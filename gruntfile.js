@@ -20,8 +20,7 @@ jshint: {
       force: true
    },
    client: [
-      'assets/site/js/**/*.js',
-      '!assets/site/js/**/*.min.js',
+      'client/**/*.js'
    ]
 },
 
@@ -31,10 +30,10 @@ concat: {
    },
    bundle: {
       src: [
-         'assets/site/lib/libs.min.js',
-         'assets/site/js/app.min.js'
+         'public/assets/site/lib/libs.min.js',
+         'public/assets/site/js/app.min.js'
       ],
-      dest: 'assets/site/js/app.min.js',
+      dest: 'public/assets/site/js/app.min.js',
    }
 },
 
@@ -44,23 +43,22 @@ uglify: {
          report: 'min'
       },
       src: [
-         'assets/site/js/**/*.js',
-         '!assets/site/js/**/*.min.js',
+         'client/**/*.js',
       ],
-      dest: 'assets/site/js/app.min.js'
+      dest: 'public/assets/site/js/app.min.js'
    },
    libs: {
       options: {
          mangle: false
       },
       src: [
-         'assets/site/lib/**/*.min.js'
+         'public/assets/site/lib/**/*.min.js'
       ],
-      dest: 'assets/site/lib/libs.min.js'
+      dest: 'public/assets/site/lib/libs.min.js'
    },
    shiv: {
-      src: 'assets/site/lib/**/html5shiv.js',
-      dest: 'assets/site/js/html5shiv.min.js'
+      src: 'public/assets/site/lib/**/html5shiv.js',
+      dest: 'public/assets/site/js/html5shiv.min.js'
    }
 },
 
@@ -70,8 +68,8 @@ uglify: {
 
 sass: {
    default: {
-      src: 'assets/site/css/default.scss',
-      dest: 'assets/site/css/default.css'
+      src: 'public/assets/site/css/default.scss',
+      dest: 'public/assets/site/css/default.css'
    }
 },
 
@@ -80,14 +78,14 @@ autoprefixer: {
       options: {
          browsers: ['> 1%', 'last 2 versions', 'firefox 24', 'opera 12.1']
       },
-      src: 'assets/site/css/default.css'
+      src: 'public/assets/site/css/default.css'
    }
 },
 
 remfallback: {
    default: {
       files: {
-         'assets/site/css/default.css': ['assets/site/css/default.css']
+         'public/assets/site/css/default.css': ['public/assets/site/css/default.css']
       }
    }
 },
@@ -97,7 +95,7 @@ csslint: {
       csslintrc: 'grunt/.csslintrc'
    },
    default: {
-      src: 'assets/site/css/default.css'
+      src: 'public/assets/site/css/default.css'
    }
 },
 
@@ -107,8 +105,8 @@ cssmin: {
       keepSpecialComments: 0
    },
    default: {
-      src: 'assets/site/css/default.css',
-      dest: 'assets/site/css/default.min.css'
+      src: 'public/assets/site/css/default.css',
+      dest: 'public/assets/site/css/default.min.css'
    }
 },
 
@@ -119,7 +117,7 @@ uncss: {
    },
    default: {
       files: {
-         'assets/site/css/default.css': ['*.html']
+         'public/assets/site/css/default.css': ['public/*.html']
       }
    }
 },
@@ -137,6 +135,7 @@ copy: {
    build: {
       files: [
          {
+            cwd: 'public',
             expand: true,
             src: [
                '*.html',
@@ -156,7 +155,7 @@ copy: {
             expand: true,
             cwd: 'temp/bmp',
             src: '*.png',
-            dest: 'assets/site/img',
+            dest: 'public/assets/site/img',
             rename: function (dest, src) {
                return dest + '/icon-' + src;
             }
@@ -165,7 +164,7 @@ copy: {
             expand: true,
             cwd: 'temp',
             src: '*.scss',
-            dest: 'assets/site/css'
+            dest: 'public/assets/site/css'
          }
       ]
    }
@@ -197,7 +196,7 @@ svgmin: {
    icons: {
       files: [{
          expand: true,
-         cwd: 'assets/site/img',
+         cwd: 'public/assets/site/img',
          src: 'icon-*.svg',
          dest: 'temp',
          rename: function (dest, src) {
@@ -237,7 +236,7 @@ grunticon: {
          dest: 'temp'
       }],
       options: {
-         datasvgcss: '_icons.scss',
+         datasvgcss: '_icons-data.scss',
          cssprefix: '.icon--',
          pngfolder: 'bmp',
          defaultWidth: 20,
@@ -256,7 +255,7 @@ watch: {
       spawn: true
    },
    js: {
-      files: ['assets/site/js/**/*.js'],
+      files: ['client/**/*.js'],
       tasks: ['makejs'],
       options: {
          livereload: true,
@@ -264,7 +263,7 @@ watch: {
       }
    },
    css: {
-      files: ['assets/site/css/default.css'],
+      files: ['public/assets/site/css/*.scss'],
       tasks: ['makecss'],
       options: {
          livereload: true,
@@ -272,39 +271,37 @@ watch: {
       }
    },
    html: {
-      files: ['*.html'],
+      files: ['public/*.html'],
+      options: {
+         livereload: true,
+         spawn: false
+      }
+   },
+   images: {
+      files: ['public/assets/site/img/*.(png|jpg|gif|svg)'],
       options: {
          livereload: true,
          spawn: false
       }
    },
    icons: {
-      files: ['assets/site/img/icon-*.svg'],
+      files: ['public/assets/site/img/icon-*.svg'],
       tasks: ['makeicons']
-   }
-},
-
-nodemon: {
-   dev: {
-      options: {
-         file: 'server.js',
-         delayTime: 1,
-         env: {
-            PORT: 3000
-         }
-      }
    }
 },
 
 exec: {
    sass: {
-      cmd: 'sass --watch default.scss:default.css --style expanded',
-      cwd: 'assets/site/css'
+      cmd: 'sass default.scss:default.css --style expanded',
+      cwd: 'public/assets/site/css'
+   },
+   server: {
+      cmd: 'node server.js'
    }
 },
 
 concurrent: {
-   dev: ['exec:sass', 'nodemon:dev', 'watch'],
+   dev: ['exec:server', 'watch'],
    options: {
       logConcurrentOutput: true
    }
@@ -326,7 +323,6 @@ grunt.loadNpmTasks('grunt-contrib-cssmin');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-imagemin');
-grunt.loadNpmTasks('grunt-nodemon');
 grunt.loadNpmTasks('grunt-concurrent');
 grunt.loadNpmTasks('grunt-autoprefixer');
 grunt.loadNpmTasks('grunt-remfallback');
@@ -341,12 +337,12 @@ grunt.loadNpmTasks('grunt-grunticon');
    ========================================================================== */
 
 grunt.registerTask('makecss', function(option) {
-   grunt.task.run('csslint');
+   grunt.task.run('exec:sass');
    if (option === 'build') {
       grunt.task.run('uncss');
    }
    grunt.task.run([
-      /*'remfallback',*/ 'autoprefixer', 'cssmin'
+      /*'remfallback',*/ 'autoprefixer', 'cssmin', 'csslint'
    ]);
 });
 
@@ -355,7 +351,7 @@ grunt.registerTask('makejs', [
 ]);
 
 grunt.registerTask('makeicons', function() {
-   if (grunt.file.expand('assets/site/img/icon-*.svg').length > 0) {
+   if (grunt.file.expand('public/assets/site/img/icon-*.svg').length > 0) {
       grunt.task.run([
          'svgmin:icons', 'grunticon:icons', 'copy:icons', 'clean:temp'
       ]);
