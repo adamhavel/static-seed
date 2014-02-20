@@ -52,13 +52,18 @@ uglify: {
          mangle: false
       },
       src: [
-         'public/assets/site/lib/**/*.min.js'
+         'public/assets/site/lib/**/*.min.js',
+         '!public/assets/site/lib/html5shiv/**/*',
+         '!public/assets/site/lib/polyfills/**/*'
       ],
       dest: 'public/assets/site/lib/libs.min.js'
    },
-   shiv: {
-      src: 'public/assets/site/lib/**/html5shiv.js',
-      dest: 'public/assets/site/js/html5shiv.min.js'
+   shims: {
+      src: [
+         'public/assets/site/lib/html5shiv/dist/html5shiv.js',
+         'public/assets/site/lib/polyfills/polyfill.js'
+      ],
+      dest: 'public/assets/site/js/shims.min.js'
    }
 },
 
@@ -112,7 +117,7 @@ cssmin: {
 
 uncss: {
    options: {
-      ignore: ['.active'],
+      ignore: [/\.j-/, /:not/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
@@ -237,7 +242,7 @@ grunticon: {
       }],
       options: {
          datasvgcss: '_icons-data.scss',
-         cssprefix: '.icon--',
+         cssprefix: 'icon--',
          pngfolder: 'bmp',
          defaultWidth: 20,
          defaultHeight: 20,
@@ -263,7 +268,7 @@ watch: {
       }
    },
    css: {
-      files: ['public/assets/site/css/*.scss'],
+      files: ['public/assets/site/css/**/*.scss'],
       tasks: ['makecss'],
       options: {
          livereload: true,
@@ -367,7 +372,7 @@ grunt.registerTask('init', function(option) {
       grunt.task.run('makecss');
    }
    grunt.task.run([
-      'uglify:libs', 'uglify:shiv', 'makejs', 'makeicons'
+      'uglify:libs', 'uglify:shims', 'makejs', 'makeicons'
    ]);
 });
 

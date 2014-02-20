@@ -2,6 +2,7 @@
    "name": "static-seed",
    "version": "0.1.0",
    "dependencies": {
-      "html5shiv": "~3.7.0"
+      "html5shiv": "~3.7.0",
+      "polyfills": "latest"
    }
 }
