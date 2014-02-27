@@ -10,13 +10,22 @@
 </head>
 <body>
 
-   <header class="page-header">
+   <header class="page-header j-page-header">
 
-      <h1><a href=""><img class="site-logo" alt="" src="assets/site/img/site-logo.svg"></a></h1>
+      <h1 class="site-logo"><a href=""><img alt="" src="assets/site/img/site-logo.svg"></a></h1>
+
+      <form action="" class="search-form j-search-form">
+         <fieldset>
+
+            <input class="search-form__input j-search-form__input" type="text" name="term" placeholder="Search" required>
+            <button class="search-form__submit j-search-form__submit" type="submit">Search</button>
+
+         </fieldset>
+      </form>
 
       <nav class="site-nav j-site-nav" role="navigation">
          <ul class="inline-list">
-            <li><a class="active" href="">Item 1</a></li><!--
+            <li><a class="active" href="">Item A</a></li><!--
             --><li><a href="">Item 2</a></li><!--
             --><li><a href="">Item 3</a></li><!--
             --><li><a href="">Item 4</a></li><!--
@@ -29,6 +38,7 @@
    <div class="layout-wrapper">
 
       <section class="main-content" role="main">
+
 
       </section>
 

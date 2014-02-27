@@ -8,15 +8,15 @@ var App = (function(parent) {
 
    var media = false,
        offset = 0,
+       touchStart = 0,
        header = document.querySelector('.j-page-header'),
        navigation = document.querySelector('.j-site-nav'),
-       navigationOffset = navigation.offsetTop;
-       page = document.querySelector('body'),
+       navigationOffset = navigation.offsetTop,
+       slideshows = getElements('.j-slideshow'),
+       page = document.body,
        searchButton = document.querySelector('.j-search-form__submit'),
        searchInput = document.querySelector('.j-search-form__input'),
        searchForm = document.querySelector('.j-search-form');
-
-   console.log(navigation.offsetTop);
 
 
    /* Private methods
@@ -59,10 +59,14 @@ var App = (function(parent) {
          if (media) {
             return media;
          }
-         media = window.getComputedStyle(document.body, ':after').getPropertyValue('content').replace(/"/g, '');
+         media = window.getComputedStyle(page).getPropertyValue('animation-name');
+         if (!media) {
+            media = window.getComputedStyle(page).getPropertyValue('-webkit-animation-name');
+         }
          return media;
       }
    };
+
 
    api.equalHeight = function(selectors, mediaLimit) {
       if (!window.getComputedStyle) {
@@ -90,6 +94,15 @@ var App = (function(parent) {
             });
          }
       });
+   };
+
+   api.slide = function(item) {
+      var nextItem = item.nextElementSibling || item.parentElement.firstElementChild;
+      item.classList.add('j-active');
+      setTimeout(function() {
+         item.classList.remove('j-active');
+         api.slide(nextItem);
+      }, 3000);
    };
 
    api.init = function() {
@@ -124,6 +137,25 @@ var App = (function(parent) {
          offset = newOffset;
       });
 
+      window.addEventListener('touchmove', function(e) {
+         var touchMoved = e.touches[0].screenY,
+             movedDown = (touchMoved - touchStart) > 0,
+             targetElement = e.touches[0].target,
+             isActive = header.classList.contains('j-active');
+
+         if (targetElement === header || header.contains(targetElement)) {
+            e.preventDefault();
+
+            if (movedDown && !isActive) {
+               header.classList.add('j-active');
+               page.classList.add('j-dim');
+            } else if (!movedDown && isActive) {
+               header.classList.remove('j-active');
+               page.classList.remove('j-dim');
+            }
+         }
+      });
+
       searchButton.addEventListener('click', function(e) {
          if (api.mediaQuery() === 'palm') {
             e.preventDefault();
@@ -137,12 +169,12 @@ var App = (function(parent) {
          }
       });
 
-      navigation.addEventListener('click', function(e) {
+      header.addEventListener('click', function(e) {
          if (api.mediaQuery() !== 'desk') {
-            header.classList.toggle('j-active');
-            searchForm.classList.remove('j-active');
+            page.classList.toggle('j-moved');
+            this.classList.toggle('j-active');
             if (!page.classList.contains('j-dim') || !header.classList.contains('j-active')) {
-               page.classList.toggle('j-dim');
+               //page.classList.toggle('j-dim');
             }
          }
       });

@@ -48,11 +48,8 @@ uglify: {
       dest: 'public/assets/site/js/app.min.js'
    },
    libs: {
-      options: {
-         mangle: false
-      },
       src: [
-         'public/assets/site/lib/**/*.min.js',
+         'public/assets/site/lib/*/**/*.js',
          '!public/assets/site/lib/html5shiv/**/*',
          '!public/assets/site/lib/polyfills/**/*'
       ],
@@ -117,7 +114,7 @@ cssmin: {
 
 uncss: {
    options: {
-      ignore: [/\.j-/, /:not/],
+      ignore: [/\.j-/, /:checked/, /:not/, /\.error/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
@@ -192,6 +189,11 @@ hashres: {
    ========================================================================== */
 
 svgmin: {
+   options: {
+      plugins: [
+         { removeXMLProcInst: false }
+      ]
+   },
    build: {
       files: [{
          expand: true,

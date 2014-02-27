@@ -1,5 +1,5 @@
 node_modules
-assets/site/lib
-assets/site/js/*.min.js
-assets/site/css/*.css
+public/assets/site/lib
+public/assets/site/js/*.min.js
+public/assets/site/css/*.css
 build
