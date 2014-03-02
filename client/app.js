@@ -106,6 +106,8 @@ var App = (function(parent) {
    };
 
    api.init = function() {
+      page.classList.remove('j-no-js');
+
       var equalHeightSelector = '.j-eh, .j-eh2';
       api.equalHeight(equalHeightSelector);
 
@@ -174,7 +176,7 @@ var App = (function(parent) {
             page.classList.toggle('j-moved');
             this.classList.toggle('j-active');
             if (!page.classList.contains('j-dim') || !header.classList.contains('j-active')) {
-               //page.classList.toggle('j-dim');
+               page.classList.toggle('j-dim');
             }
          }
       });

@@ -143,7 +143,7 @@ copy: {
                '*.html',
                'assets/**',
                '!assets/site/lib/**',
-               '!assets/site/img/icon-*.svg',
+               '!assets/site/img/icon/**',
                '!assets/site/css/*.scss',
                '!assets/site/css/default.css'
             ],
@@ -203,12 +203,9 @@ svgmin: {
    icons: {
       files: [{
          expand: true,
-         cwd: 'public/assets/site/img',
-         src: 'icon-*.svg',
-         dest: 'temp',
-         rename: function (dest, src) {
-            return dest + '/' + src.replace(/^icon-/, '');
-         }
+         cwd: 'public/assets/site/img/icon',
+         src: '*.svg',
+         dest: 'temp'
       }]
    }
 },
@@ -246,8 +243,8 @@ grunticon: {
          datasvgcss: '_icons-data.scss',
          cssprefix: 'icon--',
          pngfolder: 'bmp',
-         defaultWidth: 20,
-         defaultHeight: 20,
+         defaultWidth: 24,
+         defaultHeight: 24,
          template: 'grunt/icon.hbs'
       }
    }
@@ -292,7 +289,7 @@ watch: {
       }
    },
    icons: {
-      files: ['public/assets/site/img/icon-*.svg'],
+      files: ['public/assets/site/img/icon/*.svg'],
       tasks: ['makeicons']
    }
 },
@@ -358,7 +355,7 @@ grunt.registerTask('makejs', [
 ]);
 
 grunt.registerTask('makeicons', function() {
-   if (grunt.file.expand('public/assets/site/img/icon-*.svg').length > 0) {
+   if (grunt.file.expand('public/assets/site/img/icon/*.svg').length > 0) {
       grunt.task.run([
          'svgmin:icons', 'grunticon:icons', 'copy:icons', 'clean:temp'
       ]);
