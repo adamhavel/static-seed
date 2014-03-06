@@ -106,7 +106,7 @@ var App = (function(parent) {
    };
 
    api.init = function() {
-      page.classList.remove('j-no-js');
+      page.classList.remove('no-js');
 
       var equalHeightSelector = '.j-eh, .j-eh2';
       api.equalHeight(equalHeightSelector);
