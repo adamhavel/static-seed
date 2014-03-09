@@ -1,7 +1,7 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var http = require('http');
+var express = require('express'),
+    path = require('path'),
+    app = express();
+
 app.use(express.compress());
 app.use(express.static(path.resolve('public')));
 app.listen(80);
