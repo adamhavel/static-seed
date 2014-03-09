@@ -377,7 +377,7 @@ grunt.registerTask('makecss', function(option) {
       grunt.task.run('uncss');
    }
    grunt.task.run([
-      /*'remfallback',*/ 'autoprefixer', 'cssmin', 'cqm', 'csslint'
+      /*'remfallback',*/ 'autoprefixer', 'cqm', 'cssmin', 'csslint'
    ]);
 });
 
