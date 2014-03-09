@@ -37,6 +37,23 @@ concat: {
    }
 },
 
+modernizr: {
+   default: {
+      'devFile': 'public/assets/site/lib/modernizr/modernizr.js',
+      'outputFile': 'public/assets/site/lib/modernizr/modernizr.custom.js',
+      'extra': {
+         'shiv': false
+      },
+      'uglify': false,
+      'files': {
+         'src': [
+            'client/**/*.js',
+            'public/assets/site/css/default.min.css'
+         ]
+      },
+   }
+},
+
 uglify: {
    app: {
       options: {
@@ -49,11 +66,15 @@ uglify: {
    },
    libs: {
       src: [
-         'public/assets/site/lib/*/**/*.js',
-         '!public/assets/site/lib/html5shiv/**/*',
-         '!public/assets/site/lib/polyfills/**/*'
+         'public/assets/site/lib/modernizr/modernizr.custom.js'
       ],
       dest: 'public/assets/site/lib/libs.min.js'
+   },
+   ondemand: {
+      src: [
+         'public/assets/site/lib/fastclick/lib/fastclick.js'
+      ],
+      dest: 'public/assets/site/js/ondemand/app.touch.min.js'
    },
    shims: {
       src: [
@@ -81,6 +102,14 @@ autoprefixer: {
          browsers: ['> 1%', 'last 2 versions', 'firefox 24', 'opera 12.1']
       },
       src: 'public/assets/site/css/default.css'
+   }
+},
+
+cmq: {
+   default: {
+      files: {
+         'public/assets/site/css/default.css': ['public/assets/site/css/default.css']
+      }
    }
 },
 
@@ -330,6 +359,8 @@ grunt.loadNpmTasks('grunt-contrib-imagemin');
 grunt.loadNpmTasks('grunt-concurrent');
 grunt.loadNpmTasks('grunt-autoprefixer');
 grunt.loadNpmTasks('grunt-remfallback');
+grunt.loadNpmTasks('grunt-combine-media-queries');
+grunt.loadNpmTasks('grunt-modernizr');
 grunt.loadNpmTasks('grunt-uncss');
 grunt.loadNpmTasks('grunt-hashres');
 grunt.loadNpmTasks('grunt-exec');
@@ -346,7 +377,7 @@ grunt.registerTask('makecss', function(option) {
       grunt.task.run('uncss');
    }
    grunt.task.run([
-      /*'remfallback',*/ 'autoprefixer', 'cssmin', 'csslint'
+      /*'remfallback',*/ 'autoprefixer', 'cssmin', 'cqm', 'csslint'
    ]);
 });
 
@@ -371,7 +402,7 @@ grunt.registerTask('init', function(option) {
       grunt.task.run('makecss');
    }
    grunt.task.run([
-      'uglify:libs', 'uglify:shims', 'makejs', 'makeicons'
+      'modernizr', 'uglify:libs', 'uglify:ondemand', 'uglify:shims', 'makejs', 'makeicons'
    ]);
 });
 

@@ -106,7 +106,20 @@ var App = (function(parent) {
    };
 
    api.init = function() {
-      page.classList.remove('no-js');
+
+      Modernizr.load({
+         test: Modernizr.touch,
+         yep: 'assets/site/js/ondemand/app.touch.min.js',
+         callback: function() {
+            FastClick.attach(document.body);
+         }
+      });
+
+      if (!Modernizr.svg) {
+         getElements('img[src$=".svg"]').forEach(function(img) {
+            img.src = img.src.replace(/\.svg$/, '.png');
+         });
+      }
 
       var equalHeightSelector = '.j-eh, .j-eh2';
       api.equalHeight(equalHeightSelector);
