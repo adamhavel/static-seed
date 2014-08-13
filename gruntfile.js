@@ -44,6 +44,7 @@ modernizr: {
       'extra': {
          'shiv': false
       },
+      'tests': ['css-calc'],
       'uglify': false,
       'files': {
          'src': [
@@ -133,7 +134,8 @@ csslint: {
 cssmin: {
    options: {
       report: 'min',
-      keepSpecialComments: 0
+      keepSpecialComments: 0,
+      noAdvanced: true
    },
    default: {
       src: 'public/assets/site/css/default.css',

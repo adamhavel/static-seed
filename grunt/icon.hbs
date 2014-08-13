@@ -1,4 +1,7 @@
 .{{prefix}}{{name}}, %{{prefix}}{{name}} {
-   background-image: url('../img/icon-{{name}}.png');
-   background-image: url('{{datauri}}'), none;
+   @extend %icon;
+   @include icon {
+      background-image: url('../img/icon-{{name}}.png');
+      background-image: url('{{datauri}}'), none;
+   }
 }
