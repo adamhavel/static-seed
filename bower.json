@@ -2,10 +2,9 @@
   "name": "static-seed",
   "version": "0.1.0",
   "dependencies": {
-    "html5shiv": "~3.7.0",
+    "html5shiv": "~3.7.2",
     "polyfills": "latest",
-    "fastclick": "~0.6.12",
-    "modernizr": "~2.7.2",
-    "calc-polyfill": "*"
+    "fastclick": "~1.0.3",
+    "modernizr": "~2.8.3"
   }
 }

@@ -1,18 +1,18 @@
 var App = (function(parent) {
+   var app = parent;
 
-   // inherit API
-   var api = parent;
+   app.query = document.querySelector.bind(document);
+   app.media = false;
 
-   /* Private properties
-      ========================================================================== */
+   app.queryAll = function(selector, parent) {
+      parent = parent || document;
+      var elements = parent.querySelectorAll(selector),
+          arr = [];
+      for (var i = elements.length; i--; arr.unshift(elements[i]));
+      return arr;
+   };
 
-   var media = false;
-
-
-   /* Private methods
-   ========================================================================== */
-
-   function debounce(func, delay, immediate) {
+   app.debounce = function(func, delay, immediate) {
       var timeout;
       return function() {
          var context = this,
@@ -26,38 +26,16 @@ var App = (function(parent) {
          timeout = setTimeout(later, delay);
          if (callNow) func.apply(context, args);
       };
-   }
-
-   function getElements(selector, parent) {
-      parent = parent || document;
-      var elements = parent.querySelectorAll(selector),
-          arr = [];
-      for (var i = elements.length; i--; arr.unshift(elements[i]));
-      return arr;
-   }
-
-
-   /* Public inteface
-      ========================================================================== */
-
-   /**
-    * Returns the current state of media query as defined in stylesheet.
-    * @return {String} [description]
-    */
-   api.mediaQuery = function() {
-      if (window.getComputedStyle) {
-         if (media) {
-            return media;
-         }
-         media = window.getComputedStyle(page).getPropertyValue('animation-name');
-         if (!media) {
-            media = window.getComputedStyle(page).getPropertyValue('-webkit-animation-name');
-         }
-         return media;
-      }
    };
 
-   api.init = function() {
+   app.mediaQuery = function() {
+      if (!app.media && window.getComputedStyle) {
+         app.media = window.getComputedStyle(document.body, ':after').getPropertyValue('content').replace(/['"]/g, '');
+      }
+      return app.media;
+   };
+
+   (function init() {
 
       Modernizr.load({
          test: Modernizr.touch,
@@ -68,22 +46,17 @@ var App = (function(parent) {
       });
 
       if (!Modernizr.svg) {
-         getElements('img[src$=".svg"]').forEach(function(img) {
+         app.queryAll('img[src$=".svg"]').forEach(function(img) {
             img.src = img.src.replace(/\.svg$/, '.png');
          });
       }
 
-      window.addEventListener('scroll', function() {
+      window.addEventListener('resize', app.debounce(function() {
+         app.media = false;
+      }, 300));
 
-      });
+   })();
 
-      window.addEventListener('touchmove', function(e) {
-
-      });
-
-   };
-
-   api.init();
-   return api;
+   return app;
 
 })(App || {});

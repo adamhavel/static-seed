@@ -19,7 +19,7 @@
    "trailing": true,
    "smarttabs": false,
    "globals": {
-      "angular": true
+      "App": true
    },
    "predef": [
       "define",

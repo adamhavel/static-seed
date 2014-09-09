@@ -26,14 +26,14 @@ jshint: {
 
 concat: {
    options: {
-      separator: ';'
+      separator: '\n\n'
    },
    bundle: {
       src: [
-         'public/assets/site/lib/libs.min.js',
-         'public/assets/site/js/app.min.js'
+         'public/assets/site/lib/modernizr/modernizr.custom.js',
+         'client/**/*.js'
       ],
-      dest: 'public/assets/site/js/app.min.js',
+      dest: 'public/assets/site/js/app.js',
    }
 },
 
@@ -44,12 +44,11 @@ modernizr: {
       'extra': {
          'shiv': false
       },
-      'tests': ['css-calc'],
       'uglify': false,
       'files': {
          'src': [
             'client/**/*.js',
-            'public/assets/site/css/default.min.css'
+            'public/assets/site/css/default.css'
          ]
       },
    }
@@ -60,22 +59,14 @@ uglify: {
       options: {
          report: 'min'
       },
-      src: [
-         'client/**/*.js',
-      ],
-      dest: 'public/assets/site/js/app.min.js'
-   },
-   libs: {
-      src: [
-         'public/assets/site/lib/modernizr/modernizr.custom.js'
-      ],
-      dest: 'public/assets/site/lib/libs.min.js'
+      src: 'public/assets/site/js/app.js',
+      dest: 'public/assets/site/js/app.js'
    },
    ondemand: {
       src: [
          'public/assets/site/lib/fastclick/lib/fastclick.js'
       ],
-      dest: 'public/assets/site/js/ondemand/app.touch.min.js'
+      dest: 'public/assets/site/js/app.touch.min.js'
    },
    shims: {
       src: [
@@ -90,12 +81,12 @@ uglify: {
 /* Stylesheet
    ========================================================================== */
 
-sass: {
+/*sass: {
    default: {
       src: 'public/assets/site/css/default.scss',
       dest: 'public/assets/site/css/default.css'
    }
-},
+},*/
 
 autoprefixer: {
    default: {
@@ -139,7 +130,7 @@ cssmin: {
    },
    default: {
       src: 'public/assets/site/css/default.css',
-      dest: 'public/assets/site/css/default.min.css'
+      dest: 'public/assets/site/css/default.css'
    }
 },
 
@@ -174,9 +165,7 @@ copy: {
                '*.html',
                'assets/**',
                '!assets/site/lib/**',
-               '!assets/site/img/icon/**',
-               '!assets/site/css/*.scss',
-               '!assets/site/css/default.css'
+               '!assets/site/img/icon/**'
             ],
             dest: 'build/'
          },
@@ -197,7 +186,7 @@ copy: {
             expand: true,
             cwd: 'temp',
             src: '*.scss',
-            dest: 'public/assets/site/css'
+            dest: 'client'
          }
       ]
    }
@@ -205,12 +194,12 @@ copy: {
 
 hashres: {
    options: {
-      fileNameFormat: '${name}.${hash}.${ext}',
+      fileNameFormat: '${name}.min.${hash}.${ext}',
    },
    build: {
       src: [
-         'build/assets/site/js/app.min.js',
-         'build/assets/site/css/default.min.css'
+         'build/assets/site/js/app.js',
+         'build/assets/site/css/default.css'
       ],
       dest: 'build/*.html'
    }
@@ -298,7 +287,7 @@ watch: {
       }
    },
    css: {
-      files: ['public/assets/site/css/**/*.scss'],
+      files: ['client/**/*.scss'],
       tasks: ['makecss'],
       options: {
          livereload: true,
@@ -327,8 +316,8 @@ watch: {
 
 exec: {
    sass: {
-      cmd: 'sass default.scss:default.css --style expanded',
-      cwd: 'public/assets/site/css'
+      cmd: 'sass -r sass-globbing app.scss:../public/assets/site/css/default.css --style expanded -E UTF-8',
+      cwd: 'client'
    },
    server: {
       cmd: 'node server.js'
@@ -373,18 +362,12 @@ grunt.loadNpmTasks('grunt-grunticon');
 /* Helper tasks
    ========================================================================== */
 
-grunt.registerTask('makecss', function(option) {
-   grunt.task.run('exec:sass');
-   if (option === 'build') {
-      grunt.task.run('uncss');
-   }
-   grunt.task.run([
-      'remfallback', 'autoprefixer', 'cmq', 'cssmin', 'csslint'
-   ]);
-});
+grunt.registerTask('makecss', [
+   'exec:sass', 'remfallback', 'autoprefixer', 'csslint'
+]);
 
 grunt.registerTask('makejs', [
-   'uglify:app', 'concat:bundle', 'jshint:client'
+   'concat:bundle', 'jshint:client'
 ]);
 
 grunt.registerTask('makeicons', function() {
@@ -397,16 +380,9 @@ grunt.registerTask('makeicons', function() {
    }
 });
 
-grunt.registerTask('init', function(option) {
-   if (option === 'build') {
-      grunt.task.run('makecss:build');
-   } else {
-      grunt.task.run('makecss');
-   }
-   grunt.task.run([
-      'modernizr', 'uglify:libs', 'uglify:ondemand', 'uglify:shims', 'makejs', 'makeicons'
-   ]);
-});
+grunt.registerTask('init', [
+   'makecss', 'modernizr', 'uglify:ondemand', 'uglify:shims', 'makeicons', 'makejs'
+]);
 
 
 /* Main tasks
@@ -421,7 +397,7 @@ grunt.registerTask('default', function() {
 
 grunt.option('force', true);
 grunt.registerTask('build', [
-   'init:build', 'clean:build', 'copy:build', 'hashres:build', 'svgmin:build', 'imagemin'
+   'init', 'uncss', 'cmq', 'cssmin', 'uglify:app', 'clean:build', 'copy:build', 'hashres:build', 'svgmin:build', 'imagemin'
 ]);
 
 };
