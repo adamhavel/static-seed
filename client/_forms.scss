@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+input,
+textarea,
+select {
+   @include aloof;
+   width: 100%;
+   height: lines(1);
+   display: block;
+   padding: 0 1em;
+   box-sizing: border-box;
+
+   &.error {}
+
+   &:focus {}
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+   width: lines(1);
+   padding: 0;
+}
+
+textarea {
+   height: auto;
+}
+
+
+/* Blocks
+   ========================================================================== */
+
+.input-cell {
+   @include aloof;
+
+   &--text {
+
+      > label {}
+
+      > input {
+         margin-bottom: 0;
+      }
+   }
+
+   &--click {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+
+      > label {
+         cursor: pointer;
+         margin-left: .5em;
+      }
+
+      > input {
+         margin-bottom: 0;
+         cursor: pointer;
+
+         &:checked {}
+      }
+   }
+}

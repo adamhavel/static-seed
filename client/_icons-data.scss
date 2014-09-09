@@ -1,0 +1,16 @@
+.icon--close, %icon--close {
+   @extend %icon;
+   @include icon {
+      background-image: url('../img/icon-close.png');
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M24%203.13L3.13%2024%200%2020.87%2020.87%200zM3.13%200L24%2020.87%2020.87%2024%200%203.13z%22%2F%3E%3C%2Fsvg%3E'), none;
+   }
+}
+
+.icon--menu, %icon--menu {
+   @extend %icon;
+   @include icon {
+      background-image: url('../img/icon-menu.png');
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2219.6%22%20viewBox%3D%220%200%2024%2019.6%22%3E%3Cpath%20d%3D%22M0%200h24v3.6H0zM0%208h24v3.6H0zM0%2016h24v3.6H0z%22%2F%3E%3C%2Fsvg%3E'), none;
+   }
+}
+

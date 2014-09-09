@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+
+@mixin icon {
+   &:before {
+      @content;
+   }
+}
+
+.icon, %icon {
+   display: inline-block;
+
+   &:before {
+      @include size($line-height * 1em);
+      content: '';
+      display: inline-block;
+      margin-right: .25em;
+      vertical-align: top;
+      background: {
+         position: center;
+         size: 75%;
+         repeat: no-repeat;
+      }
+   }
+
+   &--rev {
+      direction: rtl;
+
+      @include icon {
+         margin-right: 0;
+         margin-left: .25em;
+      }
+   }
+
+   &--solo {
+      @include icon {
+         margin: 0;
+      }
+   }
+}

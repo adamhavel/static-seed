@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Mixins
+   ========================================================================== */
+
+%trim-trailing-lines {
+   :not(div) > &:last-child {
+      margin-bottom: 0;
+   }
+}
+
+%trim-leading-lines {
+   :not(div) > &:first-child {
+      margin-top: 0;
+   }
+}
+
+@function lines($count: 1, $correction: null) {
+   @if $correction == null  {
+      @return $count * $line-height * 1rem;
+   } @else {
+      @return calc(#{$count * $line-height * 1rem} + #{$correction});
+   }
+}
+
+@function taper($count: 1, $correction: null) {
+   @if $correction == null  {
+      @return $count * $gutter;
+   } @else {
+      @return calc(#{$count * $gutter} + #{$correction});
+   }
+}
+
+@mixin aloof($count: 1) {
+   @extend %trim-trailing-lines;
+   margin-bottom: lines($count);
+
+   @include media-query(palm) {
+      margin-bottom: lines($count / 2);
+   }
+}
+
+@mixin island($count: 1) {
+   @extend %trim-leading-lines;
+   @extend %trim-trailing-lines;
+   margin-top: lines($count);
+   margin-bottom: lines($count);
+
+   @include media-query(palm) {
+      margin-top: lines($count / 2);
+      margin-bottom: lines($count / 2);
+   }
+}
+
+
+/* Base
+   ========================================================================== */
+
+html {
+   font-size: #{$base}em;
+   line-height: $line-height;
+   font-family: sans-serif;
+   color: black;
+   font-feature-settings: 'liga', 'kern';
+
+   @include media-query(palm) {
+      font-feature-settings: 'liga' 0, 'kern' 0;
+   }
+}
+
+a {
+   text-decoration: underline;
+   transition: color .25s;
+   &:hover,
+   &:focus,
+   &:active {}
+}
+
+
+/* Headings
+   ========================================================================== */
+
+.heading {
+   @include aloof;
+   line-height: scale(4);
+   font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
+
+   @include icon {
+      @include size(scale(4) * 1em);
+   }
+}
+
+.alpha, %alpha {
+   font-size: scale(17) * 1rem;
+
+   @include media-query(lap) {
+      font-size: scale(12) * 1rem;
+   }
+
+   @include media-query(palm) {
+      font-size: scale(7) * 1rem;
+   }
+}
+
+.beta, %beta {
+   font-size: scale(12) * 1rem;
+
+   @include media-query(lap) {
+      font-size: scale(8) * 1rem;
+   }
+
+   @include media-query(palm) {
+      font-size: scale(5) * 1rem;
+   }
+}
+
+.gamma, %gamma {
+   font-size: scale(8) * 1rem;
+
+   @include media-query(lap) {
+      font-size: scale(5) * 1rem;
+   }
+
+   @include media-query(palm) {
+      font-size: scale(3) * 1rem;
+   }
+}
+
+.delta, %delta {
+   font-size: scale(5) * 1rem;
+
+   @include media-query(lap) {
+      font-size: scale(3) * 1rem;
+   }
+
+   @include media-query(palm) {
+      font-size: scale(2) * 1rem;
+   }
+}
+
+.epsilon, %epsilon {
+   font-size: scale(3) * 1rem;
+
+   @include media-query(lap) {
+      font-size: scale(2) * 1rem;
+   }
+
+   @include media-query(palm) {
+      font-size: scale(1) * 1rem;
+   }
+}
+
+
+/* Lists
+   ========================================================================== */
+
+.block-list, %block-list {
+   @include aloof;
+
+   > li {
+      display: block;
+   }
+}
+
+.bullet-list, %bullet-list {
+   @extend %block-list;
+
+   > li {
+      padding-left: lines(1);
+
+      &:before {
+         content: '●';
+         float: left;
+         width: lines(1);
+         margin-left: lines(-1);
+      }
+   }
+}
+
+.inline-list, %inline-list {
+   > li {
+      display: inline-block;
+      vertical-align: top;
+   }
+}
+
+/**
+ * 1. ':first-child' is used to support IE8.
+ */
+.pipe-list, %pipe-list {
+   @extend %inline-list;
+
+   > li {
+      &:before {
+         content: ' | ';
+      }
+
+      &:first-child:before { /* 1. */
+         display: none;
+      }
+   }
+}
+
+
+/* Margins
+   ========================================================================== */
+
+.aloof {
+   @include aloof;
+}
+
+.island {
+   @include island;
+}
+
+.islet {
+   @include island(2);
+}

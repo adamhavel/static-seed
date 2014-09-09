@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Media
+   ========================================================================== */
+
+.media {
+   @extend %clear;
+   @include aloof;
+   display: flex;
+   align-items: flex-start;
+
+   &__figure {
+      flex: 1;
+      margin-right: taper(1);
+
+      > img {
+         width: 100%;
+      }
+   }
+
+   &__content {
+      flex: macro-scale(1);
+   }
+
+   @include media-query(lap) {
+      display: block;
+
+      &__figure {
+         float: left;
+         width: scale-to-percentage(0, 0 1) !important;
+      }
+   }
+
+   @include media-query(palm) {
+      display: block;
+
+      &__figure {
+         width: 100% !important;
+         margin-right: 0;
+         margin-bottom: lines(.5);
+      }
+   }
+
+   .no-flexbox & {
+      &__figure {
+         float: left;
+         width: scale-to-percentage(0, 0 2);
+      }
+   }
+}

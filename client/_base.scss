@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/* Media queries
+   ========================================================================== */
+
+@mixin media-query($type) {
+   @each $breakpoint in $breakpoints {
+      $name: nth($breakpoint, 1);
+      $declaration: nth($breakpoint, 2);
+      @if $type == $name and $declaration {
+         @media only screen and #{$declaration} {
+            @content;
+         }
+      }
+   }
+}
+
+/**
+ * Expose media query breakpoints to JavaScript.
+ * Use: window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+ */
+body {
+   &:after {
+      display: none;
+   }
+
+   @each $breakpoint in $breakpoints {
+      $type: nth($breakpoint, 1);
+      @include media-query($type) {
+         &:after {
+            content: $type;
+         }
+      }
+   }
+}
+
+
+/* Color functions
+   ========================================================================== */
+
+@function faux-rgba($color, $background, $opacity) {
+  @return mix($color, $background, $opacity * 100%);
+}
+
+@function brand($color) {
+   @return map-get($colors, $color);
+}
+
+
+/* Helpers
+   ========================================================================== */
+
+@mixin size($width, $height: null) {
+   width: $width;
+   @if $height == null  {
+      height: $width;
+   } @else {
+      height: $height;
+   }
+}
+
+@function scale-to-percentage($item-interval, $configuration, $gap: $gutter) {
+   $total: 0;
+   @each $interval in $configuration {
+      $total: $total + macro-scale($interval);
+   }
+   @return (macro-scale($item-interval) / $total) * 100% - $gap * (length($configuration) - 1) / length($configuration);
+}
+
+
+/* Clearfix
+   ========================================================================== */
+
+%clear:after {
+   content: '';
+   display: table;
+   clear: both;
+}
