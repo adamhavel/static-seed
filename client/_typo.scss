@@ -96,11 +96,11 @@ a {
    font-size: scale(17) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(12) * 1rem;
+      font-size: scale(15) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(7) * 1rem;
+      font-size: scale(12) * 1rem;
    }
 }
 
@@ -108,11 +108,11 @@ a {
    font-size: scale(12) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(8) * 1rem;
+      font-size: scale(10) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(5) * 1rem;
+      font-size: scale(7) * 1rem;
    }
 }
 
@@ -120,11 +120,11 @@ a {
    font-size: scale(8) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(5) * 1rem;
+      font-size: scale(6) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(3) * 1rem;
+      font-size: scale(4) * 1rem;
    }
 }
 

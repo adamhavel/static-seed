@@ -1,8 +1,12 @@
 var App = (function(parent) {
    var app = parent;
 
-   app.query = document.querySelector.bind(document);
    app.media = false;
+
+   app.query = function(selector, parent) {
+      parent = parent || document;
+      return parent.querySelector(selector);
+   };
 
    app.queryAll = function(selector, parent) {
       parent = parent || document;
@@ -39,7 +43,7 @@ var App = (function(parent) {
 
       Modernizr.load({
          test: Modernizr.touch,
-         yep: 'assets/site/js/ondemand/app.touch.min.js',
+         yep: 'assets/site/js/app.touch.min.js',
          callback: function() {
             FastClick.attach(document.body);
          }

@@ -43,7 +43,7 @@
    .no-flexbox & {
       &__figure {
          float: left;
-         width: scale-to-percentage(0, 0 2);
+         width: scale-to-percentage(0, 0 1);
       }
    }
 }
