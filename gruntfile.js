@@ -42,7 +42,8 @@ modernizr: {
       'devFile': 'public/assets/site/lib/modernizr/modernizr.js',
       'outputFile': 'public/assets/site/lib/modernizr/modernizr.custom.js',
       'extra': {
-         'shiv': false
+         'shiv': false,
+         'load' : false
       },
       'uglify': false,
       'files': {
@@ -129,8 +130,10 @@ cssmin: {
       noAdvanced: true
    },
    default: {
-      src: 'public/assets/site/css/default.css',
-      dest: 'public/assets/site/css/default.css'
+      files: [{
+         expand: true,
+         src: ['public/assets/site/css/*.css']
+      }]
    }
 },
 
@@ -319,6 +322,10 @@ exec: {
       cmd: 'sass -r sass-globbing app.scss:../public/assets/site/css/default.css --style expanded -E UTF-8',
       cwd: 'client'
    },
+   sass_non_critical: {
+      cmd: 'sass non-critical.scss:../public/assets/site/css/non-critical.css --style expanded -E UTF-8',
+      cwd: 'client'
+   },
    server: {
       cmd: 'node server.js'
    }
@@ -363,7 +370,7 @@ grunt.loadNpmTasks('grunt-grunticon');
    ========================================================================== */
 
 grunt.registerTask('makecss', [
-   'exec:sass', 'remfallback', 'autoprefixer', 'csslint'
+   'exec:sass', 'remfallback', 'autoprefixer', 'csslint', 'exec:sass_non_critical'
 ]);
 
 grunt.registerTask('makejs', [

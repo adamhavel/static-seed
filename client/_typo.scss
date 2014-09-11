@@ -61,7 +61,7 @@
 html {
    font-size: #{$base}em;
    line-height: $line-height;
-   font-family: sans-serif;
+   font-family: 'Open Sans', sans-serif;
    color: black;
    font-feature-settings: 'liga', 'kern';
 
@@ -86,6 +86,7 @@ a {
    @include aloof;
    line-height: scale(4);
    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
+   font-weight: normal;
 
    @include icon {
       @include size(scale(4) * 1em);

@@ -3,16 +3,21 @@
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
+   <link rel="dns-prefetch" href="//cdn.polyfill.io">
    <link href="assets/site/css/default.css" rel="stylesheet">
+   <script src="//cdn.polyfill.io/v1/polyfill.min.js"></script>
+   <script>!function(){function e(e){var t=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}function t(){if(a&&localStorage.non_critical_css_file===n)e(localStorage.non_critical_css);else{var t=new XMLHttpRequest;t.open("GET",n,!0),t.addEventListener("load",function(){4===t.readyState&&(e(t.responseText),localStorage.non_critical_css=t.responseText,localStorage.non_critical_css_file=n)}),t.send()}}var n="assets/site/css/non-critical.css",a=window.localStorage&&localStorage.non_critical_css;a?t():window.addEventListener("load",t)}()</script>
    <title></title>
    <meta name="description" content="">
-   <!--[if lte IE 9]><script src="assets/site/js/shims.min.js"></script><![endif]-->
+   <noscript>
+      <link href="assets/site/css/non-critical.css" rel="stylesheet">
+   </noscript>
 </head>
 <body>
 
    <header class="page-header">
 
-      <h1 class="site-logo"><a href=""><img alt="" src="assets/site/img/site-logo.svg"></a></h1>
+      <h1 class="site-logo"><a href=""></a></h1>
 
       <nav class="site-nav j-site-nav" role="navigation">
          <ul>
@@ -35,7 +40,7 @@
             <div class="media__figure"><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></div>
 
             <div class="media__content">
-               <h1 class="beta heading">Lorem ipsum</h1>
+               <h1 class="beta heading icon icon--close">Lóřém ipšům</h1>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, iste alias fuga repellendus reprehenderit numquam nobis eligendi ad eum recusandae dolores voluptas in sit quos ut ab officia vero eius. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, suscipit, inventore esse id assumenda fuga quam eligendi libero cupiditate tempore sequi odio tempora temporibus quos incidunt debitis aliquid architecto accusantium.</p>
             </div>
 
@@ -52,6 +57,7 @@
       <small class="copyright"></small>
 
    </footer>
+
 
 <script src="assets/site/js/app.js" async></script>
 </body>

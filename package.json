@@ -39,6 +39,7 @@
     "grunt-grunticon": "~1.2.13",
     "grunt-uncss": "~0.3.6",
     "grunt-modernizr": "~0.5.2",
-    "grunt-combine-media-queries": "~1.0.19"
+    "grunt-combine-media-queries": "~1.0.19",
+    "compression": "^1.1.0"
   }
 }
