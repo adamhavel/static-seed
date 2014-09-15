@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" class="no-js">
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
    <link rel="dns-prefetch" href="//cdn.polyfill.io">
    <link href="assets/site/css/default.css" rel="stylesheet">
-   <script src="//cdn.polyfill.io/v1/polyfill.min.js"></script>
-   <script>!function(){function e(e){var t=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}function t(){if(a&&localStorage.non_critical_css_file===n)e(localStorage.non_critical_css);else{var t=new XMLHttpRequest;t.open("GET",n,!0),t.addEventListener("load",function(){4===t.readyState&&(e(t.responseText),localStorage.non_critical_css=t.responseText,localStorage.non_critical_css_file=n)}),t.send()}}var n="assets/site/css/non-critical.css",a=window.localStorage&&localStorage.non_critical_css;a?t():window.addEventListener("load",t)}()</script>
+   <script>!function(){function e(e,t,n){e.addEventListener?e.addEventListener(t,n):e.attachEvent&&e.attachEvent("on"+t,n)}function t(e){var t=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}function n(){if(c&&localStorage.font_css_cache_file===a)t(localStorage.font_css_cache);else{var n=new XMLHttpRequest;n.open("GET",a,!0),e(n,"load",function(){4===n.readyState&&(t(n.responseText),localStorage.font_css_cache=n.responseText,localStorage.font_css_cache_file=a)}),n.send()}}var a="assets/site/css/non-critical.css",c=window.localStorage&&localStorage.font_css_cache;c?n():e(window,"load",n)}();</script>
    <title></title>
    <meta name="description" content="">
    <noscript>
@@ -58,7 +57,7 @@
 
    </footer>
 
-
+<script src="//cdn.polyfill.io/v1/polyfill.min.js"></script>
 <script src="assets/site/js/app.js" async></script>
 </body>
 </html>

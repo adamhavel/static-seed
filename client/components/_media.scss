@@ -40,7 +40,7 @@
       }
    }
 
-   .no-flexbox & {
+   @include no-flex {
       &__figure {
          float: left;
          width: scale-to-percentage(0, 0 1);

@@ -139,7 +139,7 @@ cssmin: {
 
 uncss: {
    options: {
-      ignore: [/\.j-/, /:checked/, /:not/, /\.error/],
+      ignore: [/\.j-/, /\.error/, /\.active/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
@@ -205,6 +205,17 @@ hashres: {
          'build/assets/site/css/default.css'
       ],
       dest: 'build/*.html'
+   }
+},
+
+inliner: {
+   default: {
+      files: [{
+         expand: true,
+         cwd: 'build',
+         src: '*.html',
+         dest: 'build'
+      }]
    }
 },
 
@@ -328,13 +339,47 @@ exec: {
    },
    server: {
       cmd: 'node server.js'
+   },
+   server_dist: {
+      cmd: 'node server-dist.js'
+   },
+   finch: {
+      cmd: 'finch forward http://localhost'
    }
 },
 
 concurrent: {
    dev: ['exec:server', 'watch'],
+   dist: ['exec:server_dist', 'exec:finch'],
    options: {
       logConcurrentOutput: true
+   }
+},
+
+
+/* Performance
+   ========================================================================== */
+
+pagespeed: {
+   options: {
+      nokey: true,
+      locale: 'en_GB',
+      threshold: 80,
+      url: 'https://spotted-point.usefinch.com'
+   },
+   desktop: {
+      options: {
+         strategy: 'desktop',
+      }
+   }
+},
+
+perfbudget: {
+   default: {
+      options: {
+         url: 'https://spotted-point.usefinch.com',
+         key: '194bb57265774755b8dd82b8b2df09e5'
+      }
    }
 }
 
@@ -404,7 +449,7 @@ grunt.registerTask('default', function() {
 
 grunt.option('force', true);
 grunt.registerTask('build', [
-   'init', 'uncss', 'cmq', 'cssmin', 'uglify:app', 'clean:build', 'copy:build', 'hashres:build', 'svgmin:build', 'imagemin'
+   'init', 'uncss', 'cmq', 'cssmin', 'uglify:app', 'clean:build', 'copy:build', 'hashres:build', 'svgmin:build', 'imagemin', 'concurrent:dist'
 ]);
 
 };

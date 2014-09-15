@@ -1,12 +1,12 @@
 {
   "name": "static-seed",
   "description": "",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "author": "Adam Havel <havel.adam@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/rizzenvrinn/static-seed"
+    "url": "http://github.com/adamhavel/static-seed"
   },
   "scripts": {
     "start": "node server.js"
@@ -40,6 +40,9 @@
     "grunt-uncss": "~0.3.6",
     "grunt-modernizr": "~0.5.2",
     "grunt-combine-media-queries": "~1.0.19",
-    "compression": "^1.1.0"
+    "compression": "^1.1.0",
+    "grunt-pagespeed": "^0.3.0",
+    "grunt-perfbudget": "^0.1.5",
+    "grunt-inliner": "^0.2.0"
   }
 }

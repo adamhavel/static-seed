@@ -2,8 +2,6 @@
   "name": "static-seed",
   "version": "0.1.0",
   "dependencies": {
-    "html5shiv": "~3.7.2",
-    "polyfills": "latest",
     "fastclick": "~1.0.3",
     "modernizr": "~2.8.3"
   }

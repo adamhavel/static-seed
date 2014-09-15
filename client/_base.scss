@@ -61,12 +61,22 @@ body {
    }
 }
 
+@mixin no-flex {
+   .no-flexbox.no-flexboxlegacy & {
+      @content;
+   }
+}
+
 @function scale-to-percentage($item-interval, $configuration, $gap: $gutter) {
    $total: 0;
    @each $interval in $configuration {
       $total: $total + macro-scale($interval);
    }
    @return (macro-scale($item-interval) / $total) * 100% - $gap * (length($configuration) - 1) / length($configuration);
+}
+
+@function rem-to-px($value) {
+   @return round($base * 16px * $value / ($value * 0 + 1));
 }
 
 
