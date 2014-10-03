@@ -68,13 +68,6 @@ uglify: {
          'public/assets/site/lib/fastclick/lib/fastclick.js'
       ],
       dest: 'public/assets/site/js/app.touch.min.js'
-   },
-   shims: {
-      src: [
-         'public/assets/site/lib/html5shiv/dist/html5shiv.js',
-         'public/assets/site/lib/polyfills/polyfill.js'
-      ],
-      dest: 'public/assets/site/js/shims.min.js'
    }
 },
 
@@ -101,7 +94,7 @@ autoprefixer: {
 cmq: {
    default: {
       files: {
-         'public/assets/site/css/default.css': ['public/assets/site/css/default.css']
+         'build/assets/site/css/default.css': ['build/assets/site/css/default.css']
       }
    }
 },
@@ -132,19 +125,19 @@ cssmin: {
    default: {
       files: [{
          expand: true,
-         src: ['public/assets/site/css/*.css']
+         src: ['build/assets/site/css/*.css']
       }]
    }
 },
 
 uncss: {
    options: {
-      ignore: [/\.j-/, /\.error/, /\.active/],
+      ignore: [/\.j-/, /\.no-/, /\.error/, /\.active/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
       files: {
-         'public/assets/site/css/default.css': ['public/*.html']
+         'build/assets/site/css/default.css': ['build/*.html']
       }
    }
 },
@@ -167,6 +160,7 @@ copy: {
             src: [
                '*.html',
                'assets/**',
+               '**/*.map',
                '!assets/site/lib/**',
                '!assets/site/img/icon/**'
             ],
@@ -178,18 +172,12 @@ copy: {
       files: [
          {
             expand: true,
-            cwd: 'temp/bmp',
+            cwd: 'temp',
             src: '*.png',
             dest: 'public/assets/site/img',
             rename: function (dest, src) {
                return dest + '/icon-' + src;
             }
-         },
-         {
-            expand: true,
-            cwd: 'temp',
-            src: '*.scss',
-            dest: 'client'
          }
       ]
    }
@@ -225,21 +213,14 @@ inliner: {
 svgmin: {
    options: {
       plugins: [
-         { removeXMLProcInst: false }
+         { removeXMLProcInst: false },
+         { cleanupIDs: false }
       ]
    },
    build: {
       files: [{
          expand: true,
          src: 'build/assets/site/img/*.svg'
-      }]
-   },
-   icons: {
-      files: [{
-         expand: true,
-         cwd: 'public/assets/site/img/icon',
-         src: '*.svg',
-         dest: 'temp'
       }]
    }
 },
@@ -265,21 +246,29 @@ imagemin: {
    }
 },
 
+svgstore: {
+   options: {
+      svg: {}
+   },
+   icons: {
+      files: {
+         'public/assets/site/img/icons.svg': ['public/assets/site/img/icon/*.svg']
+      }
+   }
+},
+
 grunticon: {
    icons: {
       files: [{
          expand: true,
-         cwd: 'temp',
+         cwd: 'public/assets/site/img/icon',
          src: ['*.svg'],
          dest: 'temp'
       }],
       options: {
-         datasvgcss: '_icons-data.scss',
-         cssprefix: 'icon--',
-         pngfolder: 'bmp',
-         defaultWidth: 24,
-         defaultHeight: 24,
-         template: 'grunt/icon.hbs'
+         pngfolder: '.',
+         defaultWidth: 128,
+         defaultHeight: 128
       }
    }
 },
@@ -341,7 +330,7 @@ exec: {
       cmd: 'node server.js'
    },
    server_dist: {
-      cmd: 'node server-dist.js'
+      cmd: 'node server.js dist'
    },
    finch: {
       cmd: 'finch forward http://localhost'
@@ -409,7 +398,9 @@ grunt.loadNpmTasks('grunt-hashres');
 grunt.loadNpmTasks('grunt-exec');
 grunt.loadNpmTasks('grunt-sass');
 grunt.loadNpmTasks('grunt-svgmin');
+grunt.loadNpmTasks('grunt-inliner');
 grunt.loadNpmTasks('grunt-grunticon');
+grunt.loadNpmTasks('grunt-svgstore');
 
 /* Helper tasks
    ========================================================================== */
@@ -425,7 +416,7 @@ grunt.registerTask('makejs', [
 grunt.registerTask('makeicons', function() {
    if (grunt.file.expand('public/assets/site/img/icon/*.svg').length > 0) {
       grunt.task.run([
-         'svgmin:icons', 'grunticon:icons', 'copy:icons', 'clean:temp'
+         'svgstore', 'grunticon', 'copy:icons', 'clean:temp'
       ]);
    } else {
       grunt.log.writeln('No icons found.');
@@ -433,7 +424,7 @@ grunt.registerTask('makeicons', function() {
 });
 
 grunt.registerTask('init', [
-   'makecss', 'modernizr', 'uglify:ondemand', 'uglify:shims', 'makeicons', 'makejs'
+   'makecss', 'modernizr', 'uglify:ondemand', 'makeicons', 'makejs'
 ]);
 
 
@@ -449,7 +440,7 @@ grunt.registerTask('default', function() {
 
 grunt.option('force', true);
 grunt.registerTask('build', [
-   'init', 'uncss', 'cmq', 'cssmin', 'uglify:app', 'clean:build', 'copy:build', 'hashres:build', 'svgmin:build', 'imagemin', 'concurrent:dist'
+   'init', 'uglify:app', 'clean:build', 'copy:build', 'uncss', 'cmq', 'cssmin', 'hashres:build', 'svgmin:build', 'imagemin', 'concurrent:dist'
 ]);
 
 };

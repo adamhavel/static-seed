@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
+.button {
+   display: inline-block;
+   box-sizing: border-box;
+   background: silver;
+   border: 1px solid faux-rgba(black, silver, .1);
+   border-color: rgba(black, .1);
+   margin-bottom: lines(1);
+   padding: rem-to-px(lines(.5)) .75em;
+   padding: lines(.5, -1px) .75em;
+   text-decoration: none;
+   vertical-align: middle;
+   cursor: pointer;
+   transition: background-color .2s;
+
+   @include active {
+      background-color: cyan;
+
+      > .icon {
+         fill: yellow;
+      }
+   }
+
+   .no-svg & {
+      white-space: nowrap;
+   }
+}

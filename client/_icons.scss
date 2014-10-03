@@ -2,40 +2,62 @@
    Icons
    ========================================================================== */
 
-@mixin icon {
-   &:before {
-      @content;
+/* Variables
+   ========================================================================== */
+
+$icon-gap: .5em;
+$icon-size: $line-height * 1em;
+
+
+/* Mixins
+   ========================================================================== */
+
+@mixin alter-icon-size($new-size) {
+   .icon, .j-icon-placeholder {
+      @include size($new-size);
+   }
+
+   .no-svg & .icon:first-child {
+      margin-right: -($new-size);
    }
 }
 
-.icon {
+
+/* Classes
+   ========================================================================== */
+
+.icon,
+.j-icon-placeholder {
+   @include size($icon-size);
    display: inline-block;
+   vertical-align: top;
+}
 
-   &:before {
-      @include size($line-height * 1em);
-      content: '';
-      display: inline-block;
-      margin-right: .25em;
-      vertical-align: top;
-      background: {
-         position: center;
-         size: 75%;
-         repeat: no-repeat;
-      }
+.icon {
+   transition: fill .2s;
+
+   &:first-child {
+      margin-right: $icon-gap;
    }
 
-   &--rev {
-      direction: rtl;
-
-      @include icon {
-         margin-right: 0;
-         margin-left: .25em;
-      }
+   &:last-child {
+      margin-left: $icon-gap;
    }
 
-   &--solo {
-      @include icon {
-         margin: 0;
+   &:first-child:last-child {
+      margin: 0;
+   }
+
+   .no-svg & {
+      margin-left: $icon-gap;
+
+      &:first-child {
+         margin-left: 0;
+         margin-right: -($icon-size);
+
+         ~ span {
+            margin-left: $icon-gap;
+         }
       }
    }
 }

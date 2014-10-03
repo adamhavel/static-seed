@@ -4,6 +4,6 @@ var express = require('express'),
     app = express();
 
 app.use(compression());
-app.use(express.static(path.resolve('public')));
+app.use(express.static(path.resolve(process.argv[2] === 'dist' ? 'build' : 'public')));
 app.listen(80);
 console.log('Listening on port 80');

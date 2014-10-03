@@ -4,6 +4,7 @@ var App = (function(parent) {
    var app = parent;
 
    app.media = false;
+   app.assetsDir = 'assets/site';
 
    app.query = function(selector, parent) {
       parent = parent || document;
@@ -103,6 +104,19 @@ var App = (function(parent) {
          app.queryAll('img[src$=".svg"]').forEach(function(img) {
             img.src = img.src.replace(/\.svg$/, '.png');
          });
+         app.queryAll('.icon').forEach(function(icon) {
+            var fallbackIcon = document.createElement('img'),
+                placeholder = document.createElement('div'),
+                parent = icon.parentNode,
+                type = parent.innerHTML.match(/xlink:href=["']#([^"']+)["']/i)[1];
+
+            fallbackIcon.classList.add('icon');
+            placeholder.classList.add('j-icon-placeholder');
+            fallbackIcon.src = app.assetsDir + '/img/icon-' + type + '.png';
+
+            parent.insertBefore(placeholder, icon.nextSibling);
+            parent.replaceChild(fallbackIcon, icon);
+         });
       }
 
       window.addEventListener('resize', app.debounce(function() {
@@ -111,7 +125,7 @@ var App = (function(parent) {
 
       window.addEventListener('load', function() {
          if (Modernizr.touch) {
-            app.loadScript('assets/site/js/app.touch.min.js', function() {
+            app.loadScript(app.assetsDir + '/js/app.touch.min.js', function() {
                FastClick.attach(document.body);
             });
          }

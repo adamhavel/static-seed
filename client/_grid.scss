@@ -2,7 +2,7 @@
    Grid
    ========================================================================== */
 
-/* Defaults
+/* Variables
    ========================================================================== */
 
 $grid-defaults: (
@@ -50,6 +50,7 @@ $grid-item-defaults: (
 
    &__item {
       margin-left: $gutter;
+      box-sizing: border-box;
       display: inline-block;
       letter-spacing: normal;
       vertical-align: top;

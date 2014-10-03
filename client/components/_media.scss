@@ -10,6 +10,7 @@
 
    &__figure {
       flex: 1;
+      margin-top: lines(.25);
       margin-right: taper(1);
 
       > img {
@@ -35,8 +36,7 @@
 
       &__figure {
          width: 100% !important;
-         margin-right: 0;
-         margin-bottom: lines(.5);
+         margin: 0 0 lines(.5);
       }
    }
 
@@ -44,6 +44,10 @@
       &__figure {
          float: left;
          width: scale-to-percentage(0, 0 1);
+      }
+
+      &__content {
+         overflow: hidden;
       }
    }
 }

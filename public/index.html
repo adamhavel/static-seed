@@ -4,8 +4,9 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
    <link rel="dns-prefetch" href="//cdn.polyfill.io">
+   <!--[if lte IE 9]><script src="//cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
    <link href="assets/site/css/default.css" rel="stylesheet">
-   <script>!function(){function e(e,t,n){e.addEventListener?e.addEventListener(t,n):e.attachEvent&&e.attachEvent("on"+t,n)}function t(e){var t=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}function n(){if(c&&localStorage.font_css_cache_file===a)t(localStorage.font_css_cache);else{var n=new XMLHttpRequest;n.open("GET",a,!0),e(n,"load",function(){4===n.readyState&&(t(n.responseText),localStorage.font_css_cache=n.responseText,localStorage.font_css_cache_file=a)}),n.send()}}var a="assets/site/css/non-critical.css",c=window.localStorage&&localStorage.font_css_cache;c?n():e(window,"load",n)}();</script>
+   <script>!function(){function e(e){return e.split(".").pop()}function t(e,t){if("css"===t){var n=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(n),n.styleSheet?n.styleSheet.cssText=e:n.innerHTML=e}else"svg"===t&&document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",e)}function n(n){var s=localStorage[n];s?t(s,e(n)):window.addEventListener("load",function(){var s=new XMLHttpRequest;s.open("GET",n,!0),s.addEventListener("load",function(){4===s.readyState&&(t(s.responseText,e(n)),localStorage[n]=s.responseText)}),s.send()})}var s=["assets/site/css/non-critical.css","assets/site/img/icons.svg"];window.localStorage&&s.forEach(function(t){("svg"!==e(t)||document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))&&n(t)})}();</script>
    <title></title>
    <meta name="description" content="">
    <noscript>
@@ -39,13 +40,33 @@
             <div class="media__figure"><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></div>
 
             <div class="media__content">
-               <h1 class="beta heading icon icon--close">Lóřém ipšům</h1>
+               <h1 class="beta heading"><svg class="icon"><use xlink:href="#menu"></svg><span>Lóřém ipšům</span></h1>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, iste alias fuga repellendus reprehenderit numquam nobis eligendi ad eum recusandae dolores voluptas in sit quos ut ab officia vero eius. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, suscipit, inventore esse id assumenda fuga quam eligendi libero cupiditate tempore sequi odio tempora temporibus quos incidunt debitis aliquid architecto accusantium.</p>
             </div>
 
          </section>
 
+         <a class="button">
+            <svg class="icon"><use xlink:href="#close"></svg><span>Lorem ipsum</span>
+         </a>
+
+         <a class="gamma button">
+            <span>Lorem</span><svg class="icon"><use xlink:href="#menu"></svg>
+         </a>
+
+         <a class="alpha button">
+            <svg class="icon"><use xlink:href="#menu"></svg>
+         </a>
+
          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, corrupti, eos minus quos qui et commodi temporibus distinctio veritatis ea doloremque nam totam nihil iure cum laudantium labore similique quas.</p>
+
+         <ul class="bullet-list">
+            <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, est enim explicabo ea animi laboriosam fugiat optio magni quam mollitia eum omnis id temporibus repellendus aut quo quibusdam voluptates obcaecati.</li>
+            <li>Facilis, earum, tempora non excepturi ea sunt minima quibusdam iure ut illum quo eos doloribus placeat autem saepe recusandae voluptates asperiores libero atque rerum a molestiae voluptatum dolor facere iste.</li>
+            <li>Asperiores, in, tempore, nulla adipisci assumenda perspiciatis modi eum voluptates tenetur facere magnam reiciendis maiores eius illo saepe inventore dolores eos nobis atque enim iusto ullam voluptatem dolore. Cum, corporis.</li>
+            <li>Veniam, harum, provident, a fugit assumenda ipsam perferendis debitis vel fuga suscipit sapiente atque eos corrupti. Delectus, ullam deleniti reprehenderit eaque laudantium facilis aut optio aliquam iusto amet minima pariatur.</li>
+            <li>Dolor, numquam, libero possimus reiciendis mollitia ullam quia voluptatibus sunt accusamus debitis cum vel illum fugit ducimus unde obcaecati accusantium dolorem ex nesciunt inventore dolores ipsum totam veritatis aliquam nulla!</li>
+         </ul>
 
       </section>
 
@@ -57,7 +78,7 @@
 
    </footer>
 
-<script src="//cdn.polyfill.io/v1/polyfill.min.js"></script>
-<script src="assets/site/js/app.js" async></script>
+<script src="//cdn.polyfill.io/v1/polyfill.min.js" defer></script>
+<script src="assets/site/js/app.js" defer></script>
 </body>
 </html>

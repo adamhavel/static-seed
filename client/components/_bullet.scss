@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Bullet
+   ========================================================================== */
+
+%bullet {
+   $bullet-size: .5em;
+
+   &:before {
+      @include size($bullet-size);
+      content: '';
+      float: left;
+      margin-top: ($line-height / 2) - ($bullet-size / 2);
+      background: black;
+      transform: rotate(45deg);
+   }
+}

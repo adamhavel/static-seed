@@ -37,20 +37,12 @@ body {
 }
 
 
-/* Color functions
+/* Helpers
    ========================================================================== */
-
-@function faux-rgba($color, $background, $opacity) {
-  @return mix($color, $background, $opacity * 100%);
-}
 
 @function brand($color) {
    @return map-get($colors, $color);
 }
-
-
-/* Helpers
-   ========================================================================== */
 
 @mixin size($width, $height: null) {
    width: $width;
@@ -58,6 +50,14 @@ body {
       height: $width;
    } @else {
       height: $height;
+   }
+}
+
+@mixin active {
+   &:hover,
+   &:focus,
+   &:active {
+      @content;
    }
 }
 
@@ -72,7 +72,15 @@ body {
    @each $interval in $configuration {
       $total: $total + macro-scale($interval);
    }
-   @return (macro-scale($item-interval) / $total) * 100% - $gap * (length($configuration) - 1) / length($configuration);
+   @return (macro-scale($item-interval) / $total) * 100% - ($gap * (length($configuration) - 1) / length($configuration));
+}
+
+
+/* Fallbacks
+   ========================================================================== */
+
+@function faux-rgba($color, $background, $opacity) {
+  @return mix($color, $background, $opacity * 100%);
 }
 
 @function rem-to-px($value) {

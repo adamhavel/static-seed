@@ -73,83 +73,82 @@ html {
 a {
    text-decoration: underline;
    transition: color .25s;
-   &:hover,
-   &:focus,
-   &:active {}
+
+   @include active {
+
+   }
 }
 
 
 /* Headings
    ========================================================================== */
 
-.heading {
+.heading, %heading {
    @include aloof;
-   line-height: scale(4);
+   @include alter-icon-size(micro-scale(4) * 1em);
+   line-height: micro-scale(4);
    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
-   font-weight: normal;
-
-   @include icon {
-      @include size(scale(4) * 1em);
-   }
+   font-weight: 400;
+   font-size: 1rem;
 }
 
 .alpha, %alpha {
-   font-size: scale(17) * 1rem;
+   font-size: micro-scale(17) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(15) * 1rem;
+      font-size: micro-scale(15) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(12) * 1rem;
+      font-size: micro-scale(12) * 1rem;
    }
 }
 
 .beta, %beta {
-   font-size: scale(12) * 1rem;
+   font-size: micro-scale(12) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(10) * 1rem;
+      font-size: micro-scale(10) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(7) * 1rem;
+      font-size: micro-scale(7) * 1rem;
    }
 }
 
 .gamma, %gamma {
-   font-size: scale(8) * 1rem;
+   font-size: micro-scale(8) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(6) * 1rem;
+      font-size: micro-scale(6) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(4) * 1rem;
+      font-size: micro-scale(4) * 1rem;
    }
 }
 
 .delta, %delta {
-   font-size: scale(5) * 1rem;
+   font-size: micro-scale(5) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(3) * 1rem;
+      font-size: micro-scale(3) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(2) * 1rem;
+      font-size: micro-scale(2) * 1rem;
    }
 }
 
 .epsilon, %epsilon {
-   font-size: scale(3) * 1rem;
+   font-size: micro-scale(3) * 1rem;
 
    @include media-query(lap) {
-      font-size: scale(2) * 1rem;
+      font-size: micro-scale(2) * 1rem;
    }
 
    @include media-query(palm) {
-      font-size: scale(1) * 1rem;
+      font-size: micro-scale(1) * 1rem;
    }
 }
 
@@ -166,16 +165,36 @@ a {
 }
 
 .bullet-list, %bullet-list {
+   $taper: micro-scale(4) * 1em;
+
    @extend %block-list;
 
    > li {
-      padding-left: lines(1);
+      @extend %bullet;
+      margin-bottom: lines(.5);
+      padding-left: $taper;
 
       &:before {
-         content: '●';
+         margin-left: -$taper;
+      }
+   }
+}
+
+.numbered-list, %numbered-list {
+   $taper: micro-scale(5) * 1em;
+
+   @extend %block-list;
+   counter-reset: numbered-list;
+
+   > li {
+      counter-increment: numbered-list;
+      padding-left: $taper;
+
+      &:before {
+         content: counter(numbered-list) '.';
          float: left;
-         width: lines(1);
-         margin-left: lines(-1);
+         width: $taper;
+         margin-left: -$taper;
       }
    }
 }
@@ -218,4 +237,44 @@ a {
 
 .islet {
    @include island(2);
+}
+
+
+/* Editable content
+   ========================================================================== */
+
+.main-content {
+   > h2, > h3, > h4 {
+      @extend %heading;
+   }
+
+   > h2 {
+      @extend %gamma;
+   }
+
+   > h3 {
+      @extend %delta;
+   }
+
+   > h4 {
+      @extend %epsilon;
+   }
+
+   > img {
+      @include island;
+      margin-left: auto;
+      margin-right: auto;
+   }
+
+   > p {
+      margin-bottom: lines(1)
+   }
+
+   > ul {
+      @extend %bullet-list;
+   }
+
+   > ol {
+      @extend %numbered-list;
+   }
 }
