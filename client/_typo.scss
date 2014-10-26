@@ -6,13 +6,13 @@
    ========================================================================== */
 
 %trim-trailing-lines {
-   :not(div) > &:last-child {
+   :not(div):not(form) > &:last-child {
       margin-bottom: 0;
    }
 }
 
 %trim-leading-lines {
-   :not(div) > &:first-child {
+   :not(div):not(form) > &:first-child {
       margin-top: 0;
    }
 }
@@ -243,7 +243,7 @@ a {
 /* Editable content
    ========================================================================== */
 
-.main-content {
+.content {
    > h2, > h3, > h4 {
       @extend %heading;
    }
@@ -267,7 +267,7 @@ a {
    }
 
    > p {
-      margin-bottom: lines(1)
+      @include aloof;
    }
 
    > ul {

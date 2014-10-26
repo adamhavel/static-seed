@@ -5,6 +5,7 @@
 .media {
    @extend %clear;
    @include aloof;
+
    display: flex;
    align-items: flex-start;
 
@@ -35,6 +36,7 @@
       display: block;
 
       &__figure {
+         float: none !important;
          width: 100% !important;
          margin: 0 0 lines(.5);
       }

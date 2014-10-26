@@ -6,9 +6,9 @@ input,
 textarea,
 select {
    @include aloof;
+   display: block;
    width: 100%;
    height: lines(1);
-   display: block;
    padding: 0 1em;
    box-sizing: border-box;
 
@@ -28,7 +28,7 @@ textarea {
 }
 
 
-/* Blocks
+/* Cells
    ========================================================================== */
 
 .input-cell {
@@ -46,18 +46,38 @@ textarea {
    &--click {
       display: flex;
       flex-direction: row-reverse;
-      align-items: center;
+      justify-content: flex-end;
+      align-items: flex-start;
 
       > label {
-         cursor: pointer;
+         flex: 1;
          margin-left: .5em;
+         cursor: pointer;
       }
 
       > input {
          margin-bottom: 0;
          cursor: pointer;
+         background: blue;
 
-         &:checked {}
+         &:checked {
+            background: red;
+         }
+      }
+
+      @include no-flex {
+         position: relative;
+
+         > input {
+            position: absolute;
+            top: 0;
+            left: 0;
+         }
+
+         > label {
+            display: block;
+            margin-left: calc(#{lines(1)} + .5em);
+         }
       }
    }
 }

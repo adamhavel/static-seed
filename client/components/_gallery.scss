@@ -1,14 +1,11 @@
 /* ==========================================================================
-   Site navigation
+   Gallery
    ========================================================================== */
 
-.site-nav {
+.gallery {
+   @include grid;
 
-   ul {
-      @extend %inline-list;
-   }
-
-   a {
-      display: block;
+   > * {
+      @include aloof;
    }
 }

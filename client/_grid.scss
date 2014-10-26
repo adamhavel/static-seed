@@ -103,14 +103,14 @@ $grid-item-defaults: (
       }
    }
 
-   &__item {
+   > * {
       @extend %grid__item;
 
       @each $media-query in $media-queries {
 
          $columns: map-get($items-per-row, $media-query);
 
-         @if ($columns != map-get($grid-defaults, $media-query)) or ($gap != $gutter) {
+         @if ($items-per-row != $grid-defaults) or ($gap != $gutter) {
             @include media-query-with-fallback($media-query) {
                @for $i from 1 through $columns {
                   &%grid__item--span-#{$i}--#{$media-query} {
