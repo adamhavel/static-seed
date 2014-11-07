@@ -12,7 +12,7 @@ $icon-size: $line-height * 1em;
 /* Mixins
    ========================================================================== */
 
-@mixin alter-icon-size($new-size) {
+@mixin icon-size($new-size) {
    .icon, .j-icon-placeholder {
       @include size($new-size);
    }
@@ -30,6 +30,7 @@ $icon-size: $line-height * 1em;
 .j-icon-placeholder {
    @include size($icon-size);
    display: inline-block;
+   margin-top: 0;
    vertical-align: top;
 }
 

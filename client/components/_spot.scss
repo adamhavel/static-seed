@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Media
+   ========================================================================== */
+
+
+
+@mixin element-query($queries...) {
+   $selector: null;
+   @each $query in $queries {
+      $separator-index: str-index($query, ':');
+      $rule: str-slice($query, 0, ($separator-index - 1));
+      $value: trim(str-slice($query, ($separator-index + 1)));
+      $condition: '[#{$rule}^="#{$value}"]';
+      @if not $selector {
+         $selector: $condition;
+      } @else {
+         $selector: selector-unify($selector, $condition);
+      }
+   }
+   &#{$selector} {
+      @content;
+   }
+}
+
+%spot, .spot {
+   @extend %clear;
+   @include island(2);
+   @include not-flow;
+
+   display: flex;
+   align-items: flex-start;
+
+   &__media {
+      flex: 1;
+      margin-right: taper(1);
+
+      > * {
+         width: 100%;
+      }
+   }
+
+   &__content {
+      @include flow-gap(.5);
+
+      flex: macro-scale(1);
+   }
+
+   @include media-query(lap) {
+      display: block;
+
+      &__media {
+         float: left;
+         width: scale-to-percentage(0, 0 1);
+      }
+   }
+
+   @include media-query(palm) {
+      @include flow-gap(1);
+
+      display: block;
+
+      &__media {
+         float: none !important;
+         width: 100% !important;
+         margin: 0;
+      }
+   }
+
+   @include no-flex {
+      &__media {
+         float: left;
+         width: scale-to-percentage(0, 0 1);
+      }
+
+      &__content {
+         overflow: hidden;
+      }
+   }
+}

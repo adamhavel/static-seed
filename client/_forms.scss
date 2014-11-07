@@ -2,15 +2,17 @@
    Forms
    ========================================================================== */
 
+form {
+   @include island(2);
+}
+
 input,
 textarea,
 select {
-   @include aloof;
    display: block;
    width: 100%;
    height: lines(1);
    padding: 0 1em;
-   box-sizing: border-box;
 
    &.error {}
 
@@ -32,51 +34,42 @@ textarea {
    ========================================================================== */
 
 .input-cell {
-   @include aloof;
+
+
 
    &--text {
 
       > label {}
-
-      > input {
-         margin-bottom: 0;
-      }
    }
 
    &--click {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      align-items: flex-start;
+      @include not-flow;
+
+      padding-left: lines(1.5);
 
       > label {
-         flex: 1;
-         margin-left: .5em;
+         display: block;
          cursor: pointer;
+
+         &:before {
+            @include size(lines(1));
+
+            content: '';
+            float: left;
+            margin-left: lines(-1.5);
+            margin-right: lines(.5);
+            box-sizing: border-box;
+            border: 1px solid black;
+            box-shadow: inset 1px 1px 0 0 rgba(black, .3);
+            text-align: center;
+         }
       }
 
       > input {
-         margin-bottom: 0;
-         cursor: pointer;
-         background: blue;
+         display: none;
 
-         &:checked {
-            background: red;
-         }
-      }
-
-      @include no-flex {
-         position: relative;
-
-         > input {
-            position: absolute;
-            top: 0;
-            left: 0;
-         }
-
-         > label {
-            display: block;
-            margin-left: calc(#{lines(1)} + .5em);
+         &:checked + label:before {
+            content: '✘';
          }
       }
    }

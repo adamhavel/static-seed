@@ -6,19 +6,21 @@
    ========================================================================== */
 
 %trim-trailing-lines {
-   :not(div):not(form) > &:last-child {
+   &:last-child {
       margin-bottom: 0;
    }
 }
 
 %trim-leading-lines {
-   :not(div):not(form) > &:first-child {
+   &:first-child {
       margin-top: 0;
    }
 }
 
 @function lines($count: 1, $correction: null) {
-   @if $correction == null  {
+   @if $count == 0 {
+      @return 0;
+   } @else if $correction == null  {
       @return $count * $line-height * 1rem;
    } @else {
       @return calc(#{$count * $line-height * 1rem} + #{$correction});
@@ -26,19 +28,40 @@
 }
 
 @function taper($count: 1, $correction: null) {
-   @if $correction == null  {
+   @if $count == 0 {
+      @return 0;
+   } @else if $correction == null  {
       @return $count * $gutter;
    } @else {
       @return calc(#{$count * $gutter} + #{$correction});
    }
 }
 
-@mixin aloof($count: 1) {
-   @extend %trim-trailing-lines;
-   margin-bottom: lines($count);
+@mixin not-flow {
+   > * {
+      margin-top: 0;
+   }
+}
+
+@mixin flow-gap($count) {
+   > * + * {
+      margin-top: lines($count);
+   }
 
    @include media-query(palm) {
-      margin-bottom: lines($count / 2);
+      > * + * {
+         margin-top: lines($count / 2);
+      }
+   }
+}
+
+@mixin spread($amount) {
+   > * {
+      margin-left: $amount;
+
+      &:first-child {
+         margin-left: 0;
+      }
    }
 }
 
@@ -79,17 +102,33 @@ a {
    }
 }
 
+* + * {
+   margin-top: lines(1);
+
+   @include media-query(palm) {
+      margin-top: lines(.5);
+   }
+}
+
 
 /* Headings
    ========================================================================== */
 
 .heading, %heading {
-   @include aloof;
-   @include alter-icon-size(micro-scale(4) * 1em);
+   @include icon-size(micro-scale(4) * 1em);
+
    line-height: micro-scale(4);
    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
    font-weight: 400;
    font-size: 1rem;
+
+   * + & {
+      margin-top: lines(2);
+
+      @include media-query(palm) {
+         margin-top: lines(1);
+      }
+   }
 }
 
 .alpha, %alpha {
@@ -156,8 +195,8 @@ a {
 /* Lists
    ========================================================================== */
 
-.block-list, %block-list {
-   @include aloof;
+ul, ol {
+   @include flow-gap(0);
 
    > li {
       display: block;
@@ -165,25 +204,25 @@ a {
 }
 
 .bullet-list, %bullet-list {
+   @include flow-gap(.5);
    $taper: micro-scale(4) * 1em;
-
-   @extend %block-list;
 
    > li {
       @extend %bullet;
-      margin-bottom: lines(.5);
-      padding-left: $taper;
 
       &:before {
          margin-left: -$taper;
       }
+   }
+
+   @include media-query(portable) {
+      padding-left: $taper;
    }
 }
 
 .numbered-list, %numbered-list {
    $taper: micro-scale(5) * 1em;
 
-   @extend %block-list;
    counter-reset: numbered-list;
 
    > li {
@@ -200,43 +239,32 @@ a {
 }
 
 .inline-list, %inline-list {
+   @include not-flow;
+   @include spread(1em);
+
+   font-size: 0;
+
    > li {
       display: inline-block;
-      vertical-align: top;
+      font-size: 1rem;
+      vertical-align: middle;
    }
 }
 
-/**
- * 1. ':first-child' is used to support IE8.
- */
 .pipe-list, %pipe-list {
    @extend %inline-list;
 
    > li {
+      margin-left: 0;
+
       &:before {
          content: ' | ';
       }
 
-      &:first-child:before { /* 1. */
+      &:first-child:before {
          display: none;
       }
    }
-}
-
-
-/* Margins
-   ========================================================================== */
-
-.aloof {
-   @include aloof;
-}
-
-.island {
-   @include island;
-}
-
-.islet {
-   @include island(2);
 }
 
 
@@ -261,13 +289,8 @@ a {
    }
 
    > img {
-      @include island;
-      margin-left: auto;
-      margin-right: auto;
-   }
-
-   > p {
-      @include aloof;
+      @include island(2);
+      @include center;
    }
 
    > ul {

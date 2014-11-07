@@ -4,8 +4,5 @@
 
 .gallery {
    @include grid;
-
-   > * {
-      @include aloof;
-   }
+   @include island(2);
 }

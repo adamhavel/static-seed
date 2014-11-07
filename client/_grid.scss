@@ -11,11 +11,11 @@ $grid-defaults: (
    palm: 1
 );
 
-$grid-item-defaults: (
-   desk: 1,
-   lap: 1,
-   palm: 1
-);
+// $grid-item-defaults: (
+//    desk: 1,
+//    lap: 1,
+//    palm: 1
+// );
 
 
 /* Mixins
@@ -28,77 +28,75 @@ $grid-item-defaults: (
    }
 }
 
-@mixin media-query-with-fallback($type) {
-   @if $type == desk {
-      @content;
-   } @else {
-      @include media-query($type) {
-         @content;
-      }
-   }
-}
-
 
 /* Classes
    ========================================================================== */
 
 %grid {
+   @include not-flow;
    display: flex;
    flex-wrap: wrap;
-   margin-left: -$gutter;
-   letter-spacing: -0.31em;
+   margin-left: taper(-1);
 
    &__item {
-      margin-left: $gutter;
-      box-sizing: border-box;
-      display: inline-block;
-      letter-spacing: normal;
-      vertical-align: top;
-      @each $media-query in map-keys($grid-defaults) {
+      margin-left: taper(1);
+      margin-bottom: lines(1);
 
+      @include media-query(palm) {
+         margin-bottom: lines(.5);
+      }
+
+      @each $media-query in map-keys($grid-defaults) {
          $columns: map-get($grid-defaults, $media-query);
 
-         @include media-query-with-fallback($media-query) {
-            width: 100% / $columns - $gutter;
-            @for $i from 1 through $columns {
-               &%grid__item--span-#{$i}--#{$media-query} {
-                  width: ((100% / $columns) * $i) - $gutter;
-               }
+         @include media-query($media-query) {
+            width: 100% / $columns - taper(1);
+            // @for $i from 1 through $columns {
+            //    &%grid__item--span-#{$i}--#{$media-query} {
+            //       width: ((100% / $columns) * $i) - $gutter;
+            //    }
+            // }
+
+            @include last-row($columns) {
+               margin-bottom: 0;
             }
          }
 
       }
    }
+
+   @include no-flex {
+      letter-spacing: -0.31em;
+
+      &__item {
+         display: inline-block;
+         letter-spacing: normal;
+         vertical-align: top;
+      }
+   }
 }
 
-@mixin grid($items-per-row: $grid-defaults, $gap: $gutter) {
+@mixin grid($items-per-row: $grid-defaults, $hgap: taper(1), $vgap: lines(1)) {
    @extend %grid;
 
    $media-queries: map-keys($grid-defaults);
+   $items-per-row: map-merge($grid-defaults, $items-per-row);
 
    $ie8-friendly: true !default;
-   @if ($gap != 0) and (unit($gap) != "%") {
+   @if ($hgap != 0) and (unit($hgap) != "%") {
       $ie8-friendly: false;
    }
 
-   @if $items-per-row == default {
-      $items-per-row: $grid-defaults;
-   } @else {
-      $items-per-row: map-merge($grid-defaults, $items-per-row);
-   }
-
-   $items--desk: map-get($items-per-row, desk);
-
-   @if $gap != $gutter {
+   @if $hgap != taper(1) {
       @if $ie8-friendly {
-         margin-left: -$gap;
-         &__item {
-            margin-left: $gap;
+         margin-left: -$hgap;
+         > * {
+            margin-left: $hgap;
          }
       } @else {
-         margin-left: calc(#{-$gap});
-         &__item {
-            margin-left: calc(#{$gap});
+         margin-left: calc(#{-$hgap});
+         > * {
+            margin-left: calc(#{$hgap});
          }
       }
    }
@@ -106,27 +104,34 @@ $grid-item-defaults: (
    > * {
       @extend %grid__item;
 
-      @each $media-query in $media-queries {
+      @if $vgap != lines(1) {
+         margin-bottom: $vgap;
 
+         @include media-query(palm) {
+            margin-bottom: $vgap / 2;
+         }
+      }
+
+      @each $media-query in $media-queries {
          $columns: map-get($items-per-row, $media-query);
 
-         @if ($items-per-row != $grid-defaults) or ($gap != $gutter) {
-            @include media-query-with-fallback($media-query) {
-               @for $i from 1 through $columns {
-                  &%grid__item--span-#{$i}--#{$media-query} {
-                     @if $ie8-friendly {
-                        width: ((100% / $columns) * $i) - $gap;
-                     } @else {
-                        width: ((100% / $columns) * $i) - $gutter;
-                        width: calc(#{((100% / $columns) * $i)} - #{$gap});
-                     }
-                  }
-               }
+         @if ($items-per-row != $grid-defaults) or ($hgap != taper(1)) {
+            @include media-query($media-query) {
+               // @for $i from 1 through $columns {
+               //    &%grid__item--span-#{$i}--#{$media-query} {
+               //       @if $ie8-friendly {
+               //          width: ((100% / $columns) * $i) - $hgap;
+               //       } @else {
+               //          width: ((100% / $columns) * $i) - $gutter;
+               //          width: calc(#{((100% / $columns) * $i)} - #{$hgap});
+               //       }
+               //    }
+               // }
                @if $ie8-friendly {
-                  width: 100% / $columns - $gap;
+                  width: 100% / $columns - $hgap;
                } @else {
-                  width: 100% / $columns - $gutter;
-                  width: calc(#{100% / $columns} - #{$gap});
+                  width: 100% / $columns - taper(1);
+                  width: calc(#{100% / $columns} - #{$hgap});
                }
             }
          }
@@ -137,9 +142,9 @@ $grid-item-defaults: (
 
 }
 
-@mixin grid-item-span($item-span) {
-   $item-span: map-merge($grid-item-defaults, $item-span);
-   @each $media-query in map-keys($item-span) {
-      @extend %grid__item--span-#{map-get($item-span, $media-query)--#{$media-query}};
-   }
-}
+// @mixin grid-item-span($item-span) {
+//    $item-span: map-merge($grid-item-defaults, $item-span);
+//    @each $media-query in map-keys($item-span) {
+//       @extend %grid__item--span-#{map-get($item-span, $media-query)--#{$media-query}};
+//    }
+// }

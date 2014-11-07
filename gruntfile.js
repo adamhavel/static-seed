@@ -160,7 +160,7 @@ copy: {
             src: [
                '*.html',
                'assets/**',
-               '**/*.map',
+               '!**/*.map',
                '!assets/site/lib/**',
                '!assets/site/img/icon/**'
             ],
@@ -190,7 +190,9 @@ hashres: {
    build: {
       src: [
          'build/assets/site/js/app.js',
-         'build/assets/site/css/default.css'
+         'build/assets/site/css/default.css',
+         'build/assets/site/css/non-critical.css',
+         'build/assets/site/img/icons.svg'
       ],
       dest: 'build/*.html'
    }
@@ -213,8 +215,9 @@ inliner: {
 svgmin: {
    options: {
       plugins: [
-         { removeXMLProcInst: false },
-         { cleanupIDs: false }
+         { removeXMLProcInst: true },
+         { cleanupIDs: false },
+         { removeViewBox: true }
       ]
    },
    build: {
@@ -248,7 +251,7 @@ imagemin: {
 
 svgstore: {
    options: {
-      svg: {}
+      cleanup: ['id', 'enable-background']
    },
    icons: {
       files: {
@@ -339,7 +342,7 @@ exec: {
 
 concurrent: {
    dev: ['exec:server', 'watch'],
-   dist: ['exec:server_dist', 'exec:finch'],
+   dist: ['exec:server_dist'],
    options: {
       logConcurrentOutput: true
    }

@@ -7,6 +7,16 @@
    ========================================================================== */
 
 /**
+ * Reset default margin and padding to zero.
+ */
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   box-sizing: border-box;
+}
+
+/**
  * Correct 'block' display not defined in IE 8/9.
  */
 article,
@@ -63,43 +73,12 @@ html {
 }
 
 /**
- * Reset default margin and padding to zero.
- */
-html,
-body,
-p,
-ul,
-ol,
-fieldset,
-input,
-textarea,
-select,
-button,
-img,
-figure,
-blockquote,
-legend,
-table,
-pre,
-th,
-td,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-   margin: 0;
-   padding: 0;
-   border: 0;
-}
-
-/**
  * Reset list styles.
  */
 ul {
    list-style-type: none;
 }
+
 ol {
    list-style-position: inside;
 }
@@ -119,6 +98,7 @@ svg:not(:root) {
  */
 a {
    background: transparent;
+   -webkit-tap-highlight-color: transparent;
    outline: 0;
 }
 

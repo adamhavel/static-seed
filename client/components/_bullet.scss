@@ -11,6 +11,7 @@
       float: left;
       margin-top: ($line-height / 2) - ($bullet-size / 2);
       background: black;
+      background: rgba(black, .9);
       transform: rotate(45deg);
    }
 }

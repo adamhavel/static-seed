@@ -4,8 +4,9 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
    <link rel="dns-prefetch" href="//cdn.polyfill.io">
-   <!--[if lte IE 9]><script src="//cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
+   <base href="/">
    <link href="assets/site/css/default.css" rel="stylesheet">
+   <!--[if lt IE 9]><script src="//cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
    <script>!function(){function e(e){return e.split(".").pop()}function t(e,t){if("css"===t){var n=document.createElement("style");document.getElementsByTagName("head")[0].appendChild(n),n.styleSheet?n.styleSheet.cssText=e:n.innerHTML=e}else"svg"===t&&document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",e)}function n(n){var s=localStorage[n];s?t(s,e(n)):window.addEventListener("load",function(){var s=new XMLHttpRequest;s.open("GET",n,!0),s.addEventListener("load",function(){4===s.readyState&&(t(s.responseText,e(n)),localStorage[n]=s.responseText)}),s.send()})}var s=["assets/site/css/non-critical.css","assets/site/img/icons.svg"];window.localStorage&&s.forEach(function(t){("svg"!==e(t)||document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))&&n(t)})}();</script>
    <title></title>
    <meta name="description" content="">
@@ -35,32 +36,55 @@
 
       <section class="main-content" role="main">
 
-         <section class="media">
+         <section class="spot">
 
-            <div class="media__figure"><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></div>
+            <div class="spot__media"><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></div>
 
-            <div class="media__content">
+            <div class="spot__content">
                <h1 class="beta heading"><svg class="icon"><use xlink:href="#menu"></svg><span>Lóřém ipšům</span></h1>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, iste alias fuga repellendus reprehenderit numquam nobis eligendi ad eum recusandae dolores voluptas in sit quos ut ab officia vero eius. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, suscipit, inventore esse id assumenda fuga quam eligendi libero cupiditate tempore sequi odio tempora temporibus quos incidunt debitis aliquid architecto accusantium.</p>
             </div>
 
          </section>
 
-         <a class="button">
-            <svg class="icon"><use xlink:href="#close"></svg><span>Lorem ipsum</span>
-         </a>
+         <section class="spot">
 
-         <a class="gamma button">
-            <span>Lorem</span><svg class="icon"><use xlink:href="#menu"></svg>
-         </a>
+            <div class="spot__media"><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></div>
 
-         <a class="alpha button">
-            <svg class="icon"><use xlink:href="#menu"></svg>
-         </a>
+            <div class="spot__content">
+               <h1 class="beta heading"><svg class="icon"><use xlink:href="#menu"></svg><span>Lóřém ipšům</span></h1>
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, iste alias fuga repellendus reprehenderit numquam nobis eligendi ad eum recusandae dolores voluptas in sit quos ut ab officia vero eius. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, suscipit, inventore esse id assumenda fuga quam eligendi libero cupiditate tempore sequi odio tempora temporibus quos incidunt debitis aliquid architecto accusantium.</p>
+            </div>
+
+         </section>
+
+         <ul class="inline-list">
+            <li>
+               <button>
+                  <svg class="icon"><use xlink:href="#close"></svg><span>Lorem ipsum</span>
+               </button>
+            </li>
+            <li>
+               <button class="gamma">
+                  <span>Lorem</span><svg class="icon"><use xlink:href="#menu"></svg>
+               </button>
+            </li>
+            <li>
+               <button class="alpha">
+                  <svg class="icon"><use xlink:href="#menu"></svg>
+               </button>
+            </li>
+         </ul>
 
          <div class="content">
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, corrupti, eos minus quos qui et commodi temporibus distinctio veritatis ea doloremque nam totam nihil iure cum laudantium labore similique quas.</p>
+            <h2>Lorem ipsum</h2>
+
+            <p class="test">
+               Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, cupiditate rerum fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
+            </p>
+
+            <h3>Lorem ipsum</h3>
 
             <ul>
                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, est enim explicabo ea animi laboriosam fugiat optio magni quam mollitia eum omnis id temporibus repellendus aut quo quibusdam voluptates obcaecati.</li>
@@ -75,11 +99,20 @@
          <form action="">
 
             <div class="input-cell input-cell--click">
-               <label for="test">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo impedit mollitia quas? Esse repellendus nemo facilis maxime. Maxime impedit rem amet deserunt! Totam at, sequi sint, cumque excepturi dolorem error.</label>
-               <input type="checkbox" name="test" id="test">
+               <input type="checkbox" name="test" id="test1">
+               <label for="test1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo impedit mollitia quas? Esse repellendus nemo facilis maxime. Maxime impedit rem amet deserunt! Totam at, sequi sint, cumque excepturi dolorem error.</label>
+            </div>
+
+            <div class="input-cell input-cell--click">
+               <input type="checkbox" name="test" id="test2">
+               <label for="test2">Lorem ipsum dolor sit amet</label>
             </div>
 
          </form>
+
+         <p>
+            Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, cupiditate rerum fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
+         </p>
 
          <section class="gallery">
 
@@ -92,6 +125,10 @@
             <a href=""><img src="https://gs1.wac.edgecastcdn.net/8019B6/data.tumblr.com/70743e4d5038af698132aa2f19b2ddbf/tumblr_mw4vr9v4Gr1rydpjxo1_1280.jpg" alt=""></a>
 
          </section>
+
+         <p>
+            Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, cupiditate rerum fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
+         </p>
 
       </section>
 

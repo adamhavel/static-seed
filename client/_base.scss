@@ -5,13 +5,19 @@
 /* Media queries
    ========================================================================== */
 
+$static-query: desk !default;
+
 @mixin media-query($type) {
    @each $breakpoint in $breakpoints {
       $name: nth($breakpoint, 1);
       $declaration: nth($breakpoint, 2);
       @if $type == $name and $declaration {
-         @media only screen and #{$declaration} {
+         @if $static-query and $type == $static-query {
             @content;
+         } @else {
+            @media only screen and #{$declaration} {
+               @content;
+            }
          }
       }
    }
@@ -44,6 +50,17 @@ body {
    @return map-get($colors, $color);
 }
 
+@function trim($string) {
+   @while str-index($string, ' ') == 1 {
+      $string: str-slice($string, 2);
+   }
+   @while str-slice($string, str-length($string)) == ' ' {
+      $string: str-slice($string, 0, str-length($string) - 1);
+   }
+
+   @return $string;
+}
+
 @mixin size($width, $height: null) {
    width: $width;
    @if $height == null  {
@@ -61,6 +78,16 @@ body {
    }
 }
 
+@mixin ie-overlay {
+   background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+   background-image: none, none;
+}
+
+@mixin center {
+   margin-left: auto;
+   margin-right: auto;
+}
+
 @mixin no-flex {
    .no-flexbox.no-flexboxlegacy & {
       @content;
@@ -74,10 +101,6 @@ body {
    }
    @return (macro-scale($item-interval) / $total) * 100% - ($gap * (length($configuration) - 1) / length($configuration));
 }
-
-
-/* Fallbacks
-   ========================================================================== */
 
 @function faux-rgba($color, $background, $opacity) {
   @return mix($color, $background, $opacity * 100%);
@@ -96,3 +119,20 @@ body {
    display: table;
    clear: both;
 }
+
+
+// .test {
+//    background: silver;
+
+//    &[max-width="500px"] {
+//       background: yellow;
+//    }
+
+//    &[max-width="700px"] {
+//       background: red;
+//    }
+
+//    &[max-width="300px"][min-width="100px"] {
+//       background: red;
+//    }
+// }

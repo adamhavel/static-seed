@@ -131,6 +131,31 @@ var App = (function(parent) {
          }
       });
 
+      // var elem = app.query('.test');
+
+      // var regex = /\[(max-width|min-width)=['"]([0-9]+[a-z]+)['"]\]/gi;
+
+      // for (var i = document.styleSheets.length - 1; i >= 0; i--) {
+      //    var rules = document.styleSheets[i].cssRules;
+      //    for (var j = rules.length - 1; j >= 0; j--) {
+      //       var selector = rules[j].selectorText;
+      //       if (selector && regex.test(selector)) {
+      //          console.log(selector.match(regex));
+      //       }
+      //    }
+      // };
+
+      // window.addEventListener('resize', app.debounce(function() {
+      //    if (elem.offsetWidth < 500) {
+      //       elem.setAttribute('max-width', '500px');
+      //    } else {
+      //       elem.removeAttribute('max-width');
+      //    }
+      //    console.log(elem.offsetWidth);
+      // }, 100));
+
+      // console.log(elem);
+
    })();
 
    return app;
