@@ -11,6 +11,10 @@ body {
    max-width: $layout-width;
    box-sizing: border-box;
    padding: 0 taper(1);
+
+   @include media-query(palm) {
+      padding: 0 taper(2);
+   }
 }
 
 

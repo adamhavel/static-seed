@@ -4,18 +4,53 @@
 
 button,
 %button {
-   display: block;
-   background: silver;
-   padding: lines(.5) .75em;
-   text-decoration: none;
-   cursor: pointer;
-   transition: background-color .2s;
+   $default-transition: background-color .2s linear;
 
-   @include active {
+   display: block;
+   padding: lines(.5) 1em;
+   border: 1px solid rgba(black, .15);
+   border-right-color: rgba(black, .3);
+   border-bottom-color: rgba(black, .5);
+   box-shadow: 0 1px 0 0 rgba(black, .5);
+   background: #d7d7d7;
+   text-decoration: none;
+   color: rgba(black, .75);
+   cursor: pointer;
+   outline: 1px solid transparent;
+   outline-offset: 20em;
+   user-select: none;
+   transition: $default-transition;
+   will-change: background-color, transform;
+
+   &:hover,
+   &:focus {
       background-color: cyan;
 
       > .icon {
          fill: yellow;
+      }
+   }
+
+   &:focus {
+      outline-color: rgba(black, .25);
+      outline-offset: 0;
+      outline-width: 0;
+      transition: $default-transition,
+                  outline-offset .5s,
+                  outline-color .5s,
+                  outline-width .001s .5s;
+   }
+
+   &:active,
+   &[aria-pressed="true"] {
+      border-color: rgba(black, .4);
+      box-shadow: none;
+      background-color: darken(cyan, 3%);
+      transform: translateY(1px);
+      transition: $default-transition;
+
+      > .icon {
+         fill: darken(yellow, 3%);
       }
    }
 

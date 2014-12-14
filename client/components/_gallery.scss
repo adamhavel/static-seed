@@ -4,5 +4,5 @@
 
 .gallery {
    @include grid;
-   @include island(2);
+   @include island(2, 1);
 }

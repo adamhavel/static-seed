@@ -35,7 +35,8 @@ $icon-size: $line-height * 1em;
 }
 
 .icon {
-   transition: fill .2s;
+   fill: currentColor;
+   transition: fill .2s linear;
 
    &:first-child {
       margin-right: $icon-gap;
@@ -46,6 +47,7 @@ $icon-size: $line-height * 1em;
    }
 
    &:first-child:last-child {
+      display: block;
       margin: 0;
    }
 

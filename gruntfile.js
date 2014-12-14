@@ -31,6 +31,7 @@ concat: {
    bundle: {
       src: [
          'public/assets/site/lib/modernizr/modernizr.custom.js',
+         'public/assets/site/lib/snap.svg/dist/snap.svg-min.js',
          'client/**/*.js'
       ],
       dest: 'public/assets/site/js/app.js',
@@ -217,7 +218,8 @@ svgmin: {
       plugins: [
          { removeXMLProcInst: true },
          { cleanupIDs: false },
-         { removeViewBox: true }
+         { removeViewBox: true },
+         { removeTitle: true }
       ]
    },
    build: {

@@ -18,32 +18,34 @@ $grid-defaults: (
 // );
 
 
-/* Mixins
-   ========================================================================== */
-
-@mixin last-row($items-per-row) {
-   &:nth-child(#{$items-per-row}n + 1):nth-last-child(-n + #{$items-per-row}),
-   &:nth-child(#{$items-per-row}n + 1):nth-last-child(-n + #{$items-per-row}) ~ & {
-      @content;
-   }
-}
-
-
 /* Classes
    ========================================================================== */
 
 %grid {
    @include not-flow;
-   display: flex;
-   flex-wrap: wrap;
+
    margin-left: taper(-1);
 
+   .flexbox & {
+      display: flex;
+      flex-wrap: wrap;
+   }
+
+   .no-flexbox & {
+      letter-spacing: -0.31em;
+
+      &__item {
+         display: inline-block;
+         letter-spacing: normal;
+         vertical-align: top;
+      }
+   }
+
    &__item {
-      margin-left: taper(1);
-      margin-bottom: lines(1);
+      margin: 0 0 lines(1) taper(1) !important;
 
       @include media-query(palm) {
-         margin-bottom: lines(.5);
+         //margin-bottom: lines(.5);
       }
 
       @each $media-query in map-keys($grid-defaults) {
@@ -56,22 +58,8 @@ $grid-defaults: (
             //       width: ((100% / $columns) * $i) - $gutter;
             //    }
             // }
-
-            @include last-row($columns) {
-               margin-bottom: 0;
-            }
          }
 
-      }
-   }
-
-   @include no-flex {
-      letter-spacing: -0.31em;
-
-      &__item {
-         display: inline-block;
-         letter-spacing: normal;
-         vertical-align: top;
       }
    }
 }
@@ -89,14 +77,14 @@ $grid-defaults: (
 
    @if $hgap != taper(1) {
       @if $ie8-friendly {
-         margin-left: -$hgap;
+         margin-left: -$hgap !important;
          > * {
-            margin-left: $hgap;
+            margin-left: $hgap !important;
          }
       } @else {
-         margin-left: calc(#{-$hgap});
+         margin-left: calc(#{-$hgap}) !important;
          > * {
-            margin-left: calc(#{$hgap});
+            margin-left: calc(#{$hgap}) !important;
          }
       }
    }
@@ -105,10 +93,10 @@ $grid-defaults: (
       @extend %grid__item;
 
       @if $vgap != lines(1) {
-         margin-bottom: $vgap;
+         margin-bottom: $vgap !important;
 
          @include media-query(palm) {
-            margin-bottom: $vgap / 2;
+            //margin-bottom: $vgap / 2 !important;
          }
       }
 

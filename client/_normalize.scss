@@ -9,10 +9,11 @@
 /**
  * Reset default margin and padding to zero.
  */
-* {
+*, :after, :before {
    margin: 0;
    padding: 0;
    border: 0;
+   outline: 0;
    box-sizing: border-box;
 }
 
@@ -96,10 +97,11 @@ svg:not(:root) {
 /**
  *  Remove the gray background color from active links in IE 10.
  */
-a {
+a,
+label,
+[tabindex] {
    background: transparent;
    -webkit-tap-highlight-color: transparent;
-   outline: 0;
 }
 
 
@@ -202,6 +204,13 @@ i {
 /* Forms
    ========================================================================== */
 
+input,
+select,
+label,
+textarea {
+   display: block;
+}
+
 /**
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
@@ -264,20 +273,10 @@ html input[disabled] {
 }
 
 /**
- * Address box sizing set to 'content-box' in IE 8/9/10.
- */
-input[type="checkbox"],
-input[type="radio"] {
-   box-sizing: border-box;
-}
-
-/**
- * 1. Address 'appearance' set to 'searchfield' in Safari 5 and Chrome.
- * 2. Address 'box-sizing' set to 'border-box' in Safari 5 and Chrome.
+ * Address 'appearance' set to 'searchfield' in Safari 5 and Chrome.
  */
 input[type="search"] {
-   -webkit-appearance: textfield; /* 1 */
-   box-sizing: content-box; /* 2 */
+   -webkit-appearance: textfield;
 }
 
 /**
@@ -316,14 +315,36 @@ input::-ms-clear {
 /**
  * Remove spinners for number input.
  */
-input[type=number] {
+input[type="number"] {
    -moz-appearance: textfield;
 }
 
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
    -webkit-appearance: none;
    margin: 0;
+}
+
+/**
+ * Remove default appearance from select.
+ */
+select {
+   -webkit-appearance: none;
+   appearance: none;
+
+   &::-ms-expand {
+      display: none;
+   }
+
+   &::-ms-value {
+      background: transparent;
+      color: inherit;
+   }
+
+   &:-moz-focusring {
+      color: transparent;
+      text-shadow: 0 0 0 black;
+   }
 }
 
 /* Tables

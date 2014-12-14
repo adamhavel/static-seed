@@ -7,12 +7,12 @@
 
 $static-query: desk !default;
 
-@mixin media-query($type) {
+@mixin media-query($type, $force: false) {
    @each $breakpoint in $breakpoints {
       $name: nth($breakpoint, 1);
       $declaration: nth($breakpoint, 2);
       @if $type == $name and $declaration {
-         @if $static-query and $type == $static-query {
+         @if $static-query and $type == $static-query and not $force {
             @content;
          } @else {
             @media only screen and #{$declaration} {
@@ -34,7 +34,7 @@ body {
 
    @each $breakpoint in $breakpoints {
       $type: nth($breakpoint, 1);
-      @include media-query($type) {
+      @include media-query($type, true) {
          &:after {
             content: $type;
          }
@@ -92,6 +92,27 @@ body {
    .no-flexbox.no-flexboxlegacy & {
       @content;
    }
+}
+
+@mixin gtIE8 {
+   :root & {
+      @content;
+   }
+}
+
+@mixin lteIE8 {
+   @media \0screen\,screen\9 {
+      @content;
+   }
+}
+
+@mixin hide {
+   position: absolute !important;
+   width: 1px !important;
+   height: 1px !important;
+   overflow: hidden !important;
+   clip: rect(0 0 0 0) !important;
+   margin: -1px !important;
 }
 
 @function scale-to-percentage($item-interval, $configuration, $gap: $gutter) {

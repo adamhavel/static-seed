@@ -131,6 +131,53 @@ var App = (function(parent) {
          }
       });
 
+      app.queryAll('button[aria-pressed]').forEach(function(button) {
+         button.addEventListener('click', function() {
+            var state = this.getAttribute('aria-pressed') == 'true' ? true : false;
+            this.setAttribute('aria-pressed', !state);
+         });
+      });
+
+      // var s = Snap('.test');
+
+      // document.body.addEventListener('click', function() {
+
+      //    Snap.load('assets/site/img/flask.svg', function(f) {
+
+      //       outline = f.select('#outline');
+      //       drawing = f.select('#drawing');
+      //       flask = f.select('#flask');
+      //       outline.attr({'opacity': 0});
+      //       flask.attr({'opacity': 0});
+
+      //       s.append(outline);
+      //       s.append(drawing);
+      //       s.append(flask);
+
+      //       drawing.selectAll('path').forEach(function(line, i) {
+      //          var length = line.getTotalLength();
+      //          line.attr({'stroke-dasharray': length});
+      //          line.attr({'stroke-dashoffset': length});
+
+      //          setTimeout(function() {
+      //             line.animate({'stroke-dashoffset': 0}, 200, mina.easeout);
+      //          }, i * 250);
+      //       });
+
+      //       setTimeout(function() {
+      //          outline.animate({'opacity': 1}, 1000, mina.easein);
+      //          drawing.animate({'opacity': 0}, 700, mina.easein);
+      //       }, 700);
+
+      //       setTimeout(function() {
+      //          outline.animate({'opacity': 0}, 300, mina.easein);
+      //          flask.animate({'opacity': 1}, 300, mina.easein);
+      //       }, 1700);
+
+      //    });
+
+      // });
+
       // var elem = app.query('.test');
 
       // var regex = /\[(max-width|min-width)=['"]([0-9]+[a-z]+)['"]\]/gi;
