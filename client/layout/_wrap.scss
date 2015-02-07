@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Site navigation
+   Layout wrapper
    ========================================================================== */
 
-(function siteNav() {
+.wrap {
+   @include center;
 
-   var nav = App.query('.j-site-nav');
-
-})();
+   max-width: $LAYOUT_WIDTH;
+   padding: 0 $GUTTER;
+}

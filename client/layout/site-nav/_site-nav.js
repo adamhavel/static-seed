@@ -1,8 +1,10 @@
 /* ==========================================================================
-   Gallery
+   Site navigation
    ========================================================================== */
 
-.gallery {
-   @include grid;
-   @include island(3, 2);
-}
+(function siteNav($) {
+   'use strict';
+
+   var nav = $.query('.j-site-nav');
+
+})(App);

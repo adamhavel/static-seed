@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+
+.heading, %heading {
+   @include icon-size(lines(1));
+
+   line-height: lines(1);
+   font-family: font(display);
+   font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
+   font-weight: 400;
+
+   p + & {
+      @include aloof(2);
+   }
+}

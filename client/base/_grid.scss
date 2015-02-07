@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+
+/* Variables
+   ========================================================================== */
+
+$grid-defaults: (
+   '>=layout': 3,
+   '<layout': 2,
+   '<column': 1
+);
+
+
+/* Classes
+   ========================================================================== */
+
+%grid {
+   margin-left: -$GUTTER;
+   letter-spacing: -0.31em;
+
+   &__item {
+      display: inline-block;
+      margin: 0 0 lines(1) $GUTTER !important;
+      letter-spacing: normal;
+      vertical-align: top;
+
+      @each $media-query in map-keys($grid-defaults) {
+         $columns: map-get($grid-defaults, $media-query);
+
+         @include media($media-query) {
+            width: (100% / $columns) - $GUTTER;
+         }
+
+      }
+   }
+
+   .flexbox & {
+      display: flex;
+      flex-wrap: wrap;
+      letter-spacing: normal;
+
+      &__item {
+         display: block;
+      }
+   }
+}
+
+@mixin grid($items-per-row: $grid-defaults, $hgap: $GUTTER, $vgap: lines(1)) {
+   @extend %grid;
+
+   $media-queries: map-keys($grid-defaults);
+   $items-per-row: map-merge($grid-defaults, $items-per-row);
+
+   $ie8-friendly: true !default;
+   @if ($hgap != 0) and (unit($hgap) != "%") {
+      $ie8-friendly: false;
+   }
+
+   @if $hgap != $GUTTER {
+      @if $ie8-friendly {
+         margin-left: -$hgap;
+         > * {
+            margin-left: $hgap;
+         }
+      } @else {
+         margin-left: calc(#{-$hgap});
+         > * {
+            margin-left: calc(#{$hgap});
+         }
+      }
+   }
+
+   > * {
+      @extend %grid__item;
+
+      @if $vgap != lines(1) {
+         margin-bottom: $vgap !important;
+      }
+
+      @each $media-query in $media-queries {
+         $columns: map-get($items-per-row, $media-query);
+
+         @if ($items-per-row != $grid-defaults) or ($hgap != $GUTTER) {
+            @include media($media-query) {
+               @if $ie8-friendly {
+                  width: 100% / $columns - $hgap;
+               } @else {
+                  width: 100% / $columns - $GUTTER;
+                  width: calc(#{100% / $columns} - #{$hgap});
+               }
+            }
+         }
+
+      }
+
+   }
+
+}

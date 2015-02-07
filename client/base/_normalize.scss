@@ -9,7 +9,7 @@
 /**
  * Reset default margin and padding to zero.
  */
-*, :after, :before {
+*, *:after, *:before {
    margin: 0;
    padding: 0;
    border: 0;
@@ -330,6 +330,7 @@ input[type="number"]::-webkit-inner-spin-button {
  */
 select {
    -webkit-appearance: none;
+   -moz-appearance: none;
    appearance: none;
 
    &::-ms-expand {

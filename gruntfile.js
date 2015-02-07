@@ -31,7 +31,6 @@ concat: {
    bundle: {
       src: [
          'public/assets/site/lib/modernizr/modernizr.custom.js',
-         'public/assets/site/lib/snap.svg/dist/snap.svg-min.js',
          'client/**/*.js'
       ],
       dest: 'public/assets/site/js/app.js',
@@ -64,11 +63,17 @@ uglify: {
       src: 'public/assets/site/js/app.js',
       dest: 'public/assets/site/js/app.js'
    },
-   ondemand: {
+   fastclick: {
       src: [
          'public/assets/site/lib/fastclick/lib/fastclick.js'
       ],
-      dest: 'public/assets/site/js/app.touch.min.js'
+      dest: 'public/assets/site/js/fastclick.min.js'
+   },
+   hammer: {
+      src: [
+         'public/assets/site/lib/hammer.js/hammer.js'
+      ],
+      dest: 'public/assets/site/js/hammer.min.js'
    }
 },
 
@@ -429,7 +434,7 @@ grunt.registerTask('makeicons', function() {
 });
 
 grunt.registerTask('init', [
-   'makecss', 'modernizr', 'uglify:ondemand', 'makeicons', 'makejs'
+   'makecss', 'modernizr', 'uglify:fastclick', 'uglify:hammer', 'makeicons', 'makejs'
 ]);
 
 

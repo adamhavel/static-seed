@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Variables
+   ========================================================================== */
+
+$FONT_STACKS: (
+   body: ('Lato', sans-serif),
+   display: ('Playfair Display', serif)
+);
+
+/* Helpers
+   ========================================================================== */
+
+// Retrieve a font stack, either of the body or display variety.
+@function font($name) {
+   @return map-get($FONT_STACKS, $name);
+}
+
+// Returns a multiple of the leading. Used to create any sort of vertical spacing.
+@function lines($count: 1, $correction: null) {
+   @if $count == 0 {
+      @return 0;
+   } @else if $correction == null  {
+      @return $count * $LINE_HEIGHT * 1rem;
+   } @else {
+      @return calc(#{$count * $LINE_HEIGHT * 1rem} + #{$correction});
+   }
+}
+
+// Create a pretty underline.
+@mixin underline($weight: 1px, $background: color(background), $color: color(highlight), $hover: color(text), $position: 90%) {
+   display: inline-block;
+   text-decoration: none;
+   background: linear-gradient($color, $color) no-repeat;
+   background-size: 100% $weight;
+   background-position: 0 $position;
+   text-shadow: $weight 0 $background,
+                -$weight 0 $background,
+                ($weight / 2) 0 $background,
+                -($weight / 2) 0 $background;
+
+   &:focus,
+   &:hover {
+      background-image: linear-gradient($hover, $hover);
+   }
+}
+
+
+/* Flow control
+   ========================================================================== */
+
+// Default content vertical spacing.
+* + * {
+   margin-top: lines(1);
+
+   @include media('short') {
+      margin-top: lines(.5);
+   }
+}
+
+// Alter the default vertical spacing.
+@mixin v-spacing($distance, $fixed: false) {
+   > * + * {
+      margin-top: lines($distance);
+
+      @if not $fixed {
+         @include media('short') {
+            margin-top: lines($distance / 2);
+         }
+      }
+   }
+}
+
+// Spread items horizontally.
+@mixin h-spacing($distance) {
+   > * + * {
+      margin-left: $distance;
+   }
+}
+
+// Removes the horizontal spacing.
+@mixin no-spacing {
+   > * {
+      margin-top: 0;
+      margin-left: 0;
+   }
+}
+
+@mixin aloof($distance, $fixed: false) {
+   * + & {
+      margin-top: lines($distance);
+
+      @if not $fixed {
+         @include media('short') {
+            margin-top: lines($distance / 2);
+         }
+      }
+   }
+}
+
+// Somebody is an island.
+@mixin island($leading: 1, $trailing: $leading, $fixed: false) {
+   * + & {
+      margin-top: lines($leading);
+   }
+
+   & + * {
+      margin-top: lines($trailing);
+   }
+
+   @if not $fixed {
+      @include media('short') {
+         * + & {
+            margin-top: lines($leading / 2);
+         }
+
+         & + * {
+            margin-top: lines($trailing / 2);
+         }
+      }
+   }
+}
+
+
+/* Base
+   ========================================================================== */
+
+html {
+   font-size: $BASE * 1em;
+   line-height: $LINE_HEIGHT;
+   font-family: font(body);
+   color: color(text);
+   font-feature-settings: 'liga', 'kern';
+
+   @include media('<column') {
+      font-size: $BASE * 1em * micro-scale(-1);
+   }
+}
+
+body {
+   background: color(background);
+}
+
+a {
+   li &,
+   p & {
+      text-decoration: underline;
+      color: color(highlight);
+
+      &:focus,
+      &:hover {
+         text-decoration: none;
+      }
+   }
+}
+
+small {
+   font-size: micro-scale(-4) * 1em;
+}
+
+
+/* Weights
+   ========================================================================== */
+
+.alpha, %alpha {
+   font-size: micro-scale(17, rem);
+
+   @include media('<layout') {
+      font-size: micro-scale(15, rem);
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(12, rem);
+   }
+}
+
+.beta, %beta {
+   font-size: micro-scale(12, rem);
+
+   @include media('<layout') {
+      font-size: micro-scale(10, rem);
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(7, rem);
+   }
+}
+
+.gamma, %gamma {
+   font-size: micro-scale(8, rem);
+
+   @include media('<layout') {
+      font-size: micro-scale(6, rem);
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(4, rem);
+   }
+}
+
+.delta, %delta {
+   font-size: micro-scale(5, rem);
+
+   @include media('<layout') {
+      font-size: micro-scale(3, rem);
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(2, rem);
+   }
+}
+
+.epsilon, %epsilon {
+   font-size: micro-scale(3, rem);
+
+   @include media('<layout') {
+      font-size: micro-scale(2, rem);
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(1, rem);
+   }
+}
+
+/* Editable content
+   ========================================================================== */
+
+// .content {
+//    > h2, > h3, > h4 {
+//       @extend %heading;
+//    }
+
+//    > h2 {
+//       @extend %gamma;
+//    }
+
+//    > h3 {
+//       @extend %delta;
+//    }
+
+//    > h4 {
+//       @extend %epsilon;
+//    }
+
+//    > img {
+//       @include island(2);
+//       @include center;
+//    }
+
+//    > ul:not([class]) {
+//       @extend %bullet-list;
+//    }
+
+//    > ol {
+//       @extend %numbered-list;
+//    }
+// }

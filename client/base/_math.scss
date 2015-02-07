@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Math
+   ========================================================================== */
+
+@function gcd($a, $b) {
+   @if ($b != 0) {
+      @return gcd($b, $a % $b);
+   } @else {
+      @return abs($a);
+   }
+}
+
+@function pow($base, $exponent, $prec: 12) {
+
+   @if (floor($exponent) != $exponent) {
+      $prec2 : pow(10, $prec);
+      $exponent: round($exponent * $prec2);
+      $denominator: gcd($exponent, $prec2);
+      @return nthRoot(pow($base, $exponent / $denominator), $prec2 / $denominator, $prec);
+   }
+
+   $value: $base;
+   @if $exponent > 1 {
+      @for $i from 2 through $exponent {
+         $value: $value * $base;
+      }
+   } @else if $exponent < 1 {
+      @for $i from 0 through -$exponent {
+         $value: $value / $base;
+      }
+   }
+
+   @return $value;
+}
+
+@function nthRoot($num, $n: 2, $prec: 12) {
+   $x: 1;
+
+   @for $i from 0 through $prec {
+      $x: 1 / $n * (($n - 1) * $x + ($num / pow($x, $n - 1)));
+   }
+
+   @return $x;
+}

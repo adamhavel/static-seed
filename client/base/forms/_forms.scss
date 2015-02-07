@@ -2,15 +2,14 @@
    Forms
    ========================================================================== */
 
-/* Settings
+/* Variables
    ========================================================================== */
 
 $forms-floating-labels: true;
 $forms-input-size: lines(1.5);
 $forms-color-background: white;
-$forms-color-focus: faux-rgba(cyan, $forms-color-background, .1);
+$forms-color-focus: faux-rgba(color(highlight), $forms-color-background, .25);
 $forms-color-invalid: faux-rgba(red, $forms-color-background, .1);
-$forms-color-valid: faux-rgba(green, $forms-color-background, .1);
 
 
 /* Helpers
@@ -34,21 +33,21 @@ $forms-color-valid: faux-rgba(green, $forms-color-background, .1);
    @return $selector;
 }
 
-@keyframes invalid-input {
-   0%, 100% {
-      transform: translateX(0);
-   }
-   10%, 30%, 50%, 70%, 90% {
-      transform: translateX(-5px);
-   }
-   20%, 40%, 60%, 80% {
-      transform: translateX(5px);
-   }
-}
+// @keyframes invalid-input {
+//    0%, 100% {
+//       transform: translateX(0);
+//    }
+//    10%, 30%, 50%, 70%, 90% {
+//       transform: translateX(-5px);
+//    }
+//    20%, 40%, 60%, 80% {
+//       transform: translateX(5px);
+//    }
+// }
 
-.j-invalid-input {
-   animation: invalid-input .5s;
-}
+// .j-invalid-input {
+//    animation: invalid-input .5s;
+// }
 
 
 /* Templates
@@ -60,10 +59,6 @@ $forms-color-valid: faux-rgba(green, $forms-color-background, .1);
    box-shadow: inset 2px 2px 0 0 rgba(black, .2);
    font-size: micro-scale(3) * 1em;
    transition: background-color .2s;
-
-   &[empty="false"]:valid:not(:focus):not(select) {
-      background-color: $forms-color-valid;
-   }
 
    &:focus {
       background-color: $forms-color-focus;
@@ -91,20 +86,25 @@ $forms-color-valid: faux-rgba(green, $forms-color-background, .1);
    ========================================================================== */
 
 form {
-   @include island(3);
+   @include island(4);
+   @include center;
+
+   width: scale-to-percentage(0, 0 1);
 }
 
-   form div {
-      @include grid((
-         desk: 2
-      ), 5%, lines(1.5));
+fieldset {
+   @if $forms-floating-labels {
+      @include v-spacing(1.5, true);
    }
 
-   form button {
+   > :nth-last-child(2) {
+      float: left;
+   }
+
+   button[type="submit"] {
       margin-left: auto;
-      min-width: scale-to-percentage(0, 0 2);
    }
-
+}
 
 input,
 select,
@@ -131,7 +131,7 @@ input[type="checkbox"] {
 }
 
 select {
-   @include not-flow;
+   @include no-spacing;
 
    padding: 0 0 0 .25em;
    cursor: pointer;
@@ -150,7 +150,7 @@ textarea {
 }
 
 label {
-   @include not-flow;
+   @include no-spacing;
 
    display: block;
    position: relative;
@@ -210,15 +210,17 @@ label {
                height: $forms-input-size;
                line-height: $forms-input-size;
                font-size: micro-scale(3) * 1em;
-               transition: transform .2s;
+               transition: transform .2s, opacity .2s;
                transform-origin: bottom left;
                pointer-events: none;
+               opacity: .4;
                will-change: transform;
             }
 
             &:focus + span,
             &[empty="false"] + span {
                transform: translateY(-90%) scale(micro-scale(-3));
+               opacity: 1;
                pointer-events: auto;
             }
 
@@ -232,7 +234,8 @@ label {
       // label
       & + span {
          position: relative;
-         padding-left: $forms-input-size + lines(.5);
+         min-height: $forms-input-size;
+         padding-left: $forms-input-size + 1rem;
          padding-top: ($forms-input-size - lines(1)) / 2;
       }
 

@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Scale
+   ========================================================================== */
+
+@function scale-by($ratio, $interval, $unit: null) {
+   $unitless-value: pow($ratio, $interval);
+
+   @if (not $unit) {
+      @return $unitless-value;
+   } @else {
+      @return $unitless-value * 1#{$unit};
+   }
+}
+
+// Typographic level scale based on equal temperament.
+@function micro-scale($interval, $unit: null) {
+   @return scale-by(1.05946309436, $interval, $unit);
+}
+
+// Layout scale based on golden ratio.
+@function macro-scale($interval, $unit: null) {
+   @return scale-by(1.61803398875, $interval, $unit);
+}

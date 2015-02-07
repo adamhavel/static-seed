@@ -2,32 +2,28 @@
    Tables
    ========================================================================== */
 
-.table {
-   background-color: blue;
-   overflow-x: auto;
-}
-
 table {
    @include island(2);
+
    width: 100%;
    word-wrap: break-word;
 }
 
-caption {
-   display: none;
-}
-
 thead {
-   border-bottom: 2px solid #222;
+   border-bottom: 2px solid color(text);
 
-   tr:last-child * {
+   tr:last-child th {
       padding-bottom: lines(.5, -2px);
+   }
+
+   th {
+      vertical-align: bottom;
    }
 }
 
 tbody {
    tr {
-      border-bottom: 1px solid #cbcbcb;
+      border-bottom: 1px solid faux-rgba(color(text), color(background), .25);
 
       &:last-child {
          border-bottom: 0;
@@ -35,24 +31,25 @@ tbody {
    }
 }
 
-// tr :nth-child(n+4) {
-//    display: none;
-// }
-
 th,
 td {
-   padding: lines(.5) .5em;
+   padding: lines(.5) .75em;
    padding-bottom: lines(.5, -1px);
    vertical-align: top;
    max-width: 25em;
 
-   p[aria-expanded] {
-      position: relative;
-      padding-left: 1em;
-      cursor: pointer;
-      white-space: nowrap;
+   p {
+      max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+   }
+
+   p[aria-expanded] {
+      position: relative;
+      cursor: pointer;
+      white-space: nowrap;
+      margin-left: -1em;
+      padding-left: 1em;
 
       &:before {
          @include size(0);
@@ -63,7 +60,7 @@ td {
          left: 0;
          border-left: .333em solid transparent;
          border-right: .333em solid transparent;
-         border-top: lines(.333) solid #222;
+         border-top: lines(.333) solid faux-rgba(color(text), color(background), .75);
          transition: transform .3s, opacity .2s;
          opacity: .5;
       }
@@ -74,7 +71,7 @@ td {
       }
 
       &:focus:before {
-         border-top-color: cyan;
+         border-top-color: color(highlight);
       }
    }
 
@@ -90,11 +87,6 @@ td {
          display: none;
       }
    }
-}
-
-th {
-   font-weight: 700;
-   white-space: nowrap;
 
    &:first-child {
       text-align: left;
@@ -105,12 +97,17 @@ th {
    }
 }
 
-td:last-child {
-   font-feature-settings: 'tnum';
-   text-align: right;
+th {
+   font-weight: 700;
 }
 
-@include media-query(lap) {
+td {
+   &:last-child {
+      font-feature-settings: 'tnum';
+   }
+}
+
+@include media('<layout') {
 
    table {
       table-layout: fixed;
@@ -128,7 +125,7 @@ td:last-child {
 
 }
 
-@include media-query(palm) {
+@include media('<column') {
 
    table,
    tbody {
@@ -140,7 +137,7 @@ td:last-child {
    }
 
    tr {
-      @include not-flow;
+      @include no-spacing;
 
       position: relative;
       display: table;
@@ -154,7 +151,7 @@ td:last-child {
          content: '';
          height: 1px;
          width: 100%;
-         background-color: #bbb;
+         background-color: faux-rgba(color(text), color(background), .25);
       }
 
       &:last-child:after {

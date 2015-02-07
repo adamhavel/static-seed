@@ -3,13 +3,5 @@
    ========================================================================== */
 
 .site-nav {
-
-   ul {
-      @extend %inline-list;
-      text-align: center;
-   }
-
-   a {
-      @extend %button;
-   }
+   display: none;
 }

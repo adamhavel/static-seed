@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+
+/* Helpers
+   ========================================================================== */
+
+@mixin bullet($size: $LINE_HEIGHT * .333em, $taper: 1.25em, $line-height: $LINE_HEIGHT) {
+   padding-left: $taper;
+
+   &:before {
+      @include size($size);
+
+      content: '';
+      float: left;
+      margin-top: ($line-height / 2) - ($size / 2);
+      margin-left: -$taper;
+      background: color(text);
+      transform: rotate(45deg);
+   }
+}
+
+
+/* Definitions
+   ========================================================================== */
+
+ul, ol {
+   @include no-spacing;
+
+   > li {
+      display: block;
+   }
+}
+
+.bullet-list, %bullet-list {
+   @include v-spacing(.5);
+
+   > li {
+      @include bullet;
+   }
+}
+
+.numbered-list, %numbered-list {
+   $taper: 1em;
+
+   counter-reset: numbered-list;
+
+   > li {
+      counter-increment: numbered-list;
+      padding-left: $taper;
+
+      &:before {
+         content: counter(numbered-list) '.';
+         float: left;
+         width: $taper;
+         margin-left: -$taper;
+      }
+   }
+}
+
+.inline-list, %inline-list {
+   @include no-spacing;
+   @include h-spacing(1em);
+
+   > li {
+      display: inline-block;
+      vertical-align: middle;
+   }
+
+   .flexbox & {
+      display: flex;
+
+      > li {
+         flex-shrink: 1;
+      }
+   }
+}
+
+.pipe-list, %pipe-list {
+   @extend %inline-list;
+
+   > li {
+
+      &:before {
+         content: '|';
+         padding-right: 1em;
+      }
+
+      &:first-child:before {
+         display: none;
+      }
+   }
+}

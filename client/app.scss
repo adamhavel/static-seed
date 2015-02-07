@@ -1,13 +1,21 @@
 @charset "UTF-8";
 
-@import "normalize";
-@import "scale";
-@import "vars";
-@import "base";
-@import "icons";
-@import "typo";
-@import "grid";
-@import "tables/tables";
-@import "forms/forms";
+@import "base/normalize";
+@import "base/math";
+@import "base/scale";
+@import "base/config";
+@import "base/utils";
+@import "base/colors";
+@import "base/media-queries";
+@import "base/typo";
+@import "base/grid";
+@import "base/icons";
+@import "base/lists";
+@import "base/headings";
+
+@import "base/tables/**/*";
+@import "base/forms/**/*";
+
+@import "layout/**/*";
+
 @import "components/**/*";
-@import "layout";

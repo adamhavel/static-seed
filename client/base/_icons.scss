@@ -5,8 +5,8 @@
 /* Variables
    ========================================================================== */
 
-$icon-gap: .5em;
-$icon-size: $line-height * 1em;
+$ICON_GAP: .5em;
+$ICON_SIZE: $LINE_HEIGHT * 1em;
 
 
 /* Mixins
@@ -28,7 +28,7 @@ $icon-size: $line-height * 1em;
 
 .icon,
 .j-icon-placeholder {
-   @include size($icon-size);
+   @include size($ICON_SIZE);
    display: inline-block;
    margin-top: 0;
    vertical-align: top;
@@ -36,30 +36,28 @@ $icon-size: $line-height * 1em;
 
 .icon {
    fill: currentColor;
-   transition: fill .2s linear;
 
    &:first-child {
-      margin-right: $icon-gap;
+      margin-right: $ICON_GAP;
    }
 
    &:last-child {
-      margin-left: $icon-gap;
+      margin-left: $ICON_GAP;
    }
 
    &:first-child:last-child {
-      display: block;
       margin: 0;
    }
 
    .no-svg & {
-      margin-left: $icon-gap;
+      margin-left: $ICON_GAP;
 
       &:first-child {
          margin-left: 0;
-         margin-right: -($icon-size);
+         margin-right: -($ICON_SIZE);
 
          ~ span {
-            margin-left: $icon-gap;
+            margin-left: $ICON_GAP;
          }
       }
    }
