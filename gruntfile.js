@@ -138,7 +138,7 @@ cssmin: {
 
 uncss: {
    options: {
-      ignore: [/\.j-/, /\.no-/, /\.error/, /\.active/],
+      ignore: [/\.j-/, /\.no-/, /\.svg/, /\.js/, /\.flexbox/, /\.csstransitions/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
@@ -324,6 +324,10 @@ watch: {
    icons: {
       files: ['public/assets/site/img/icon/*.svg'],
       tasks: ['makeicons']
+   },
+   fonts: {
+      files: ['public/assets/site/font/*.woff'],
+      tasks: ['exec:sass_non_critical']
    }
 },
 
@@ -333,7 +337,7 @@ exec: {
       cwd: 'client'
    },
    sass_non_critical: {
-      cmd: 'sass non-critical.scss:../public/assets/site/css/non-critical.css --style expanded -E UTF-8',
+      cmd: 'sass -r ../data-uri.rb non-critical.scss:../public/assets/site/css/non-critical.css --style expanded -E UTF-8',
       cwd: 'client'
    },
    server: {

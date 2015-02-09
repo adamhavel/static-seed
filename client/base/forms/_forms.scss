@@ -90,6 +90,14 @@ form {
    @include center;
 
    width: scale-to-percentage(0, 0 1);
+
+   @include media('<layout') {
+      width: scale-to-percentage(1, 0 1);
+   }
+
+   @include media('<column') {
+      width: auto;
+   }
 }
 
 fieldset {

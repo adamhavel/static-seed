@@ -6,7 +6,7 @@
    ========================================================================== */
 
 $FONT_STACKS: (
-   body: ('Lato', sans-serif),
+   body: ('Azo Sans', sans-serif),
    display: ('Playfair Display', serif)
 );
 
@@ -88,12 +88,18 @@ $FONT_STACKS: (
    }
 }
 
+@mixin out-of-flow {
+   &:first-child + * {
+      margin-top: 0 !important;
+   }
+}
+
 @mixin aloof($distance, $fixed: false) {
    * + & {
       margin-top: lines($distance);
 
       @if not $fixed {
-         @include media('short') {
+         @include media('<column') {
             margin-top: lines($distance / 2);
          }
       }
@@ -103,21 +109,21 @@ $FONT_STACKS: (
 // Somebody is an island.
 @mixin island($leading: 1, $trailing: $leading, $fixed: false) {
    * + & {
-      margin-top: lines($leading);
+      margin-top: lines($leading) !important;
    }
 
-   & + * {
-      margin-top: lines($trailing);
+   &:not(:last-child) {
+      margin-bottom: lines($trailing) !important;
    }
 
    @if not $fixed {
-      @include media('short') {
+      @include media('<column') {
          * + & {
-            margin-top: lines($leading / 2);
+            margin-top: lines($leading / 2) !important;
          }
 
-         & + * {
-            margin-top: lines($trailing / 2);
+         &:not(:last-child) {
+            margin-bottom: lines($trailing) !important;
          }
       }
    }
