@@ -2,71 +2,82 @@
    Grid
    ========================================================================== */
 
-/* Variables
+/* Settings
    ========================================================================== */
 
-$grid-defaults: (
-   '>=layout': 3,
+$GRID_COLUMNS: (
+   '>=layout': 5,
    '<layout': 2,
    '<column': 1
 );
+$GRID_HGAP: $GUTTER;
+$GRID_VGAP: lines(2);
 
 
 /* Classes
    ========================================================================== */
 
 %grid {
-   margin-left: -$GUTTER;
-   letter-spacing: -0.31em;
+   @include island($GRID_VGAP / lines(1) * 2, $GRID_VGAP / lines(1) * 1);
+
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-left: -$GRID_HGAP;
+
 
    &__item {
-      display: inline-block;
-      margin: 0 0 lines(1) $GUTTER !important;
-      letter-spacing: normal;
-      vertical-align: top;
+      margin: 0 0 $GRID_VGAP $GRID_HGAP !important;
 
-      @each $media-query in map-keys($grid-defaults) {
-         $columns: map-get($grid-defaults, $media-query);
+      @each $breakpoint, $columns in $GRID_COLUMNS {
+         $width: (100% / $columns) - $GRID_HGAP;
 
-         @include media($media-query) {
-            width: (100% / $columns) - $GUTTER;
+         @if $breakpoint == $MEDIA_STATIC_BREAKPOINT {
+            width: $width;
+         } @else {
+            @include media($breakpoint) {
+               width: $width;
+            }
          }
 
       }
    }
 
-   .flexbox & {
-      display: flex;
-      flex-wrap: wrap;
-      letter-spacing: normal;
+   .no-flexbox & {
+      letter-spacing: -0.31em;
+      text-align: center;
 
       &__item {
-         display: block;
+         display: inline-block;
+         letter-spacing: normal;
+         vertical-align: top;
+         text-align: left;
       }
    }
 }
 
-@mixin grid($items-per-row: $grid-defaults, $hgap: $GUTTER, $vgap: lines(1)) {
+@mixin grid($items-per-row: $GRID_COLUMNS, $hgap: $GRID_HGAP, $vgap: $GRID_VGAP) {
    @extend %grid;
 
-   $media-queries: map-keys($grid-defaults);
-   $items-per-row: map-merge($grid-defaults, $items-per-row);
+   $items-per-row: map-merge($GRID_COLUMNS, $items-per-row);
+   $ie8-friendly: true;
 
-   $ie8-friendly: true !default;
    @if ($hgap != 0) and (unit($hgap) != "%") {
       $ie8-friendly: false;
    }
 
-   @if $hgap != $GUTTER {
+   @if $hgap != $GRID_HGAP {
       @if $ie8-friendly {
          margin-left: -$hgap;
          > * {
-            margin-left: $hgap;
+            margin-left: $hgap !important;
          }
       } @else {
-         margin-left: calc(#{-$hgap});
-         > * {
-            margin-left: calc(#{$hgap});
+         @include gtIE8 {
+            margin-left: -$hgap;
+            > * {
+               margin-left: $hgap !important;
+            }
          }
       }
    }
@@ -74,22 +85,32 @@ $grid-defaults: (
    > * {
       @extend %grid__item;
 
-      @if $vgap != lines(1) {
+      @if $vgap != $GRID_VGAP {
          margin-bottom: $vgap !important;
       }
 
-      @each $media-query in $media-queries {
-         $columns: map-get($items-per-row, $media-query);
+      $is-default: ($GRID_COLUMNS == $items-per-row) and ($hgap == $GRID_HGAP);
 
-         @if ($items-per-row != $grid-defaults) or ($hgap != $GUTTER) {
-            @include media($media-query) {
+      @each $breakpoint, $columns in $items-per-row {
+
+         @if not $is-default {
+            $width: if($ie8-friendly, (100% / $columns) - $hgap, calc(#{(100% / $columns)} - #{$hgap}));
+
+            @if $breakpoint == $MEDIA_STATIC_BREAKPOINT {
+
                @if $ie8-friendly {
-                  width: 100% / $columns - $hgap;
+                  width: $width;
                } @else {
-                  width: 100% / $columns - $GUTTER;
-                  width: calc(#{100% / $columns} - #{$hgap});
+                  width: (100% / $columns) - $GRID_HGAP;
+                  width: $width;
+               }
+
+            } @else {
+               @include media($breakpoint) {
+                  width: $width;
                }
             }
+
          }
 
       }

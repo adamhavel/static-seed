@@ -52,31 +52,37 @@ $FONT_STACKS: (
    ========================================================================== */
 
 // Default content vertical spacing.
-* + * {
+body * + * {
    margin-top: lines(1);
 
-   @include media('short') {
+   @include media('condensed') {
       margin-top: lines(.5);
    }
 }
 
 // Alter the default vertical spacing.
-@mixin v-spacing($distance, $fixed: false) {
+@mixin v-spacing($lines, $fixed: false) {
    > * + * {
-      margin-top: lines($distance);
+      margin-top: lines($lines);
 
       @if not $fixed {
-         @include media('short') {
-            margin-top: lines($distance / 2);
+         @include media('condensed') {
+            margin-top: lines($lines / 2);
          }
       }
    }
 }
 
 // Spread items horizontally.
-@mixin h-spacing($distance) {
+@mixin h-spacing($distance, $fixed: false) {
    > * + * {
       margin-left: $distance;
+
+      @if not $fixed {
+         @include media('<column') {
+            margin-left: $distance / 2;
+         }
+      }
    }
 }
 
@@ -84,49 +90,47 @@ $FONT_STACKS: (
 @mixin no-spacing {
    > * {
       margin-top: 0;
-      margin-left: 0;
    }
 }
 
 @mixin out-of-flow {
+   margin-top: 0;
+
    &:first-child + * {
       margin-top: 0 !important;
    }
 }
 
-@mixin aloof($distance, $fixed: false) {
-   * + & {
-      margin-top: lines($distance);
+// Somebody is an island.
+@mixin island($leading: 1, $trailing: $leading, $fixed: false) {
 
-      @if not $fixed {
-         @include media('<column') {
-            margin-top: lines($distance / 2);
+   &:not(:first-child) {
+      margin-top: lines($leading);
+   }
+
+   @if $trailing > 0 {
+      &:not(:last-child) {
+         margin-bottom: lines($trailing);
+      }
+   }
+
+   @if not $fixed {
+      @include media('condensed') {
+         &:not(:first-child) {
+            margin-top: lines($leading / 2);
+         }
+
+         @if $trailing > 0 {
+            &:not(:last-child) {
+               margin-bottom: lines($trailing / 2);
+            }
          }
       }
    }
 }
 
-// Somebody is an island.
-@mixin island($leading: 1, $trailing: $leading, $fixed: false) {
-   * + & {
-      margin-top: lines($leading) !important;
-   }
-
-   &:not(:last-child) {
-      margin-bottom: lines($trailing) !important;
-   }
-
-   @if not $fixed {
-      @include media('<column') {
-         * + & {
-            margin-top: lines($leading / 2) !important;
-         }
-
-         &:not(:last-child) {
-            margin-bottom: lines($trailing) !important;
-         }
-      }
-   }
+@mixin aloof($distance, $fixed: false) {
+   @include island($distance, 0, $fixed);
 }
 
 

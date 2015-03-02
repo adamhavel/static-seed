@@ -16,7 +16,7 @@ $MEDIA_EXPRESSIONS: (
    print: 'print',
    landscape: '(orientation: landscape)',
    portrait: '(orientation: portrait)',
-   short: '(max-height: #{$LINE-HEIGHT * 1em * 20})',
+   condensed: ('(max-width: #{map-get($MEDIA_BREAKPOINTS, column)})', '(max-height: #{em-to-px($LINE-HEIGHT * 20em)})'),
    retina2x: ('(-webkit-min-device-pixel-ratio: 2)', '(min-resolution: 192dpi)'),
    retina3x: ('(-webkit-min-device-pixel-ratio: 3)', '(min-resolution: 350dpi)')
 );
@@ -27,6 +27,7 @@ $MEDIA_UNIT_INTERVALS: (
    'rem': 0.1
 );
 
+$MEDIA_STATIC_BREAKPOINT: '>=layout';
 
 /* Functions
    ========================================================================== */

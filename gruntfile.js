@@ -126,7 +126,7 @@ cssmin: {
    options: {
       report: 'min',
       keepSpecialComments: 0,
-      noAdvanced: true
+      advanced: false
    },
    default: {
       files: [{
