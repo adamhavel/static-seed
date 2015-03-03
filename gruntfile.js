@@ -1,4 +1,8 @@
-module.exports = function(grunt) { grunt.initConfig({
+module.exports = function(grunt) {
+
+require('load-grunt-tasks')(grunt);
+
+grunt.initConfig({
 pkg: grunt.file.readJSON('package.json'),
 
 /* ==========================================================================
@@ -30,10 +34,18 @@ concat: {
    },
    bundle: {
       src: [
-         'public/assets/site/lib/modernizr/modernizr.custom.js',
+         //'public/assets/site/lib/modernizr/modernizr.custom.js',
          'client/**/*.js'
       ],
       dest: 'public/assets/site/js/app.js',
+   }
+},
+
+babel: {
+   dist: {
+      files: {
+         'public/assets/site/js/app.js': 'public/assets/site/js/app.js'
+      }
    }
 },
 
@@ -45,7 +57,7 @@ modernizr: {
          'shiv': false,
          'load' : false
       },
-      'uglify': false,
+      'uglify': true,
       'files': {
          'src': [
             'client/**/*.js',
@@ -63,17 +75,11 @@ uglify: {
       src: 'public/assets/site/js/app.js',
       dest: 'public/assets/site/js/app.js'
    },
-   fastclick: {
+   ondemand: {
       src: [
          'public/assets/site/lib/fastclick/lib/fastclick.js'
       ],
-      dest: 'public/assets/site/js/fastclick.min.js'
-   },
-   hammer: {
-      src: [
-         'public/assets/site/lib/hammer.js/hammer.js'
-      ],
-      dest: 'public/assets/site/js/hammer.min.js'
+      dest: 'public/assets/site/js/app.touch.min.js'
    }
 },
 
@@ -138,7 +144,7 @@ cssmin: {
 
 uncss: {
    options: {
-      ignore: [/\.j-/, /\.no-/, /\.svg/, /\.js/, /\.flexbox/, /\.csstransitions/],
+      ignore: [/\.j-/, /\.no-/, /\.svg/, /\.js/, /\.flexbox/, /\.csstransforms/,  /\.csstransitions/],
       stylesheets: ['assets/site/css/default.css']
    },
    default: {
@@ -223,8 +229,7 @@ svgmin: {
       plugins: [
          { removeXMLProcInst: true },
          { cleanupIDs: false },
-         { removeViewBox: true },
-         { removeTitle: true }
+         { removeViewBox: true }
       ]
    },
    build: {
@@ -389,33 +394,6 @@ perfbudget: {
 });
 
 
-/* ==========================================================================
-   Tasks
-   ========================================================================== */
-
-grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-uglify');
-grunt.loadNpmTasks('grunt-contrib-csslint');
-grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-contrib-cssmin');
-grunt.loadNpmTasks('grunt-contrib-clean');
-grunt.loadNpmTasks('grunt-contrib-copy');
-grunt.loadNpmTasks('grunt-contrib-imagemin');
-grunt.loadNpmTasks('grunt-concurrent');
-grunt.loadNpmTasks('grunt-autoprefixer');
-grunt.loadNpmTasks('grunt-remfallback');
-grunt.loadNpmTasks('grunt-combine-media-queries');
-grunt.loadNpmTasks('grunt-modernizr');
-grunt.loadNpmTasks('grunt-uncss');
-grunt.loadNpmTasks('grunt-hashres');
-grunt.loadNpmTasks('grunt-exec');
-grunt.loadNpmTasks('grunt-sass');
-grunt.loadNpmTasks('grunt-svgmin');
-grunt.loadNpmTasks('grunt-inliner');
-grunt.loadNpmTasks('grunt-grunticon');
-grunt.loadNpmTasks('grunt-svgstore');
-
 /* Helper tasks
    ========================================================================== */
 
@@ -424,7 +402,7 @@ grunt.registerTask('makecss', [
 ]);
 
 grunt.registerTask('makejs', [
-   'concat:bundle', 'jshint:client'
+   'concat:bundle', 'jshint:client', 'babel:dist'
 ]);
 
 grunt.registerTask('makeicons', function() {
@@ -438,7 +416,7 @@ grunt.registerTask('makeicons', function() {
 });
 
 grunt.registerTask('init', [
-   'makecss', 'modernizr', 'uglify:fastclick', 'uglify:hammer', 'makeicons', 'makejs'
+   'makecss', 'modernizr', 'uglify:ondemand', 'makeicons', 'makejs'
 ]);
 
 

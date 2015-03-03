@@ -6,12 +6,12 @@
    ========================================================================== */
 
 $GRID_COLUMNS: (
-   '>=layout': 5,
+   '>=layout': 3,
    '<layout': 2,
    '<column': 1
 );
 $GRID_HGAP: $GUTTER;
-$GRID_VGAP: lines(2);
+$GRID_VGAP: lines(1);
 
 
 /* Classes

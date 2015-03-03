@@ -1,5 +1,4 @@
 var App = (function($) {
-   'use strict';
 
    var media = false,
        assetsDir = 'assets/site';
@@ -127,20 +126,9 @@ var App = (function($) {
          });
       }
 
-      if ($.queryAll('table').length) {
-         // load tables script
-      }
-
       window.addEventListener('resize', $.debounce(function() {
          media = false;
       }, 300));
-
-      // $.queryAll('button[aria-pressed]').forEach(function(button) {
-      //    button.matches('button');
-      //    button.addEventListener('click', function() {
-      //       $.toggleAttribute(this, 'aria-pressed');
-      //    });
-      // });
 
    })();
 
