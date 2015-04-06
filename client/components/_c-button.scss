@@ -2,33 +2,33 @@
    Button
    ========================================================================== */
 
-@mixin animate-outline($default-transition: none) {
-   outline: 1px solid transparent;
-   outline-offset: 20em;
+// @mixin animate-outline($default-transition: none) {
+//    outline: 1px solid transparent;
+//    outline-offset: 20em;
 
-   &:focus {
-      outline-color: rgba(black, .25);
-      outline-offset: 0;
-      outline-width: 0;
-      transition: $default-transition,
-                  outline-offset .5s,
-                  outline-color .5s,
-                  outline-width .001s .5s;
-   }
+//    &:focus {
+//       outline-color: rgba(black, .25);
+//       outline-offset: 0;
+//       outline-width: 0;
+//       transition: $default-transition,
+//                   outline-offset .5s,
+//                   outline-color .5s,
+//                   outline-width .001s .5s;
+//    }
 
-   &:active,
-   &[aria-pressed="true"] {
-      transition: $default-transition;
-   }
-}
+//    &:active,
+//    &[aria-pressed="true"] {
+//       transition: $default-transition;
+//    }
+// }
 
 @mixin make-button($background-color) {
    background: $background-color;
    border: 1px solid faux-rgba(black, $background-color, .15);
    border-right-color: faux-rgba(black, $background-color, .3);
    border-bottom-color: faux-rgba(black, $background-color, .5);
-   box-shadow: 0 .1em 0 0 faux-rgba(black, $background-color, .5);
    color: contrasting-color($background-color, .8);
+   box-shadow: 0 .1em 0 0 faux-rgba(black, $background-color, .5);
 
    &:hover,
    &:focus {
@@ -43,23 +43,18 @@
    }
 }
 
-button,
-.button {
-   $default-transition: background-color .1s;
+.c-button {
    @include make-button(color(highlight));
-   @include animate-outline($default-transition);
 
    display: block;
    padding: lines(.25) 1em;
    line-height: $LINE-HEIGHT;
-
    text-decoration: none;
    cursor: pointer;
    user-select: none;
    white-space: nowrap;
-
    transform: translateY(-.1em);
-   transition: $default-transition;
+   transition: background-color .1s;
 
    &:active,
    &[aria-pressed="true"] {

@@ -1,16 +1,19 @@
 /* ==========================================================================
-   Headings
+   Heading
    ========================================================================== */
 
-.heading, %heading {
-   @include icon-size(lines(1));
+.c-heading {
+   @include icon-size(1em);
 
-   line-height: lines(1);
+   line-height: 1;
+   font-size: micro-scale(8, rem);
    font-family: font(display);
    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
    font-weight: 400;
 
-   p + & {
+   * + & {
       @include aloof(2);
+
+      line-height: lines(1);
    }
 }

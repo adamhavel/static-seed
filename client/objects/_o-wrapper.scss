@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Wrapper
+   ========================================================================== */
+
+.o-wrapper, %o-wrapper {
+   @include center;
+   @include clearfix;
+
+   max-width: $LAYOUT_WIDTH;
+
+   @include media('<layout') {
+      padding: 0 $GUTTER;
+   }
+}

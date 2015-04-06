@@ -5,7 +5,7 @@
 /* Variables
    ========================================================================== */
 
-$ICON_GAP: .5em;
+$ICON_GAP: .25em;
 $ICON_SIZE: $LINE_HEIGHT * 1em;
 
 
@@ -13,13 +13,16 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
    ========================================================================== */
 
 @mixin icon-size($new-size) {
-   .icon, .j-icon-placeholder {
+
+   .icon,
+   .j-icon-placeholder {
       @include size($new-size);
    }
 
    .no-svg & .icon:first-child {
       margin-right: -($new-size);
    }
+
 }
 
 

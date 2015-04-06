@@ -1,7 +1,10 @@
 /* ==========================================================================
-   Site logo
+   Article preview
    ========================================================================== */
 
-.site-logo {
-
+.c-article-preview {
+   padding: lines(1);
+   background-color: #eee;
+   border: 1px solid rgba(black, .125);
+   border-radius: .25em;
 }

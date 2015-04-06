@@ -1,0 +1,18 @@
+/* ==========================================================================
+   Inline list
+   ========================================================================== */
+
+.o-inline-list, %o-inline-list {
+   @include no-spacing;
+   @include h-spacing(1em);
+
+   > li {
+      display: inline-block;
+      vertical-align: middle;
+   }
+
+   .flexbox & {
+      display: flex;
+      flex-wrap: wrap;
+   }
+}

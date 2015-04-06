@@ -1,30 +1,31 @@
 /* ==========================================================================
-   Media
+   Spot
    ========================================================================== */
 
-%spot, .spot {
+.o-spot, %o-spot {
    @include clearfix;
    @include no-spacing;
-   @include island(3);
+   @include island(2);
 
    &__media {
       float: left;
       width: scale-to-percentage(0, 0 1);
+      margin-top: .2em;
       margin-right: $GUTTER;
 
-      > * {
+      * {
          width: 100%;
       }
    }
 
-   &__content {
+   &__body {
+      @include v-spacing(.5);
+
       overflow: hidden;
    }
 
    @include media('<layout') {
-      display: block;
-
-      &__content {
+      &__body {
          overflow: visible;
       }
    }
@@ -35,7 +36,9 @@
       &__media {
          float: none;
          width: auto;
+         margin-top: 0;
          margin-right: 0;
       }
+
    }
 }

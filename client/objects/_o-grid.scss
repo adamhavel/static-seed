@@ -17,14 +17,13 @@ $GRID_VGAP: lines(1);
 /* Classes
    ========================================================================== */
 
-%grid {
+.o-grid, %o-grid {
    @include island($GRID_VGAP / lines(1) * 2, $GRID_VGAP / lines(1) * 1);
 
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
    margin-left: -$GRID_HGAP;
-
 
    &__item {
       margin: 0 0 $GRID_VGAP $GRID_HGAP !important;
@@ -44,6 +43,7 @@ $GRID_VGAP: lines(1);
    }
 
    .no-flexbox & {
+      display: block;
       letter-spacing: -0.31em;
       text-align: center;
 
@@ -57,7 +57,7 @@ $GRID_VGAP: lines(1);
 }
 
 @mixin grid($items-per-row: $GRID_COLUMNS, $hgap: $GRID_HGAP, $vgap: $GRID_VGAP) {
-   @extend %grid;
+   @extend %o-grid;
 
    $items-per-row: map-merge($GRID_COLUMNS, $items-per-row);
    $ie8-friendly: true;
@@ -83,7 +83,7 @@ $GRID_VGAP: lines(1);
    }
 
    > * {
-      @extend %grid__item;
+      @extend %o-grid__item;
 
       @if $vgap != $GRID_VGAP {
          margin-bottom: $vgap !important;
