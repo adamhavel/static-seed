@@ -3,5 +3,12 @@
    ========================================================================== */
 
 .c-site-logo {
+   @include island(2);
 
+   display: flex;
+   justify-content: center;
+
+   img {
+      @include center;
+   }
 }

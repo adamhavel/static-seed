@@ -172,6 +172,10 @@ a {
    }
 }
 
+em {
+   color: color(highlight);
+}
+
 small {
    font-size: micro-scale(-4) * 1em;
 }

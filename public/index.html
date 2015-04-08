@@ -19,16 +19,18 @@
 
    <header class="l-header" role="banner">
 
-      <h1 class="c-site-logo"><a href=""></a></h1>
+      <h1 class="c-site-logo"><a href=""><img src="assets/site/img/icon/menu.svg" alt=""></a></h1>
 
       <nav class="c-site-nav j-site-nav" role="navigation">
-         <ul>
-            <li><a href="">Item 1</a></li>
-            <li><a href="">Item 2</a></li>
-            <li><a href="">Item 3</a></li>
-            <li><a href="">Item 4</a></li>
-            <li><a href="">Item 5</a></li>
-         </ul>
+         <div class="o-wrapper">
+            <ul class="o-inline-list">
+               <li><a href="">Item 1</a></li>
+               <li><a href="">Item 2</a></li>
+               <li><a href="">Item 3</a></li>
+               <li><a href="">Item 4</a></li>
+               <li><a href="">Item 5</a></li>
+            </ul>
+         </div>
       </nav>
 
    </header>
@@ -107,26 +109,31 @@
          <form action="">
             <fieldset>
 
-               <label>
-                  <input value="Adam" type="text" name="name" required aria-required="true" aria-describedby="tooltip1">
-                  <span>Your name</span>
-                  <small id="tooltip1" role="tooltip">is your first name.</small>
+               <label class="c-form-cell">
+                  <span class="c-form-cell__label">Your name</span>
+                  <input class="c-form-cell__input c-input j-input" value="Adam" type="text" name="name" required aria-describedby="tooltip1">
+                  <small class="c-form-cell__tooltip" id="tooltip1" role="tooltip">is your first name.</small>
                </label>
 
-               <label>
-                  <input type="email" name="email" required aria-required="true" autocomplete="email" aria-describedby="tooltip2">
-                  <span>Your e-mail</span>
-                  <small id="tooltip2" role="tooltip">is the address associated with your account.</small>
+               <label class="c-form-cell">
+                  <span class="c-form-cell__label">Your e-mail</span>
+                  <input class="c-form-cell__input c-input j-input" type="email" name="email" required autocomplete="email" aria-describedby="tooltip2">
+                  <small class="c-form-cell__tooltip" id="tooltip2" role="tooltip">is the address associated with your account.</small>
                </label>
 
-               <label>
-                  <input type="number" name="name" required aria-required="true">
-                  <span>Your age</span>
+               <label class="c-form-cell">
+                  <span class="c-form-cell__label">Your age</span>
+                  <input class="c-form-cell__input c-input j-input" type="number" name="name" required>
                </label>
 
                <label>
                   <input type="tel" name="name">
                   <span>Your phone</span>
+               </label>
+
+               <label class="c-form-cell">
+                  <span class="c-form-cell__label">Your message</span>
+                  <textarea class="c-form-cell__input c-input j-input" name="msg" rows="5"></textarea>
                </label>
 
                <label>
@@ -138,9 +145,9 @@
                   <span>Your gender</span>
                </label>
 
-               <label>
-                  <input type="checkbox" name="test" required aria-required="true">
-                  <span>I agree with the terms.</span>
+               <label class="c-form-cell c-form-cell--inline">
+                  <input type="checkbox" name="test" required class="c-form-cell__input c-input j-input">
+                  <span class="c-input-placeholder c-form-cell__label">I agree with the terms.</span>
                </label>
 
                <button class="c-button c-button--alt" type="submit">Send</button>
@@ -214,7 +221,6 @@
       <small></small>
 
    </footer>
-
 
 <script src="https://cdn.polyfill.io/v1/polyfill.min.js" defer></script>
 <script src="assets/site/js/app.js" defer></script>

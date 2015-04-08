@@ -249,6 +249,10 @@ select {
    text-transform: none;
 }
 
+label {
+   cursor: pointer;
+}
+
 /**
  * Remove inner shadow in Safari.
  */
@@ -268,6 +272,11 @@ input[type="reset"],
 input[type="submit"] {
    -webkit-appearance: button; /* 2 */
    cursor: pointer; /* 3 */
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+   cursor: pointer;
 }
 
 /**
