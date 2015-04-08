@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Form cell
+   ========================================================================== */
+
+.c-form-cell {
+   @include no-spacing;
+
+   display: block;
+   position: relative;
+
+   &--inline {
+      display: flex;
+      align-items: center;
+
+      :first-child {
+         margin-right: 1em;
+      }
+   }
+
+   // Label
+
+   &__label {
+      display: block;
+      padding-left: .5em;
+   }
+
+      &--inline &__label {
+         padding-left: 0;
+         flex-shrink: 0;
+      }
+
+   // Input
+
+   &__input {
+      display: block;
+   }
+
+      &--inline &__input {
+         flex: 1 1 auto;
+      }
+
+   // Tooltip
+
+   &__tooltip {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      opacity: 0;
+      transform: translateX(-3em);
+      transition: all .3s;
+      will-change: transform, opacity;
+      font-style: italic;
+      pointer-events: none;
+
+      &:before {
+         content: '…';
+      }
+   }
+
+      &__input:focus ~ &__tooltip {
+         opacity: 1;
+         transform: none;
+      }
+}
