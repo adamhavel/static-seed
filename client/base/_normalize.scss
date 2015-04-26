@@ -230,6 +230,10 @@ textarea {
    outline: 0;
 }
 
+legend + * {
+   -webkit-margin-top-collapse: separate;
+}
+
 /**
  * Address Firefox 4+ setting 'line-height' on 'input' using '!important' in the UA stylesheet.
  */

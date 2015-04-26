@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Wrapper
+   Spacing
    ========================================================================== */
 
-.o-wrapper, %o-wrapper {
-   @include center;
-   @include clearfix;
+.u-islet {
+   @include island(2);
+}
 
-   max-width: $LAYOUT_WIDTH;
-   padding: 0 $GUTTER;
+.u-island {
+   @include island(3);
 }

@@ -6,13 +6,18 @@
    @include no-spacing;
    @include h-spacing(1em);
 
+   margin-bottom: lines(-.25);
+   letter-spacing: -0.31em;
+
    > li {
       display: inline-block;
+      margin-bottom: lines(.25);
       vertical-align: middle;
+      letter-spacing: normal;
    }
 
-   .flexbox & {
+   &--spread {
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
    }
 }

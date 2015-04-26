@@ -2,8 +2,20 @@
    Sizes
    ========================================================================== */
 
+.u-kilo {
+   font-size: micro-scale(26, rem) !important;
+
+   @include media('<layout') {
+      font-size: micro-scale(21, rem) !important;
+   }
+
+   @include media('<column') {
+      font-size: micro-scale(17, rem) !important;
+   }
+}
+
 .u-alpha {
-   font-size: micro-scale(17, rem) !important;
+   font-size: micro-scale(18, rem) !important;
 
    @include media('<layout') {
       font-size: micro-scale(15, rem) !important;
@@ -28,6 +40,7 @@
 
 .u-gamma {
    font-size: micro-scale(8, rem) !important;
+   line-height: $LINE-HEIGHT * micro-scale(-4);
 
    @include media('<layout') {
       font-size: micro-scale(6, rem) !important;
@@ -60,4 +73,20 @@
    @include media('<column') {
       font-size: micro-scale(1, rem) !important;
    }
+}
+
+.u-milli {
+   font-size: micro-scale(-1, rem) !important;
+}
+
+.u-micro {
+   font-size: micro-scale(-2, rem) !important;
+}
+
+.u-nano {
+   font-size: micro-scale(-4, rem) !important;
+}
+
+.u-pico {
+   font-size: micro-scale(-6, rem) !important;
 }

@@ -14,9 +14,10 @@ $MEDIA_BREAKPOINTS: (
 $MEDIA_EXPRESSIONS: (
    screen: 'screen',
    print: 'print',
+   inbetween: '(max-width: #{map-get($MEDIA_BREAKPOINTS, layout) - 1px}) and (min-width: #{map-get($MEDIA_BREAKPOINTS, column)})',
    landscape: '(orientation: landscape)',
    portrait: '(orientation: portrait)',
-   condensed: ('(max-width: #{map-get($MEDIA_BREAKPOINTS, column)})', '(max-height: #{em-to-px($LINE-HEIGHT * 20em)})'),
+   condensed: ('(max-width: #{map-get($MEDIA_BREAKPOINTS, column) - 1px})', '(max-height: #{em-to-px($LINE-HEIGHT * 20em)})'),
    retina2x: ('(-webkit-min-device-pixel-ratio: 2)', '(min-resolution: 192dpi)'),
    retina3x: ('(-webkit-min-device-pixel-ratio: 3)', '(min-resolution: 350dpi)')
 );

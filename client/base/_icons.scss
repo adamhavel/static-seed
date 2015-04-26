@@ -5,18 +5,30 @@
 /* Variables
    ========================================================================== */
 
-$ICON_GAP: .25em;
+$ICON_GAP: .65em;
 $ICON_SIZE: $LINE_HEIGHT * 1em;
 
 
 /* Mixins
    ========================================================================== */
 
-@mixin icon-size($new-size) {
+@mixin icon-size($new-size, $line-height: $LINE_HEIGHT) {
 
    .icon,
    .j-icon-placeholder {
+
+      @if (unit($new-size) != unit(1em)) {
+         @error 'Icon must have a size defined in "ems"';
+      }
+
       @include size($new-size);
+
+      @if ($new-size < ($line-height * 1em)) {
+         vertical-align: baseline;
+      } @else {
+         margin-top: -($new-size - ($line-height * 1em)) / 2;
+      }
+
    }
 
    .no-svg & .icon:first-child {
@@ -32,13 +44,13 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
 .icon,
 .j-icon-placeholder {
    @include size($ICON_SIZE);
+
    display: inline-block;
    margin-top: 0;
    vertical-align: top;
 }
 
 .icon {
-   fill: currentColor;
 
    &:first-child {
       margin-right: $ICON_GAP;
@@ -52,6 +64,15 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
       margin: 0;
    }
 
+   &--vertical {
+      @include island(.25);
+
+      display: block;
+      margin-top: 0 !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+   }
+
    .no-svg & {
       margin-left: $ICON_GAP;
 
@@ -62,6 +83,11 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
          ~ span {
             margin-left: $ICON_GAP;
          }
+
+      }
+
+      &--vertical ~ span {
+         margin-left: 0 !important;
       }
    }
 }
