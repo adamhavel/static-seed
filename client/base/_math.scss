@@ -10,7 +10,7 @@
    }
 }
 
-@function pow($base, $exponent, $prec: 12) {
+@function pow($base, $exponent, $prec: 5) {
 
    @if (floor($exponent) != $exponent) {
       $prec2 : pow(10, $prec);

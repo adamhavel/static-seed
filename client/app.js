@@ -1,7 +1,9 @@
+'use strict';
+
 var App = (function($) {
 
-   var media = false,
-       assetsDir = 'assets/site';
+   var media = false;
+   var assetsDir = '';
 
    $.query = function(selector, parent) {
       parent = parent || document;
@@ -10,30 +12,47 @@ var App = (function($) {
 
    $.queryAll = function(selector, parent) {
       parent = parent || document;
-      var elements = parent.querySelectorAll(selector),
-          arr = [];
-      for (var i = elements.length; i--; arr.unshift(elements[i]));
+      var elements = parent.querySelectorAll(selector);
+      var arr = [];
+      for (var i = elements.length; i--; i > 0) {
+         arr.unshift(elements[i]);
+      }
       return arr;
    };
 
    $.debounce = function(func, delay, immediate) {
       var timeout;
       return function() {
-         var context = this,
-             args = arguments;
+         var context = this;
+         var args = arguments;
          var later = function() {
             timeout = null;
-            if (!immediate) func.apply(context, args);
+            if (!immediate) {
+               func.apply(context, args);
+            }
          };
          var callNow = immediate && !timeout;
          clearTimeout(timeout);
          timeout = setTimeout(later, delay);
-         if (callNow) func.apply(context, args);
+         if (callNow) {
+            func.apply(context, args);
+         }
       };
    };
 
    $.toggleAttribute = function(item, attr) {
       item.setAttribute(attr, item.getAttribute(attr) === 'true' ? 'false' : 'true');
+   };
+
+   $.roundTo = function(number, decimalPoint) {
+      decimalPoint = decimalPoint || 1;
+      var scaleFactor = Math.pow(10, decimalPoint);
+
+      return Math.round(Number(number) * scaleFactor) / scaleFactor;
+   };
+
+   $.getStyleProperty = function(el, property, pseudoEl = null) {
+      return document.defaultView.getComputedStyle(el, pseudoEl).getPropertyValue(property);
    };
 
    $.mediaQuery = function() {
@@ -45,8 +64,8 @@ var App = (function($) {
 
    $.loadScript = function(src, callback) {
       callback = callback || null;
-      var ref = document.getElementsByTagName('script')[0],
-          script = document.createElement('script');
+      var ref = document.getElementsByTagName('script')[0];
+      var script = document.createElement('script');
 
       if (callback) {
          script.onload = script.onreadystatechange = function() {
@@ -58,37 +77,18 @@ var App = (function($) {
          };
       }
 
-      script.src = assetsDir + '/js/' + src;
+      script.src = assetsDir + 'js/' + src;
       ref.parentNode.insertBefore(script, ref);
 
       return script;
    };
 
-   // Uncomment if supporting IE8 is not needed.
-   // $.loadScript = function(src, callback) {
-   //    callback = callback || null;
-   //    var ref = document.getElementsByTagName('script')[0],
-   //        script = document.createElement('script');
-
-   //    if (callback) {
-   //       script.addEventListener('load', function handler() {
-   //          callback.call(window);
-   //          script.removeEventListener('load', handler);
-   //       });
-   //    }
-
-   //    script.src = src;
-   //    ref.parentNode.insertBefore(script, ref);
-
-   //    return script;
-   // };
-
    $.loadStyle = function(src) {
-      var ref = document.getElementsByTagName('script')[0],
-          style = document.createElement('link');
+      var ref = document.getElementsByTagName('script')[0];
+      var style = document.createElement('link');
 
       style.rel = 'stylesheet';
-      style.href = assetsDir + '/css/' + src;
+      style.href = assetsDir + 'css/' + src;
       style.media = 'only x';
       ref.parentNode.insertBefore(style, ref);
 
@@ -99,21 +99,40 @@ var App = (function($) {
       return style;
    };
 
+   $.createNodes = function(html) {
+      var container = document.createElement('div');
+
+      container.id = 'dummy-node';
+
+      if (Array.isArray(html)) {
+         html = html.join('');
+      }
+
+      container.innerHTML = html;
+      var nodes = $.queryAll('#dummy-node > *', container);
+
+      if (nodes.length === 1) {
+         return nodes[0];
+      } else {
+         return nodes;
+      }
+   };
+
    (function init() {
 
       if (!Modernizr.svg) {
          $.queryAll('img[src$=".svg"]').forEach(function(img) {
             img.src = img.src.replace(/\.svg$/, '.png');
          });
-         $.queryAll('.icon').forEach(function(icon) {
-            var fallbackIcon = document.createElement('img'),
-                placeholder = document.createElement('div'),
-                parent = icon.parentNode,
-                type = parent.innerHTML.match(/xlink:href=["']#([^"']+)["']/i)[1];
+         $.queryAll('svg.icon').forEach(function(icon) {
+            var fallbackIcon = document.createElement('img');
+            var placeholder = document.createElement('div');
+            var parent = icon.parentNode;
+            var type = parent.innerHTML.match(/xlink:href=["']#([^"']+)["']/i)[1];
 
             fallbackIcon.classList.add('icon');
             placeholder.classList.add('j-icon-placeholder');
-            fallbackIcon.src = assetsDir + '/img/icon-' + type + '.png';
+            fallbackIcon.src = assetsDir + 'img/icon/' + type + '.png';
 
             parent.insertBefore(placeholder, icon.nextSibling);
             parent.replaceChild(fallbackIcon, icon);

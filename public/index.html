@@ -4,10 +4,9 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
    <link rel="dns-prefetch" href="//cdn.polyfill.io">
-   <base href="/">
    <link href="assets/site/css/default.css" rel="stylesheet">
-   <script>(function(){function t(e){return e.split(".").pop()}function n(e,t){var n=document.getElementsByTagName("head")[0];if(t==="css"){var r=document.createElement("style");n.appendChild(r);if(r.styleSheet){r.styleSheet.cssText=e}else{r.innerHTML=e}}else if(t==="svg"){n.insertAdjacentHTML("beforeend",e)}}function r(e){var r=localStorage[e];if(r){n(r,t(e))}else{var i=new XMLHttpRequest;i.open("GET",e,true);i.onreadystatechange=function(){if(i.readyState===4){n(i.responseText,t(e));localStorage[e]=i.responseText}};i.send()}}var e=["assets/site/css/non-critical.css","assets/site/img/icons.svg"];if(window.localStorage){for(var i=e.length;i--;){if(!(t(e[i])==="svg"&&!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))){r(e[i])}}}})()</script>
-   <script>window.Modernizr=function(e,t,n){function C(e){f.cssText=e}function k(e,t){return C(h.join(e+";")+(t||""))}function L(e,t){return typeof e===t}function A(e,t){return!!~(""+e).indexOf(t)}function O(e,t){for(var r in e){var i=e[r];if(!A(i,"-")&&f[i]!==n)return t=="pfx"?i:!0}return!1}function M(e,t,r){for(var i in e){var s=t[e[i]];if(s!==n)return r===!1?e[i]:L(s,"function")?s.bind(r||t):s}return!1}function _(e,t,n){var r=e.charAt(0).toUpperCase()+e.slice(1),i=(e+" "+d.join(r+" ")+r).split(" ");return L(t,"string")||L(t,"undefined")?O(i,t):(i=(e+" "+v.join(r+" ")+r).split(" "),M(i,t,n))}var r="2.8.3",i={},s=!0,o=t.documentElement,u="modernizr",a=t.createElement(u),f=a.style,l,c={}.toString,h=" -webkit- -moz- -o- -ms- ".split(" "),p="Webkit Moz O ms",d=p.split(" "),v=p.toLowerCase().split(" "),m={svg:"http://www.w3.org/2000/svg"},g={},y={},b={},w=[],E=w.slice,S,x=function(e,n,r,i){var s,a,f,l,c=t.createElement("div"),h=t.body,p=h||t.createElement("body");if(parseInt(r,10))while(r--)f=t.createElement("div"),f.id=i?i[r]:u+(r+1),c.appendChild(f);return s=["&#173;",'<style id="s',u,'">',e,"</style>"].join(""),c.id=u,(h?c:p).innerHTML+=s,p.appendChild(c),h||(p.style.background="",p.style.overflow="hidden",l=o.style.overflow,o.style.overflow="hidden",o.appendChild(p)),a=n(c,e),h?c.parentNode.removeChild(c):(p.parentNode.removeChild(p),o.style.overflow=l),!!a},T={}.hasOwnProperty,N;!L(T,"undefined")&&!L(T.call,"undefined")?N=function(e,t){return T.call(e,t)}:N=function(e,t){return t in e&&L(e.constructor.prototype[t],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(t){var n=this;if(typeof n!="function")throw new TypeError;var r=E.call(arguments,1),i=function(){if(this instanceof i){var e=function(){};e.prototype=n.prototype;var s=new e,o=n.apply(s,r.concat(E.call(arguments)));return Object(o)===o?o:s}return n.apply(t,r.concat(E.call(arguments)))};return i}),g.flexbox=function(){return _("flexWrap")},g.touch=function(){var n;return"ontouchstart"in e||e.DocumentTouch&&t instanceof DocumentTouch?n=!0:x(["@media (",h.join("touch-enabled),("),u,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(e){n=e.offsetTop===9}),n},g.csstransitions=function(){return _("transition")},g.svg=function(){return!!t.createElementNS&&!!t.createElementNS(m.svg,"svg").createSVGRect};for(var D in g)N(g,D)&&(S=D.toLowerCase(),i[S]=g[D](),w.push((i[S]?"":"no-")+S));return i.addTest=function(e,t){if(typeof e=="object")for(var r in e)N(e,r)&&i.addTest(r,e[r]);else{e=e.toLowerCase();if(i[e]!==n)return i;t=typeof t=="function"?t():t,typeof s!="undefined"&&s&&(o.className+=" "+(t?"":"no-")+e),i[e]=t}return i},C(""),a=l=null,i._version=r,i._prefixes=h,i._domPrefixes=v,i._cssomPrefixes=d,i.testProp=function(e){return O([e])},i.testAllProps=_,i.testStyles=x,o.className=o.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(s?" js "+w.join(" "):""),i}(this,this.document);</script>
+   <script>(function(){function t(e){return e.split(".").pop()}function n(e,t){var n=document.getElementsByTagName("head")[0];if(t==="css"){var r=document.createElement("style");n.appendChild(r);if(r.styleSheet){r.styleSheet.cssText=e}else{r.innerHTML=e}}else if(t==="svg"){n.insertAdjacentHTML("beforeend",e)}}function r(e){var r=localStorage[e];if(r){n(r,t(e))}else{var i=new XMLHttpRequest;i.open("GET",e,true);i.onreadystatechange=function(){if(i.readyState===4){n(i.responseText,t(e));localStorage[e]=i.responseText}};i.send()}}var e=["css/non-critical.css","img/icons.svg"];if(window.localStorage){for(var i=e.length;i--;){if(!(t(e[i])==="svg"&&!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))){r(e[i])}}}})()</script>
+   <script src="assets/site/js/modernizr.min.js"></script>
    <!--[if lt IE 9]><script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
    <title></title>
    <meta name="description" content="">
@@ -19,7 +18,7 @@
 
    <header class="l-header" role="banner">
 
-      <h1 class="c-site-logo"><a href=""><img src="assets/site/img/icon/menu.svg" alt=""></a></h1>
+      <h1 class=""><a href=""><img src="" alt=""></a></h1>
 
       <nav class="c-site-nav j-site-nav" role="navigation">
          <div class="o-wrapper">
@@ -39,178 +38,7 @@
 
       <main class="l-main-content" role="main">
 
-         <section class="o-spot">
 
-            <div class="o-spot__media"><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></div>
-
-            <div class="o-spot__body">
-               <h2 class="u-beta c-heading">Management assessment</h2>
-               <p>Assessing a company's management team(s) is seen crucial when closing business deals, since it could be the key to assure long-term success of a new established company or its failure. In addition, this will allow the organisation to understand by which means will the teams be performing their roles, in context with the company's future business plan. All this will clarify the structure of the organisation's work-force. Assessing a company's management team(s) is seen crucial when closing business deals, since it could be the key to assure long-term success of a new established company or its failure. In addition, this will allow the organisation to understand by which means will the teams be performing their roles.</p>
-            </div>
-
-         </section>
-
-         <section class="o-spot">
-
-            <div class="o-spot__media"><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></div>
-
-            <div class="o-spot__body">
-               <h2 class="u-beta c-heading">Gibil</h2>
-               <p>Gibil in Sumerian mythology is the god of fire, variously of the son of An and Ki, An and Shala or of Ishkur and Shala. He later developed into the Akkadian god Gerra. In some versions of the Enûma Eliš Gibil is said to maintain the sharp point of weapons, have broad wisdom, and that his mind is "so vast that all the gods, all of them, cannot fathom it". Some versions state Gibil, as lord of the fire and the forge, also possesses wisdom of metallurgy.</p>
-            </div>
-
-         </section>
-
-         <div class="content">
-
-            <h2 class="u-alpha c-heading">Lorem ipsum</h2>
-
-            <p>
-               Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, <a href="">cupiditate rerum</a> fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
-            </p>
-
-            <ul class="o-inline-list">
-               <li>
-                  <button class="c-button">
-                     <svg class="icon"><use xlink:href="#close"></use></svg><span>Close</span>
-                  </button>
-               </li>
-               <li>
-                  <button class="c-button" aria-pressed="false">
-                     <svg class="icon" role="image" aria-label="menu"><use xlink:href="#menu"></use></svg>
-                  </button>
-               </li>
-               <li>
-                  <button class="c-button c-button--alt">
-                     <span>Menu</span><svg class="icon"><use xlink:href="#menu"></use></svg>
-                  </button>
-               </li>
-               <li>
-                  <button class="c-button">Lorem</button>
-               </li>
-            </ul>
-
-            <p>
-               Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, <a href="">cupiditate rerum</a> fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
-            </p>
-
-            <h3 class="u-gamma c-heading">Lorem ipsum</h3>
-
-            <ul class="c-bullet-list">
-               <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, est enim explicabo ea animi laboriosam fugiat optio magni quam mollitia eum omnis id temporibus repellendus aut quo quibusdam voluptates obcaecati.</li>
-               <li>Facilis, earum, tempora non excepturi ea sunt minima quibusdam iure ut illum quo eos doloribus placeat autem saepe recusandae voluptates asperiores libero atque rerum a molestiae voluptatum dolor facere iste.</li>
-               <li>Asperiores, in, tempore, nulla adipisci assumenda perspiciatis modi eum voluptates tenetur facere magnam reiciendis maiores eius illo saepe inventore dolores eos nobis atque enim iusto ullam voluptatem dolore. Cum, corporis.</li>
-               <li>Veniam, harum, provident, a fugit assumenda ipsam perferendis debitis vel fuga suscipit sapiente atque eos corrupti. Delectus, ullam deleniti reprehenderit eaque laudantium facilis aut optio aliquam iusto amet minima pariatur.</li>
-               <li>Dolor, numquam, libero possimus reiciendis mollitia ullam quia voluptatibus sunt accusamus debitis cum vel illum fugit ducimus unde obcaecati accusantium dolorem ex nesciunt inventore dolores ipsum totam veritatis aliquam nulla!</li>
-            </ul>
-
-         </div>
-
-         <form action="">
-            <fieldset>
-
-               <label class="c-form-cell">
-                  <span class="c-form-cell__label">Your name</span>
-                  <input class="c-form-cell__input c-input j-input" value="Adam" type="text" name="name" required aria-describedby="tooltip1">
-                  <small class="c-form-cell__tooltip" id="tooltip1" role="tooltip">is your first name.</small>
-               </label>
-
-               <label class="c-form-cell">
-                  <span class="c-form-cell__label">Your e-mail</span>
-                  <input class="c-form-cell__input c-input j-input" type="email" name="email" required autocomplete="email" aria-describedby="tooltip2">
-                  <small class="c-form-cell__tooltip" id="tooltip2" role="tooltip">is the address associated with your account.</small>
-               </label>
-
-               <label class="c-form-cell">
-                  <span class="c-form-cell__label">Your age</span>
-                  <input class="c-form-cell__input c-input j-input" type="number" name="name" required>
-               </label>
-
-               <label>
-                  <input type="tel" name="name">
-                  <span>Your phone</span>
-               </label>
-
-               <label class="c-form-cell">
-                  <span class="c-form-cell__label">Your message</span>
-                  <textarea class="c-form-cell__input c-input j-input" name="msg" rows="5"></textarea>
-               </label>
-
-               <label>
-                  <select required aria-required="true">
-                     <option value="m">Male</option>
-                     <option value="f">Female</option>
-                     <option value="n">None</option>
-                  </select>
-                  <span>Your gender</span>
-               </label>
-
-               <label class="c-form-cell c-form-cell--inline">
-                  <input type="checkbox" name="test" required class="c-form-cell__input c-input j-input">
-                  <span class="c-input-placeholder c-form-cell__label">I agree with the terms.</span>
-               </label>
-
-               <button class="c-button c-button--alt" type="submit">Send</button>
-
-            </fieldset>
-         </form>
-
-         <p>
-            Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, cupiditate rerum fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
-         </p>
-
-         <div class="c-gallery">
-
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-            <a href=""><img src="http://cs7004.vk.me/c540106/v540106215/23328/Qv4OKCN_2rM.jpg" alt="A scenery of mountains."></a>
-
-         </div>
-
-         <p>
-            Lorem! ipsum dolor sit amet, consectetur adipisicing elit. Facilis dignissimos eligendi, neque sunt incidunt nemo ipsum. Repellat aliquam eaque, ipsam, cupiditate rerum fuga maxime asperiores unde nostrum recusandae, adipisci, est. Ratione dolorum blanditiis ullam distinctio maxime magni molestiae laudantium sint dicta est magnam quisquam molestias voluptas, facilis incidunt amet excepturi sunt obcaecati id officiis suscipit soluta quibusdam. Ipsam dignissimos, voluptatem. Quis eius delectus tenetur mollitia tempore, laudantium ex sed iste earum, totam perferendis eligendi, exercitationem! Dolor vitae enim voluptatem assumenda. Nostrum in impedit magnam. Harum consequuntur optio enim voluptatum commodi?
-         </p>
-
-         <table summary="">
-            <caption></caption>
-            <thead>
-               <tr>
-                  <th>Name</th>
-                  <th>Occupation</th>
-                  <th>Description</th>
-                  <th>Age</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <th>Jane Doe</th>
-                  <td>Unknown</td>
-                  <td><p>The name "Jane Doe" is used as placeholder name for a party whose true identity is unknown or must be withheld in a legal action, case, or discussion.</p></td>
-                  <td>N/A</td>
-               </tr>
-               <tr>
-                  <th>Hayao Miyazaki</th>
-                  <td>Director</td>
-                  <td><p>Hayao Miyazaki is a Japanese film director, animator, manga artist, illustrator, producer, and screenwriter.</p></td>
-                  <td>73</td>
-               </tr>
-               <tr>
-                  <th>Bruce Lee</th>
-                  <td>Actor and director and martial artists</td>
-                  <td><p>Bruce Lee was a Hong Kong action film actor, Hong Kong American martial artist, martial arts instructor, philosopher, filmmaker.</p></td>
-                  <td>32</td>
-               </tr>
-               <tr>
-                  <th>John Smith</th>
-                  <td>Biologist</td>
-                  <td><p>John Donnell Smith of Baltimore, Maryland was a biologist.</p></td>
-                  <td>99</td>
-               </tr>
-            </tbody>
-         </table>
 
       </main>
 

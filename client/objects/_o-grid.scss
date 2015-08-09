@@ -5,32 +5,38 @@
 /* Settings
    ========================================================================== */
 
-$GRID_COLUMNS: (
+$grid-columns: (
    '>=layout': 3,
    'inbetween': 2,
    '<column': 1
 );
-$GRID_HGAP: $GUTTER * 2;
-$GRID_VGAP: lines(3);
+$grid-hgap: const(GUTTER);
+$grid-vgap: lines(1);
 
 
 /* Classes
    ========================================================================== */
 
-.o-grid, %o-grid {
-   @include island($GRID_VGAP / lines(1) * 1);
-
+.o-grid,
+%o-grid {
    display: flex;
    flex-wrap: wrap;
+   margin-left: -$grid-hgap;
    justify-content: center;
-   margin-left: -$GRID_HGAP;
 
-   &__item {
-      margin-left: $GRID_HGAP;
-      margin-top: $GRID_VGAP;
+   .no-flexbox & {
+      display: block;
+      letter-spacing: -.31em;
+   }
+}
 
-      @each $breakpoint, $columns in $GRID_COLUMNS {
-         $width: (100% / $columns) - $GRID_HGAP;
+   .o-grid__item,
+   %o-grid__item {
+      margin-left: $grid-hgap;
+      margin-top: $grid-vgap;
+
+      @each $breakpoint, $columns in $grid-columns {
+         $width: (100% / $columns) - $grid-hgap;
 
          @include media($breakpoint) {
             &:nth-child(-n + #{$columns}) {
@@ -38,7 +44,7 @@ $GRID_VGAP: lines(3);
             }
          }
 
-         @if $breakpoint == $MEDIA_STATIC_BREAKPOINT {
+         @if $breakpoint == $media-static-breakpoint {
             width: $width;
          } @else {
             @include media($breakpoint) {
@@ -48,43 +54,38 @@ $GRID_VGAP: lines(3);
 
       }
 
-   }
-
-   .no-flexbox & {
-      display: block;
-      letter-spacing: -0.31em;
-
-      &__item {
+      .no-flexbox & {
          display: inline-block;
          letter-spacing: normal;
          vertical-align: top;
       }
    }
-}
 
-@mixin grid($items-per-row: $GRID_COLUMNS, $hgap: $GRID_HGAP, $vgap: $GRID_VGAP) {
+@mixin grid($items-per-row: $grid-columns, $hgap: $grid-hgap, $vgap: $grid-vgap) {
    @extend %o-grid;
 
-   $items-per-row: map-merge($GRID_COLUMNS, $items-per-row);
+   $items-per-row: map-merge($grid-columns, $items-per-row);
    $ie8-friendly: true;
 
-   @if ($hgap != 0) and (unit($hgap) != "%") {
+   @if ($hgap != 0) and (unit($hgap) != '%') {
       $ie8-friendly: false;
    }
 
-   @if $vgap != $GRID_VGAP {
+   @if $vgap != $grid-vgap {
       @include island($vgap / lines(1) * 1);
    }
 
-   @if $hgap != $GRID_HGAP {
+   @if $hgap != $grid-hgap {
       @if $ie8-friendly {
          margin-left: -$hgap;
+
          > * {
             margin-left: $hgap;
          }
       } @else {
-         @include gtIE8 {
+         @include gt-ie8 {
             margin-left: -$hgap;
+
             > * {
                margin-left: $hgap;
             }
@@ -95,9 +96,9 @@ $GRID_VGAP: lines(3);
    > * {
       @extend %o-grid__item;
 
-      $is-default: ($GRID_COLUMNS == $items-per-row) and ($hgap == $GRID_HGAP);
+      $is-default: ($grid-columns == $items-per-row) and ($hgap == $grid-hgap);
 
-      @if ($vgap != $GRID_VGAP) {
+      @if ($vgap != $grid-vgap) {
          margin-top: $vgap;
       }
 
@@ -106,20 +107,20 @@ $GRID_VGAP: lines(3);
          @if not $is-default {
             $width: if($ie8-friendly, (100% / $columns) - $hgap, calc(#{(100% / $columns)} - #{$hgap}));
 
-            margin-top: $vgap !important;
+            margin-top: $vgap;// !important;
 
             @include media($breakpoint) {
                &:nth-child(-n + #{$columns}) {
-                  margin-top: 0 !important;
+                  margin-top: 0;// !important;
                }
             }
 
-            @if $breakpoint == $MEDIA_STATIC_BREAKPOINT {
+            @if $breakpoint == $media-static-breakpoint {
 
                @if $ie8-friendly {
                   width: $width;
                } @else {
-                  width: (100% / $columns) - $GRID_HGAP;
+                  width: (100% / $columns) - $grid-hgap;
                   width: $width;
                }
 

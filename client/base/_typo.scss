@@ -5,9 +5,9 @@
 /* Variables
    ========================================================================== */
 
-$FONTS: (
-   body: ('Azo Sans', sans-serif),
-   display: ('Playfair Display', serif)
+$fonts: (
+   body: ('Source Sans Pro', 'Helvetica Neue', Helvetica, 'Segoe UI', Roboto, Arial, sans-serif),
+   display: (Bariol, 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif)
 );
 
 /* Helpers
@@ -15,7 +15,7 @@ $FONTS: (
 
 // Retrieve a font stack, either of the body or display variety.
 @function font($name) {
-   @return map-get($FONTS, $name);
+   @return map-get($fonts, $name);
 }
 
 // Returns a multiple of the leading. Used to create any sort of vertical spacing.
@@ -23,9 +23,9 @@ $FONTS: (
    @if $count == 0 {
       @return 0;
    } @else if $correction == null  {
-      @return $count * $LINE_HEIGHT * 1rem;
+      @return $count * const(LINE_HEIGHT) * 1rem;
    } @else {
-      @return calc(#{$count * $LINE_HEIGHT * 1rem} + #{$correction});
+      @return calc(#{$count * const(LINE_HEIGHT) * 1rem} + #{$correction});
    }
 }
 
@@ -54,22 +54,18 @@ $FONTS: (
 // Default content vertical spacing.
 body * + * {
    margin-top: lines(1);
-
-   @include media('condensed') {
-      margin-top: lines(.5);
-   }
 }
 
 // Alter the default vertical spacing.
-@mixin v-spacing($lines, $fixed: false) {
-   > * + * {
-      margin-top: lines($lines);
+@mixin v-spacing($lines, $fixed: false, $propagate: false) {
+   $selector: '* + *';
 
-      @if not $fixed {
-         @include media('condensed') {
-            margin-top: lines($lines / 2);
-         }
-      }
+   @if not $propagate {
+      $selector: selector_nest('>', $selector);
+   }
+
+   #{$selector} {
+      margin-top: lines($lines);
    }
 }
 
@@ -77,6 +73,10 @@ body * + * {
 @mixin h-spacing($distance, $fixed: false) {
    > * {
       margin-right: $distance;
+
+      &:last-child {
+         margin-right: 0;
+      }
 
       @if not $fixed {
          @include media('<column') {
@@ -87,9 +87,16 @@ body * + * {
 }
 
 // Removes the horizontal spacing.
-@mixin no-spacing {
-   > * {
+@mixin no-spacing($propagate: false) {
+   $selector: '*';
+
+   @if not $propagate {
+      $selector: selector_nest('>', $selector);
+   }
+
+   #{$selector} {
       margin-top: 0;
+      margin-bottom: 0;
    }
 }
 
@@ -105,32 +112,18 @@ body * + * {
 @mixin island($leading: 1, $trailing: $leading, $fixed: false) {
 
    @if $leading > 0 {
-      &:not(:first-child) {
-         margin-top: lines($leading);
+      margin-top: lines($leading);
+
+      &:first-child {
+         margin-top: 0;
       }
    }
 
    @if $trailing > 0 {
-      &:not(:last-child) {
-         margin-bottom: lines($trailing);
-      }
-   }
+      margin-bottom: lines($trailing);
 
-   @if not $fixed {
-      @include media('condensed') {
-
-         @if $leading > 0 {
-            &:not(:first-child) {
-               margin-top: lines($leading / 2);
-            }
-         }
-
-         @if $trailing > 0 {
-            &:not(:last-child) {
-               margin-bottom: lines($trailing / 2);
-            }
-         }
-
+      &:last-child {
+         margin-bottom: 0;
       }
    }
 }
@@ -144,31 +137,31 @@ body * + * {
    ========================================================================== */
 
 html {
-   font-size: $BASE * 1em;
-   line-height: $LINE_HEIGHT;
-   font-family: font(body);
    color: color(text);
-   font-feature-settings: 'liga', 'kern';
+   font-family: font(body);
+   font-size: const(BASE) * 1em;
+   line-height: const(LINE_HEIGHT);
+   font-weight: 400;
 
    @include media('<column') {
-      font-size: $BASE * 1em * micro-scale(-1);
+      font-size: const(BASE) * 1em * micro-scale(-1);
    }
 }
 
 body {
+   @include no-spacing;
+
    background: color(background);
 }
 
 a {
-   li &,
-   p & {
-      text-decoration: underline;
-      color: color(highlight);
+   color: shade(color(highlight), .2);
+   text-decoration: underline;
+   transition: color .2s;
 
-      &:focus,
-      &:hover {
-         color: color(text);
-      }
+   &:focus,
+   &:hover {
+      color: color(highlight);
    }
 }
 
@@ -176,41 +169,10 @@ em {
    color: color(highlight);
 }
 
-small {
-   font-size: micro-scale(-4) * 1em;
+strong {
+   font-weight: 600;
 }
 
-
-/* Editable content
-   ========================================================================== */
-
-// .content {
-//    > h2, > h3, > h4 {
-//       @extend %heading;
-//    }
-
-//    > h2 {
-//       @extend %gamma;
-//    }
-
-//    > h3 {
-//       @extend %delta;
-//    }
-
-//    > h4 {
-//       @extend %epsilon;
-//    }
-
-//    > img {
-//       @include island(2);
-//       @include center;
-//    }
-
-//    > ul:not([class]) {
-//       @extend %bullet-list;
-//    }
-
-//    > ol {
-//       @extend %numbered-list;
-//    }
-// }
+small {
+   font-size: micro-scale(-2) * 1em;
+}

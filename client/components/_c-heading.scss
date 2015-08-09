@@ -10,10 +10,4 @@
    font-family: font(display);
    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
    font-weight: 400;
-
-   * + & {
-      @include aloof(2);
-
-      line-height: lines(1);
-   }
 }

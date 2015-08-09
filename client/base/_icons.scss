@@ -5,14 +5,14 @@
 /* Variables
    ========================================================================== */
 
-$ICON_GAP: .65em;
-$ICON_SIZE: $LINE_HEIGHT * 1em;
+$icon-gap: .65em;
+$icon-size: const(LINE_HEIGHT) * 1em;
 
 
 /* Mixins
    ========================================================================== */
 
-@mixin icon-size($new-size, $line-height: $LINE_HEIGHT) {
+@mixin icon-size($new-size, $line-height: const(LINE_HEIGHT)) {
 
    .icon,
    .j-icon-placeholder {
@@ -24,7 +24,7 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
       @include size($new-size);
 
       @if ($new-size < ($line-height * 1em)) {
-         vertical-align: baseline;
+         vertical-align: middle;
       } @else {
          margin-top: -($new-size - ($line-height * 1em)) / 2;
       }
@@ -43,7 +43,7 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
 
 .icon,
 .j-icon-placeholder {
-   @include size($ICON_SIZE);
+   @include size($icon-size);
 
    display: inline-block;
    margin-top: 0;
@@ -51,13 +51,14 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
 }
 
 .icon {
+   fill: currentColor;
 
    &:first-child {
-      margin-right: $ICON_GAP;
+      margin-right: $icon-gap;
    }
 
    &:last-child {
-      margin-left: $ICON_GAP;
+      margin-left: $icon-gap;
    }
 
    &:first-child:last-child {
@@ -73,15 +74,20 @@ $ICON_SIZE: $LINE_HEIGHT * 1em;
       margin-right: auto !important;
    }
 
+   &--inline {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+   }
+
    .no-svg & {
-      margin-left: $ICON_GAP;
+      margin-left: $icon-gap;
 
       &:first-child {
          margin-left: 0;
-         margin-right: -($ICON_SIZE);
+         margin-right: -($icon-size);
 
          ~ span {
-            margin-left: $ICON_GAP;
+            margin-left: $icon-gap;
          }
 
       }

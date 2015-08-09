@@ -2,43 +2,40 @@
    Spot
    ========================================================================== */
 
-.o-spot, %o-spot {
+.o-spot {
    @include clearfix;
    @include no-spacing;
    @include island(2);
 
-   &__media {
+   @include media('<column') {
+      @include v-spacing(1);
+   }
+}
+
+   .o-spot__media {
       float: left;
-      width: scale-to-percentage(0, 0 1);
+      margin-right: const(GUTTER);
       margin-top: .2em;
-      margin-right: $GUTTER;
+      width: scale-to-percentage(0, 0 1);
+
+      @include media('<column') {
+         float: none;
+         margin-right: 0;
+         margin-top: 0;
+         width: auto;
+      }
 
       * {
          width: 100%;
       }
    }
 
-   &__body {
+   .o-spot__body {
       @include v-spacing(.5);
 
       overflow: hidden;
-   }
 
-   @include media('<layout') {
-      &__body {
+      @include media('<layout') {
          overflow: visible;
       }
    }
-
-   @include media('<column') {
-      @include v-spacing(1);
-
-      &__media {
-         float: none;
-         width: auto;
-         margin-top: 0;
-         margin-right: 0;
-      }
-
-   }
-}

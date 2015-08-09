@@ -3,68 +3,64 @@
    ========================================================================== */
 
 .u-kilo {
-   font-size: micro-scale(26, rem) !important;
-
-   @include media('<layout') {
-      font-size: micro-scale(21, rem) !important;
-   }
-
-   @include media('<column') {
-      font-size: micro-scale(17, rem) !important;
-   }
+   font-size: 4rem !important;
 }
 
-.u-alpha {
-   font-size: micro-scale(18, rem) !important;
+.u-alpha,
+%u-alpha {
+   font-size: 2.5rem !important;
 
    @include media('<layout') {
       font-size: micro-scale(15, rem) !important;
    }
 
    @include media('<column') {
+      font-size: micro-scale(14, rem) !important;
+   }
+}
+
+.u-beta,
+%u-beta {
+   font-size: 2rem !important;
+
+   @include media('<layout') {
       font-size: micro-scale(12, rem) !important;
    }
-}
 
-.u-beta {
-   font-size: micro-scale(12, rem) !important;
-
-   @include media('<layout') {
+   @include media('<column') {
       font-size: micro-scale(10, rem) !important;
    }
-
-   @include media('<column') {
-      font-size: micro-scale(7, rem) !important;
-   }
 }
 
-.u-gamma {
-   font-size: micro-scale(8, rem) !important;
-   line-height: $LINE-HEIGHT * micro-scale(-4);
+.u-gamma,
+%u-gamma {
+   font-size: 1.5rem !important;
 
    @include media('<layout') {
+      font-size: micro-scale(8, rem) !important;
+   }
+
+   @include media('<column') {
       font-size: micro-scale(6, rem) !important;
    }
-
-   @include media('<column') {
-      font-size: micro-scale(4, rem) !important;
-   }
 }
 
-.u-delta {
-   font-size: micro-scale(5, rem) !important;
+.u-delta,
+%u-delta {
+   font-size: 1.25rem !important;
 
    @include media('<layout') {
-      font-size: micro-scale(3, rem) !important;
+      font-size: micro-scale(4, rem) !important;
    }
 
    @include media('<column') {
-      font-size: micro-scale(2, rem) !important;
+      font-size: micro-scale(3, rem) !important;
    }
 }
 
-.u-epsilon {
-   font-size: micro-scale(3, rem) !important;
+.u-epsilon,
+%u-epsilon {
+   font-size: 1.125rem !important;
 
    @include media('<layout') {
       font-size: micro-scale(2, rem) !important;

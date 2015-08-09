@@ -4,8 +4,4 @@
 
 .l-header {
    @include island(3);
-
-   padding-top: lines(2);
-   background: url('../img/header-bg.jpg') no-repeat center;
-   background-size: cover;
 }

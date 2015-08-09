@@ -10,11 +10,11 @@
  * Reset default margin and padding to zero.
  */
 * {
-   margin: 0;
-   padding: 0;
    border: 0;
-   outline: 0;
    box-sizing: border-box;
+   margin: 0;
+   outline: 0;
+   padding: 0;
 }
 
 *:after,
@@ -105,7 +105,8 @@ svg:not(:root) {
  */
 a,
 label,
-[tabindex] {
+[tabindex],
+button {
    background: transparent;
    -webkit-tap-highlight-color: transparent;
 }
@@ -168,7 +169,7 @@ pre {
  * Set consistent quote types.
  */
 q {
-   quotes: "\201C" "\201D" "\2018" "\2019";
+   quotes: '\201C' '\201D' '\2018' '\2019';
 }
 
 /**
@@ -190,11 +191,11 @@ sup {
 }
 
 sup {
-   top: -0.5em;
+   top: -.5em;
 }
 
 sub {
-   bottom: -0.25em;
+   bottom: -.25em;
 }
 
 /**
@@ -227,11 +228,17 @@ select,
 textarea {
    font-family: inherit; /* 1 */
    font-size: 100%; /* 2 */
+   font-weight: inherit;
    outline: 0;
 }
 
 legend + * {
    -webkit-margin-top-collapse: separate;
+}
+
+button {
+   background: none;
+   color: inherit;
 }
 
 /**
@@ -271,15 +278,15 @@ textarea {
  * 3. Improve usability and consistency of cursor style between image-type 'input' and others.
  */
 button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
+html input[type='button'], /* 1 */
+input[type='reset'],
+input[type='submit'] {
    -webkit-appearance: button; /* 2 */
    cursor: pointer; /* 3 */
 }
 
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
    cursor: pointer;
 }
 
@@ -294,15 +301,15 @@ html input[disabled] {
 /**
  * Address 'appearance' set to 'searchfield' in Safari 5 and Chrome.
  */
-input[type="search"] {
+input[type='search'] {
    -webkit-appearance: textfield;
 }
 
 /**
  * Remove inner padding and search cancel button in Safari 5 and Chrome on OS X.
  */
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
    -webkit-appearance: none;
 }
 
@@ -334,12 +341,12 @@ input::-ms-clear {
 /**
  * Remove spinners for number input.
  */
-input[type="number"] {
+input[type='number'] {
    -moz-appearance: textfield;
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
    -webkit-appearance: none;
    margin: 0;
 }
@@ -348,8 +355,8 @@ input[type="number"]::-webkit-inner-spin-button {
  * Remove default appearance from select.
  */
 select {
-   -webkit-appearance: none;
    -moz-appearance: none;
+   -webkit-appearance: none;
    appearance: none;
 
    &::-ms-expand {
@@ -363,7 +370,7 @@ select {
 
    &:-moz-focusring {
       color: transparent;
-      text-shadow: 0 0 0 black;
+      text-shadow: 0 0 0 #000;
    }
 }
 
@@ -384,4 +391,8 @@ table {
 img {
    display: block;
    max-width: 100%;
+}
+
+[src$=".svg"] {
+   width: 100%;
 }

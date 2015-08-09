@@ -2,6 +2,7 @@
    Block list
    ========================================================================== */
 
-.o-block-list, %o-block-list {
+.o-block-list,
+%o-block-list {
    @include v-spacing(.25);
 }

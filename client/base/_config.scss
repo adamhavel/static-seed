@@ -2,16 +2,37 @@
    Configuration
    ========================================================================== */
 
+$constants: () !global;
+
+/* Functions
+   ========================================================================== */
+
+@mixin const($name, $value) {
+   @if map-has-key($constants, $name) {
+      @error 'Constant `#{$name}` already defined.';
+   }
+
+   $constants: map-merge($constants, ($name: $value)) !global;
+}
+
+@function const($name) {
+   @if not map-has-key($constants, $name) {
+      @error 'Unknown constant `#{$name}`.';
+   }
+
+   @return map-get($constants, $name);
+}
+
 /* Typography
    ========================================================================== */
 
-$BASE: 1;
-$LINE_HEIGHT: micro-scale(8);
-$LINE_LENGTH: 38em;
+@include const('BASE', 1);
+@include const('LINE_HEIGHT', 1.75);
+@include const('LINE_LENGTH', 40rem);
 
 
 /* Layout
    ========================================================================== */
 
-$GUTTER: 2%;
-$LAYOUT_WIDTH: $LINE_LENGTH + ($LINE_LENGTH * macro-scale(-1));
+@include const('GUTTER', 2%);
+@include const('LAYOUT_WIDTH', const(LINE_LENGTH) + const(LINE_LENGTH) * macro-scale(-1));

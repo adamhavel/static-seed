@@ -3,7 +3,7 @@
    ========================================================================== */
 
 @function em-to-px($value) {
-   @return round($BASE * 16px * ($value / ($value * 0 + 1)));
+   @return round(const(BASE) * 16px * ($value / ($value * 0 + 1)));
 }
 
 @mixin size($width, $height: $width) {
@@ -16,13 +16,13 @@
    margin-right: auto;
 }
 
-@mixin gtIE8 {
+@mixin gt-ie8 {
    @media only screen {
       @content;
    }
 }
 
-@mixin lteIE8 {
+@mixin lte-ie8 {
    @media \0screen\,screen\9 {
       @content;
    }
@@ -39,21 +39,16 @@
 
 @mixin clearfix {
    &:after {
+      clear: both;
       content: '';
       display: table;
-      clear: both;
    }
 }
 
-@function scale-to-percentage($item-interval, $configuration, $gap: $GUTTER) {
+@function scale-to-percentage($item-interval, $configuration, $gap: const(GUTTER)) {
    $total: 0;
    @each $interval in $configuration {
       $total: $total + macro-scale($interval);
    }
    @return (macro-scale($item-interval) / $total) * 100% - ($gap * (length($configuration) - 1) / length($configuration));
 }
-
-.u-center {
-   text-align: center !important;
-}
-

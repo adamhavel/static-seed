@@ -5,30 +5,30 @@
 /* Settings
    ========================================================================== */
 
-$MEDIA_BREAKPOINTS: (
+$media-breakpoints: (
    char: em-to-px(.5em),
-   column: em-to-px($LINE_LENGTH),
-   layout: em-to-px($LAYOUT_WIDTH)
+   column: em-to-px(const(LINE_LENGTH)),
+   layout: em-to-px(const(LAYOUT_WIDTH))
 );
 
-$MEDIA_EXPRESSIONS: (
+$media-expressions: (
    screen: 'screen',
    print: 'print',
-   inbetween: '(max-width: #{map-get($MEDIA_BREAKPOINTS, layout) - 1px}) and (min-width: #{map-get($MEDIA_BREAKPOINTS, column)})',
+   inbetween: '(max-width: #{map-get($media-breakpoints, layout) - 1px}) and (min-width: #{map-get($media-breakpoints, column)})',
    landscape: '(orientation: landscape)',
    portrait: '(orientation: portrait)',
-   condensed: ('(max-width: #{map-get($MEDIA_BREAKPOINTS, column) - 1px})', '(max-height: #{em-to-px($LINE-HEIGHT * 20em)})'),
+   condensed: ('(max-width: #{map-get($media-breakpoints, column) - 1px})', '(max-height: #{em-to-px(const(LINE_HEIGHT) * 20em)})'),
    retina2x: ('(-webkit-min-device-pixel-ratio: 2)', '(min-resolution: 192dpi)'),
    retina3x: ('(-webkit-min-device-pixel-ratio: 3)', '(min-resolution: 350dpi)')
 );
 
-$MEDIA_UNIT_INTERVALS: (
+$media-unit-intervals: (
    'px': 1,
-   'em': 0.01,
-   'rem': 0.1
+   'em': .01,
+   'rem': .1
 );
 
-$MEDIA_STATIC_BREAKPOINT: '>=layout';
+$media-static-breakpoint: '>=layout';
 
 /* Functions
    ========================================================================== */
@@ -120,10 +120,10 @@ $MEDIA_STATIC_BREAKPOINT: '>=layout';
    }
 
    // Checking what type of expression we're dealing with
-   @if map-has-key($MEDIA_BREAKPOINTS, $value) {
-      $result: map-get($MEDIA_BREAKPOINTS, $value);
-   } @else if map-has-key($MEDIA_EXPRESSIONS, $expression) {
-      $result: map-get($MEDIA_EXPRESSIONS, $expression);
+   @if map-has-key($media-breakpoints, $value) {
+      $result: map-get($media-breakpoints, $value);
+   } @else if map-has-key($media-expressions, $expression) {
+      $result: map-get($media-expressions, $expression);
       $is-width: false;
    } @else {
       $result: to-number($value);
@@ -133,8 +133,8 @@ $MEDIA_STATIC_BREAKPOINT: '>=layout';
       $unit: unit($result);
       $interval: 0;
 
-      @if (map-has-key($MEDIA_UNIT_INTERVALS, $unit)) {
-         $interval: map-get($MEDIA_UNIT_INTERVALS, $unit);
+      @if (map-has-key($media-unit-intervals, $unit)) {
+         $interval: map-get($media-unit-intervals, $unit);
       } @else {
          @warn 'Unknown unit: #{$unit}';
       }
@@ -194,8 +194,8 @@ $MEDIA_STATIC_BREAKPOINT: '>=layout';
       } @else {
 
          @if type-of($index) != 'number' {
-           $result: if($minus, $result * -1, $result);
-           @return _length($result, str-slice($string, $i));
+            $result: if($minus, $result * -1, $result);
+            @return _length($result, str-slice($string, $i));
          }
 
          $number: nth($numbers, $index);
@@ -203,9 +203,9 @@ $MEDIA_STATIC_BREAKPOINT: '>=layout';
          @if $divider == 0 {
             $result: $result * 10;
          } @else {
-           // Move the decimal dot to the left
-           $divider: $divider * 10;
-           $number: $number / $divider;
+            // Move the decimal dot to the left
+            $divider: $divider * 10;
+            $number: $number / $divider;
          }
 
          $result: $result + $number;
@@ -241,7 +241,7 @@ body {
       display: none;
    }
 
-   @each $type in map-keys($MEDIA_BREAKPOINTS) {
+   @each $type in map-keys($media-breakpoints) {
       @include media('>=' + $type) {
          &:after {
             content: quote($type);

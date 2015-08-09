@@ -2,18 +2,19 @@
    Inline list
    ========================================================================== */
 
-.o-inline-list, %o-inline-list {
+.o-inline-list,
+%o-inline-list {
    @include no-spacing;
    @include h-spacing(1em);
 
+   letter-spacing: -.31em;
    margin-bottom: lines(-.25);
-   letter-spacing: -0.31em;
 
    > li {
       display: inline-block;
+      letter-spacing: normal;
       margin-bottom: lines(.25);
       vertical-align: middle;
-      letter-spacing: normal;
    }
 
    &--spread {

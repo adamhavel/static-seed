@@ -2,32 +2,41 @@
    Layout
    ========================================================================== */
 
-.o-layout, %o-layout {
+.o-layout {
    @include clearfix;
    @include no-spacing;
 
-   &__item {
-      float: left;
-      width: scale-to-percentage(1, 0 1);
-
-      &:first-child {
-         width: scale-to-percentage(0, 0 1);
-         margin-right: $GUTTER;
-      }
-   }
-
-      &--equal &__item {
-         width: 50% - ($GUTTER / 2);
-      }
-
-   @include media('<column') {
+   @include media('<layout') {
       @include v-spacing(1);
-
-      &__item {
-         float: none;
-         width: auto !important;
-         margin-right: 0 !important;
-      }
-
    }
 }
+
+   .o-layout__item {
+      $gutter: const(GUTTER) * 2;
+
+      float: left;
+      width: scale-to-percentage(0, 0 1, $gutter);
+
+      @include media('<layout') {
+         float: none;
+         margin-right: 0 !important;
+         width: auto !important;
+      }
+
+      &:first-child {
+         margin-right: $gutter;
+         width: scale-to-percentage(1, 0 1, $gutter);
+      }
+
+      .o-layout--rev & {
+         width: scale-to-percentage(1, 0 1, $gutter);
+
+         &:first-child {
+            width: scale-to-percentage(0, 0 1, $gutter);
+         }
+      }
+
+      .o-layout--equal & {
+         width: 50% - ($gutter / 2) !important;
+      }
+   }

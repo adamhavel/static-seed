@@ -5,7 +5,7 @@
 .c-bullet-list {
    @extend %o-block-list;
    $taper: 1.25em;
-   $size: $LINE_HEIGHT * .33em;
+   $size: const(LINE_HEIGHT) * .33em;
 
    > li {
       padding-left: $taper;
@@ -15,7 +15,7 @@
 
          content: '';
          float: left;
-         margin-top: ($LINE_HEIGHT / 2) - ($size / 2);
+         margin-top: (const(LINE_HEIGHT) / 2) - ($size / 2);
          margin-left: -$taper;
          background: color(text);
          transform: rotate(45deg);

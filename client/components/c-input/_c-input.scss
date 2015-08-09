@@ -58,7 +58,7 @@ $INPUT_COLORS: (
          @extend %t-input;
       }
 
-      @include gtIE8 {
+      @include gt-ie8 {
          @include hide;
 
          & ~ .c-input-placeholder {

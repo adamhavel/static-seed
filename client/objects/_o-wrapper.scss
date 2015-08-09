@@ -2,10 +2,14 @@
    Wrapper
    ========================================================================== */
 
-.o-wrapper, %o-wrapper {
+.o-wrapper {
    @include center;
    @include clearfix;
 
-   max-width: $LAYOUT_WIDTH;
-   padding: 0 $GUTTER;
+   max-width: const(LAYOUT_WIDTH);
+   padding: 0 const(GUTTER);
+
+   @include media('<layout') {
+      padding: 0 const(GUTTER) * 2;
+   }
 }
