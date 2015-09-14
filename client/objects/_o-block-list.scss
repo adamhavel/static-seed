@@ -5,4 +5,8 @@
 .o-block-list,
 %o-block-list {
    @include v-spacing(.25);
+
+   > * {
+      display: block;
+   }
 }
