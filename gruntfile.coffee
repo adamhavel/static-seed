@@ -208,7 +208,7 @@ module.exports = (grunt) ->
             files: ['client/**/*.js']
             tasks: ['make_js']
          html:
-            files: ['views/*.html']
+            files: ['public/*.html']
          images:
             files: ['public/assets/site/img/*.(png|jpg|gif|svg)']
          icons:
