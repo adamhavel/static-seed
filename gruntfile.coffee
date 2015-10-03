@@ -39,9 +39,6 @@ module.exports = (grunt) ->
          modernizr:
             src: 'public/assets/site/lib/modernizr/modernizr.custom.js'
             dest: 'public/assets/site/js/modernizr.min.js'
-         smoothscroll:
-            src: 'public/assets/site/lib/smoothscroll/smoothscroll.js'
-            dest: 'public/assets/site/js/smoothscroll.min.js'
 
       # CSS
 
@@ -108,18 +105,6 @@ module.exports = (grunt) ->
                   '!img/icon/**'
                ]
                dest: 'build/public'
-            },
-            {
-               cwd: 'views'
-               expand: true
-               src: '**/*.html'
-               dest: 'build/views'
-            },
-            {
-               cwd: 'locales'
-               expand: true
-               src: '**/*.json'
-               dest: 'build/locales'
             }]
 
       hashres:
@@ -132,17 +117,15 @@ module.exports = (grunt) ->
                'build/public/assets/site/css/non-critical.css',
                'build/public/assets/site/img/icons.svg'
             ]
-            dest: 'build/views/*.html'
+            dest: 'build/public/*.html'
 
       inliner:
-         options:
-            baseDir: 'build/public'
          default:
             files: [{
                expand: true
-               cwd: 'build/views'
+               cwd: 'build/public'
                src: '*.html'
-               dest: 'build/views'
+               dest: 'build/public'
             }]
          modernizr:
             options:
@@ -150,21 +133,10 @@ module.exports = (grunt) ->
                css: false
             files: [{
                expand: true
-               cwd: 'build/views'
+               cwd: 'build/public'
                src: '*.html'
-               dest: 'build/views'
+               dest: 'build/public'
             }]
-
-      raggedast:
-         options:
-            type: 'json'
-            ignore: /^web\./i
-            shortWords: 0
-         cz:
-            options:
-               lang: 'cs'
-            src: 'build/locales/cs.json'
-            dest: 'build/locales/cs.json'
 
       # Images
 
@@ -248,7 +220,6 @@ module.exports = (grunt) ->
 
    grunt.loadNpmTasks 'grunt-autoprefixer'
    grunt.loadNpmTasks 'grunt-babel'
-   grunt.loadNpmTasks 'grunt-combine-media-queries'
    grunt.loadNpmTasks 'grunt-concurrent'
    grunt.loadNpmTasks 'grunt-contrib-clean'
    grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -261,7 +232,6 @@ module.exports = (grunt) ->
    grunt.loadNpmTasks 'grunt-hashres'
    grunt.loadNpmTasks 'grunt-inliner'
    grunt.loadNpmTasks 'grunt-modernizr'
-   grunt.loadNpmTasks 'grunt-raggedast'
    grunt.loadNpmTasks 'grunt-sass'
    grunt.loadNpmTasks 'grunt-sass-globbing'
    grunt.loadNpmTasks 'grunt-svg-to-png'
@@ -290,7 +260,7 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'init',
       'Builds the non-critical stylesheet.',
-      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:modernizr', 'uglify:fastclick', 'uglify:smoothscroll', 'make_js', 'make_icons']
+      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:modernizr', 'uglify:fastclick', 'make_js', 'make_icons']
 
    grunt.registerTask 'develop',
       'Watches the project for changes and automatically builds them.',
@@ -298,5 +268,5 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'build',
       'Compiles all of the assets and copies the files to the build directory.',
-      ['init', 'clean:build', 'copy:build', 'raggedast', 'cssmin', 'uglify:app', 'inliner', 'hashres', 'svgmin', 'imagemin']
+      ['init', 'clean:build', 'copy:build', 'cssmin', 'uglify:app', 'inliner', 'hashres', 'svgmin', 'imagemin']
 
