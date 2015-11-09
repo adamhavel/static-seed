@@ -11,19 +11,16 @@ $FONTS_PATH: 'assets/site/font/';
 /* Helpers
    ========================================================================== */
 
-@mixin define-font($name, $file) {
-   $path: $FONTS_PATH + $file;
+@mixin define-font($name, $file, $weight: null) {
+    $path: $FONTS_PATH + $file;
 
-   @font-face {
-      font-family: $name;
-      src: url($path + '.eot?#ie8hack') format('ie9hack');
-   }
-
-   @font-face {
-      font-family: $name;
-      src: base64('../public/' + $path + '.woff') format('woff'),
-           url($path + '.ttf') format('truetype');;
-   }
+    @font-face {
+        font-family: $name;
+        src: base64('../public/' + $path + '.woff') format('woff');
+        @if $weight not null {
+            font-weight: $weight;
+        }
+    }
 
 }
 
@@ -31,5 +28,4 @@ $FONTS_PATH: 'assets/site/font/';
 /* Fonts
    ========================================================================== */
 
-@include define-font('Azo Sans', 'azosans');
-@include define-font('Playfair Display', 'playfairdisplay');
+//@include define-font('', '');

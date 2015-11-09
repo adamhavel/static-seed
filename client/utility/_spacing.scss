@@ -3,9 +3,9 @@
    ========================================================================== */
 
 .u-islet {
-   @include island(2);
+    @include island(1);
 }
 
 .u-island {
-   @include island(3);
+    @include island(2);
 }

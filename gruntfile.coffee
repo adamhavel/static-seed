@@ -18,12 +18,9 @@ module.exports = (grunt) ->
 
       modernizr:
          default:
-            devFile: 'public/assets/site/lib/modernizr/modernizr.js'
-            outputFile: 'public/assets/site/lib/modernizr/modernizr.custom.js'
-            extra:
-               shiv: false
-               load: false
+            dest: 'public/lib/modernizr/modernizr.custom.js'
             uglify: false
+            options: ['prefixed']
             files:
                src: ['client/**/*.js',' public/assets/site/css/default.css']
 
@@ -196,8 +193,6 @@ module.exports = (grunt) ->
             spawn: false
          gruntfile:
             files: ['Gruntfile.coffee']
-         locales:
-            files: ['locales/**/*.json']
          sass:
             files: ['client/**/*.scss']
             tasks: ['make_css']
@@ -242,7 +237,7 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'make_css',
       'Builds the critical stylesheet.',
-      ['sass_globbing', 'exec:sass', 'autoprefixer:default']
+      ['sass_globbing', 'sass', 'autoprefixer:default']
 
    grunt.registerTask 'make_js',
       'Bundles and transpiles scripts.',

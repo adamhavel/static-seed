@@ -2,20 +2,12 @@
    Sizes
    ========================================================================== */
 
-.u-kilo {
-   font-size: 4rem !important;
-}
-
 .u-alpha,
 %u-alpha {
-   font-size: 2.5rem !important;
-
-   @include media('<layout') {
-      font-size: micro-scale(15, rem) !important;
-   }
+   font-size: 3rem !important;
 
    @include media('<column') {
-      font-size: micro-scale(14, rem) !important;
+      font-size: 2rem !important;
    }
 }
 
@@ -23,12 +15,8 @@
 %u-beta {
    font-size: 2rem !important;
 
-   @include media('<layout') {
-      font-size: micro-scale(12, rem) !important;
-   }
-
    @include media('<column') {
-      font-size: micro-scale(10, rem) !important;
+      font-size: 1.5rem !important;
    }
 }
 
@@ -36,12 +24,8 @@
 %u-gamma {
    font-size: 1.5rem !important;
 
-   @include media('<layout') {
-      font-size: micro-scale(8, rem) !important;
-   }
-
    @include media('<column') {
-      font-size: micro-scale(6, rem) !important;
+      font-size: 1.25rem !important;
    }
 }
 
@@ -49,12 +33,8 @@
 %u-delta {
    font-size: 1.25rem !important;
 
-   @include media('<layout') {
-      font-size: micro-scale(4, rem) !important;
-   }
-
    @include media('<column') {
-      font-size: micro-scale(3, rem) !important;
+      font-size: 1.125rem !important;
    }
 }
 
@@ -62,27 +42,19 @@
 %u-epsilon {
    font-size: 1.125rem !important;
 
-   @include media('<layout') {
-      font-size: micro-scale(2, rem) !important;
-   }
-
    @include media('<column') {
-      font-size: micro-scale(1, rem) !important;
+      font-size: 1rem !important;
    }
 }
 
 .u-milli {
-   font-size: micro-scale(-1, rem) !important;
+   font-size: .875rem !important;
 }
 
 .u-micro {
-   font-size: micro-scale(-2, rem) !important;
+   font-size: .75rem !important;
 }
 
 .u-nano {
-   font-size: micro-scale(-4, rem) !important;
-}
-
-.u-pico {
-   font-size: micro-scale(-6, rem) !important;
+   font-size: .5rem !important;
 }
