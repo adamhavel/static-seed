@@ -2,21 +2,22 @@
    Numbered list
    ========================================================================== */
 
-.c-numbered-list {
-   @extend %o-block-list;
-   $taper: 1.5em;
+.c-numbered-list,
+%c-numbered-list {
+    @extend %o-block-list;
+    $taper: 1.5em;
 
-   counter-reset: numbered-list;
+    counter-reset: numbered-list;
 
-   > li {
-      counter-increment: numbered-list;
-      padding-left: $taper;
+    > li {
+        counter-increment: numbered-list;
+        padding-left: $taper;
 
-      &:before {
-         content: counter(numbered-list) '.';
-         float: left;
-         width: $taper;
-         margin-left: -$taper;
-      }
-   }
+        &:before {
+            content: counter(numbered-list) '.';
+            float: left;
+            width: $taper;
+            margin-left: -$taper;
+        }
+    }
 }

@@ -1,23 +1,24 @@
 /* ==========================================================================
-   Header
+   Spot
    ========================================================================== */
 
-.l-header {
-    @include no-spacing;
+.c-spot {
+    @include island(2);
+    @include v-spacing(.5);
 }
 
-    .l-header__logo {
+    .c-spot__title {
 
     }
 
-    .l-header__nav {
+    .c-spot__date {
 
     }
 
-    .l-header__search {
+    .c-spot__lede {
 
     }
 
-    .l-header__language {
+    .c-spot__link {
 
     }

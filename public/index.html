@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="cs" class="no-js">
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width,minimum-scale=1.0">
-   <link rel="dns-prefetch" href="//cdn.polyfill.io">
-   <link href="assets/site/css/default.css" rel="stylesheet">
-   <script>(function(){function t(e){return e.split(".").pop()}function n(e,t){var n=document.getElementsByTagName("head")[0];if(t==="css"){var r=document.createElement("style");n.appendChild(r);if(r.styleSheet){r.styleSheet.cssText=e}else{r.innerHTML=e}}else if(t==="svg"){n.insertAdjacentHTML("beforeend",e)}}function r(e){var r=localStorage[e];if(r){n(r,t(e))}else{var i=new XMLHttpRequest;i.open("GET",e,true);i.onreadystatechange=function(){if(i.readyState===4){n(i.responseText,t(e));localStorage[e]=i.responseText}};i.send()}}var e=["css/non-critical.css","img/icons.svg"];if(window.localStorage){for(var i=e.length;i--;){if(!(t(e[i])==="svg"&&!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))){r(e[i])}}}})()</script>
-   <script src="assets/site/js/modernizr.min.js"></script>
-   <!--[if lt IE 9]><script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
-   <title></title>
-   <meta name="description" content="">
-   <noscript>
-      <link href="assets/site/css/non-critical.css" rel="stylesheet">
-   </noscript>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0">
+    <link rel="dns-prefetch" href="//cdn.polyfill.io">
+    <link href="assets/site/css/default.css" rel="stylesheet">
+    <script>(function(){function t(e){return e.split(".").pop()}function n(e,t){var n=document.getElementsByTagName("head")[0];if(t==="css"){var r=document.createElement("style");n.appendChild(r);if(r.styleSheet){r.styleSheet.cssText=e}else{r.innerHTML=e}}else if(t==="svg"){n.insertAdjacentHTML("beforeend",e)}}function r(e){var r=localStorage[e];if(r){n(r,t(e))}else{var i=new XMLHttpRequest;i.open("GET",e,true);i.onreadystatechange=function(){if(i.readyState===4){n(i.responseText,t(e));localStorage[e]=i.responseText}};i.send()}}var e=["assets/site/css/non-critical.css","assets/site/img/icons.svg"];if(window.localStorage){for(var i=e.length;i--;){if(!(t(e[i])==="svg"&&!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))){r(e[i])}}}})()</script>
+    <script src="assets/site/js/modernizr.min.js"></script>
+    <!--[if lt IE 9]><script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
+    <title></title>
+    <meta name="description" content="">
+    <noscript>
+        <link href="assets/site/css/non-critical.css" rel="stylesheet">
+    </noscript>
 </head>
 <body>
 
    <header class="l-header" role="banner">
 
-      <h1 class=""><a href=""><img src="" alt=""></a></h1>
+        <h1 class="" class="l-header__logo c-site-logo">
+            <a href=""><img class="c-site-logo__image" src="" alt=""></a>
+        </h1>
 
-      <nav class="c-site-nav j-site-nav" role="navigation">
-         <div class="o-wrapper">
-            <ul class="o-inline-list">
-               <li><a href="">Item 1</a></li>
-               <li><a href="">Item 2</a></li>
-               <li><a href="">Item 3</a></li>
-               <li><a href="">Item 4</a></li>
-               <li><a href="">Item 5</a></li>
-            </ul>
-         </div>
-      </nav>
+        <nav class="l-header__nav c-site-nav j-site-nav" role="navigation">
+            <div class="o-wrapper">
+                <ul class="c-site-nav__list">
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href=""><svg class="b-icon" aria-hidden="true"><use xlink:href="#close"></use></svg><span>Item 1</span></a></li>
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 2</a></li>
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 3</a></li>
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 4</a></li>
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 5</a></li>
+                </ul>
+            </div>
+        </nav>
 
-   </header>
+    </header>
 
-   <div class="o-wrapper">
+    <div class="o-wrapper">
 
-      <main class="l-main-content" role="main">
+        <main class="l-main-content" role="main">
 
 
 
-      </main>
+        </main>
 
-   </div>
+    </div>
 
-   <footer class="l-footer" role="contentinfo">
+    <footer class="l-footer" role="contentinfo">
 
-      <small></small>
+        <small class="l-footer__copyright"></small>
 
-   </footer>
+    </footer>
 
 <script src="https://cdn.polyfill.io/v1/polyfill.min.js" defer></script>
 <script src="assets/site/js/app.js" defer></script>

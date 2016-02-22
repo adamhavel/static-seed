@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Input
+   ========================================================================== */
+
+.b-input {
+    display: block;
+    width: 100%;
+    padding: lines(.25) .75em;
+    background: color(background);
+    border: 1px solid color(text);
+    color: color(highlight);
+    transition: border-color .3s;
+
+    &[cols] {
+        height: auto;
+    }
+
+    &:focus {
+       border-color: color(highlight);
+    }
+
+    &.is-invalid {
+        background: tint(color(highlight), .9);
+    }
+
+    &[type="checkbox"] {
+        @include hide;
+
+        & + .b-input--faux {
+            @include size(lines(.85));
+
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+
+            &:before {
+                @include size(100%);
+
+                content: '';
+                display: block;
+            }
+        }
+
+        &:checked + .b-input--faux:before {
+            display: none;
+        }
+    }
+
+    &[type="radio"] {
+        @include hide;
+
+        & + .b-input--faux {
+            @include size(lines(.85));
+
+            padding: 0;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        &:checked + .b-input--faux:before {
+            @include size(50%);
+
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            border-radius: 50%;
+            background: color(highlight);
+        }
+    }
+}

@@ -5,22 +5,26 @@ module.exports = (grunt) ->
 
       # JavaScript
 
-      concat:
-         default:
-            separator: '\n\n'
-            src: ['client/**/*.js']
-            dest: 'public/assets/site/js/app.js'
-
       babel:
-         default:
-            src: 'public/assets/site/js/app.js'
+         options:
+            presets: ['es2015']
+         app:
+            src: 'client/app.js'
             dest: 'public/assets/site/js/app.js'
+         components:
+            files: [{
+               cwd: 'client/components'
+               expand: true
+               src: ['**/*.js']
+               dest: 'public/assets/site/js/components'
+               flatten: true
+            }]
 
       modernizr:
          default:
-            dest: 'public/lib/modernizr/modernizr.custom.js'
+            dest: 'public/assets/site/lib/modernizr/modernizr.custom.js'
             uglify: false
-            options: ['prefixed']
+            options: ['prefixed', 'setClasses']
             files:
                src: ['client/**/*.js',' public/assets/site/css/default.css']
 
@@ -30,12 +34,27 @@ module.exports = (grunt) ->
                report: 'min'
             src: 'build/public/assets/site/js/app.js'
             dest: 'build/public/assets/site/js/app.js'
-         fastclick:
-            src: 'public/assets/site/lib/fastclick/lib/fastclick.js'
-            dest: 'public/assets/site/js/fastclick.min.js'
+         components:
+            options:
+               report: 'min'
+            files: [{
+               cwd: 'build/public/assets/site/js/components'
+               expand: true
+               src: ['*.js']
+               dest: 'build/public/assets/site/js/components'
+            }]
          modernizr:
             src: 'public/assets/site/lib/modernizr/modernizr.custom.js'
             dest: 'public/assets/site/js/modernizr.min.js'
+         fastclick:
+            src: 'public/assets/site/lib/fastclick/lib/fastclick.js'
+            dest: 'public/assets/site/js/fastclick.min.js'
+         pep:
+            src: 'public/assets/site/lib/pepjs/dist/pep.js'
+            dest: 'public/assets/site/js/pep.min.js'
+         smoothscroll:
+            src: 'public/assets/site/lib/smoothscroll/dist/smoothscroll.js'
+            dest: 'public/assets/site/js/smoothscroll.min.js'
 
       # CSS
 
@@ -49,6 +68,7 @@ module.exports = (grunt) ->
             src: [
                'client/objects/**/*.scss',
                'client/layout/**/*.scss',
+               'client/blocks/**/*.scss',
                'client/components/**/*.scss',
                'client/utility/**/*.scss'
             ]
@@ -76,7 +96,7 @@ module.exports = (grunt) ->
 
       autoprefixer:
          options:
-            browsers: ['> 1%', 'last 2 versions', 'firefox 24', 'opera 12.1']
+            browsers: ['> 1%', 'last 2 versions']
          default:
             src: 'public/assets/site/css/default.css'
             dest: 'public/assets/site/css/default.css'
@@ -98,8 +118,10 @@ module.exports = (grunt) ->
                src: [
                   '**',
                   '!**/*.map',
-                  '!lib/**',
-                  '!img/icon/**'
+                  '!assets/site/lib/**',
+                  '!assets/site/img/icon/**',
+                  '!assets/site/font/**',
+                  '!assets/site/img/icons-style.svg'
                ]
                dest: 'build/public'
             }]
@@ -107,6 +129,14 @@ module.exports = (grunt) ->
       hashres:
          options:
             fileNameFormat: '${name}.min.${hash}.${ext}'
+         components:
+            src: [
+               'build/public/assets/site/js/components/*.js'
+            ]
+            dest: [
+              'build/public/assets/site/js/app.js',
+              'build/public/assets/site/js/components/*.js'
+            ]
          default:
             src: [
                'build/public/assets/site/js/app.js',
@@ -142,7 +172,8 @@ module.exports = (grunt) ->
             plugins: [
                {removeXMLProcInst: true},
                {cleanupIDs: false},
-               {removeViewBox: true}
+               {removeViewBox: true},
+               {convertStyleToAttrs: false}
             ]
          default:
             files: [{
@@ -168,17 +199,15 @@ module.exports = (grunt) ->
 
       svgstore:
          options:
-            cleanup: ['id', 'enable-background']
+            cleanup: ['fill', 'class']
+            cleanupdefs: true
+            externalDefs: 'public/assets/site/img/icons-style.svg'
+            symbol: {
+              class: 'icon'
+            }
          icons:
             src: ['public/assets/site/img/icon/*.svg']
             dest: 'public/assets/site/img/icons.svg'
-
-      svg2png:
-         icons:
-            files: [{
-               expand: true
-               src: 'public/assets/site/img/icon/*.svg'
-            }]
 
       # Runtime
 
@@ -208,7 +237,7 @@ module.exports = (grunt) ->
             files: ['public/assets/site/img/*.(png|jpg|gif|svg)']
          icons:
             files: ['public/assets/site/img/icon/*.svg']
-            tasks: ['make_icons']
+            tasks: ['svgstore']
          fonts:
             files: ['public/assets/site/assets/site/font/*.woff']
             tasks: ['exec:sass_non_critical']
@@ -229,7 +258,6 @@ module.exports = (grunt) ->
    grunt.loadNpmTasks 'grunt-modernizr'
    grunt.loadNpmTasks 'grunt-sass'
    grunt.loadNpmTasks 'grunt-sass-globbing'
-   grunt.loadNpmTasks 'grunt-svg-to-png'
    grunt.loadNpmTasks 'grunt-svgmin'
    grunt.loadNpmTasks 'grunt-svgstore'
 
@@ -237,15 +265,15 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'make_css',
       'Builds the critical stylesheet.',
-      ['sass_globbing', 'sass', 'autoprefixer:default']
+      ['sass_globbing', 'exec:sass', 'autoprefixer:default']
 
    grunt.registerTask 'make_js',
       'Bundles and transpiles scripts.',
-      ['concat', 'babel']
+      ['babel']
 
    grunt.registerTask 'make_icons', () ->
       if grunt.file.expand('public/assets/site/img/icon/*.svg').length > 0
-         grunt.task.run ['svgstore', 'svg2png:icons']
+         grunt.task.run ['svgstore']
       else
          grunt.log.writeln 'No icons found.'
 
@@ -255,7 +283,7 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'init',
       'Builds the non-critical stylesheet.',
-      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:modernizr', 'uglify:fastclick', 'make_js', 'make_icons']
+      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:modernizr', 'uglify:fastclick', 'uglify:pep', 'uglify:smoothscroll', 'make_js', 'svgstore']
 
    grunt.registerTask 'develop',
       'Watches the project for changes and automatically builds them.',
@@ -263,5 +291,5 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'build',
       'Compiles all of the assets and copies the files to the build directory.',
-      ['init', 'clean:build', 'copy:build', 'cssmin', 'uglify:app', 'inliner', 'hashres', 'svgmin', 'imagemin']
+      ['init', 'clean:build', 'copy:build', 'cssmin', 'uglify:app', 'uglify:components', 'inliner:modernizr', 'hashres', 'svgmin', 'imagemin']
 

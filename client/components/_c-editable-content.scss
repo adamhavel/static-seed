@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Editable content
+   ========================================================================== */
+
+.c-editable-content {
+
+    h4 {
+        @extend %b-heading;
+        @extend %u-delta;
+    }
+
+    ul {
+        @extend %c-bullet-list;
+    }
+
+    ol {
+        @extend %c-numbered-list;
+    }
+}

@@ -115,6 +115,16 @@ button {
 /* Typography
    ========================================================================== */
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
 /**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
  */
@@ -176,7 +186,7 @@ q {
  * Address inconsistent and variable font size in all browsers.
  */
 small {
-   font-size: 80%;
+    font-size: .875em;
 }
 
 /**
@@ -184,18 +194,18 @@ small {
  */
 sub,
 sup {
-   font-size: 75%;
-   line-height: 0;
-   position: relative;
-   vertical-align: baseline;
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
 }
 
 sup {
-   top: -.5em;
+    top: -.5em;
 }
 
 sub {
-   bottom: -.25em;
+    bottom: -.25em;
 }
 
 /**
@@ -205,7 +215,7 @@ address,
 em,
 dfn,
 i {
-   font-style: normal;
+    font-style: normal;
 }
 
 /* Forms
@@ -215,7 +225,7 @@ input,
 select,
 label,
 textarea {
-   display: block;
+    display: block;
 }
 
 /**
@@ -226,27 +236,31 @@ button,
 input,
 select,
 textarea {
-   font-family: inherit; /* 1 */
-   font-size: 100%; /* 2 */
-   font-weight: inherit;
-   outline: 0;
+    font: inherit;
+    color: inherit;
+    outline: 0;
+    line-height: inherit;
+}
+
+::-webkit-input-placeholder {
+    color: inherit;
+}
+
+::-moz-placeholder {
+    color: inherit;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: inherit;
 }
 
 legend + * {
-   -webkit-margin-top-collapse: separate;
+    -webkit-margin-top-collapse: separate;
 }
 
 button {
    background: none;
-   color: inherit;
-}
-
-/**
- * Address Firefox 4+ setting 'line-height' on 'input' using '!important' in the UA stylesheet.
- */
-button,
-input {
-   line-height: normal;
 }
 
 /**
@@ -389,10 +403,24 @@ table {
    ========================================================================== */
 
 img {
-   display: block;
-   max-width: 100%;
+    display: block;
+    max-width: 100%;
+
+    p & {
+        margin: 0 .125em;
+        margin-bottom: -.1rem;
+        display: inline-block;
+        width: auto !important;
+    }
 }
 
 [src$=".svg"] {
-   width: 100%;
+    width: 100%;
+}
+
+/* Flexbox
+   ========================================================================== */
+
+_:-ms-input-placeholder, :root * {
+    flex: 0 1 auto;
 }

@@ -6,8 +6,8 @@
    ========================================================================== */
 
 $fonts: (
-   body: ('Source Sans Pro', 'Helvetica Neue', Helvetica, 'Segoe UI', Roboto, Arial, sans-serif),
-   display: (Bariol, 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif)
+   body: ('Helvetica Neue', Helvetica, 'Segoe UI', Roboto, Arial, sans-serif),
+   display: ('Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif)
 );
 
 /* Helpers
@@ -15,22 +15,22 @@ $fonts: (
 
 // Retrieve a font stack, either of the body or display variety.
 @function font($name) {
-   @return map-get($fonts, $name);
+    @return map-get($fonts, $name);
 }
 
 // Returns a multiple of the leading. Used to create any sort of vertical spacing.
 @function lines($count: 1, $correction: null) {
-   @if $count == 0 {
-      @return 0;
-   } @else if $correction == null  {
-      @return $count * const(LINE_HEIGHT) * 1rem;
-   } @else {
-      @return calc(#{$count * const(LINE_HEIGHT) * 1rem} + #{$correction});
-   }
+    @if $count == 0 {
+        @return 0;
+    } @else if $correction == null  {
+        @return $count * const(LINE_HEIGHT) * 1rem;
+    } @else {
+        @return calc(#{$count * const(LINE_HEIGHT) * 1rem} + #{$correction});
+    }
 }
 
 // Create a pretty underline.
-@mixin underline($weight: 1px, $background: color(background), $color: color(highlight), $hover: color(text), $position: 90%) {
+@mixin underline($weight: 1px, $background: color(background), $color: currentColor, $hover: color(text), $position: 90%) {
    display: inline-block;
    text-decoration: none;
    background: linear-gradient($color, $color) no-repeat;
@@ -47,69 +47,66 @@ $fonts: (
    }
 }
 
+@mixin display-type {
+    line-height: 1.25;
+    font-family: font(display);
+    font-feature-settings: 'liga', 'kern', 'swsh', 'calt';
+}
+
 
 /* Flow control
    ========================================================================== */
 
 // Default content vertical spacing.
 body * + * {
-   margin-top: lines(1);
+    margin-top: lines(1);
 }
 
 // Alter the default vertical spacing.
-@mixin v-spacing($lines, $fixed: false, $propagate: false) {
-   $selector: '* + *';
+@mixin v-spacing($lines, $propagate: false, $fixed: false) {
+    $selector: '* + *';
 
-   @if not $propagate {
-      $selector: selector_nest('>', $selector);
-   }
+    @if not $propagate {
+        $selector: selector_nest('>', $selector);
+    }
 
-   #{$selector} {
-      margin-top: lines($lines);
-   }
+    #{$selector} {
+        margin-top: lines($lines);
+    }
 }
 
 // Spread items horizontally.
-@mixin h-spacing($distance, $fixed: false) {
-   > * {
-      margin-right: $distance;
+@mixin h-spacing($distance, $adjust: false) {
+    > * {
+        margin-right: $distance;
 
-      &:last-child {
-         margin-right: 0;
-      }
+        &:last-child {
+            margin-right: 0;
+        }
 
-      @if not $fixed {
-         @include media('<column') {
-            margin-right: $distance / 2;
-         }
-      }
-   }
+        @if $adjust {
+            @include media('<column') {
+                margin-right: $distance / 2;
+            }
+        }
+    }
 }
 
 // Removes the horizontal spacing.
 @mixin no-spacing($propagate: false) {
-   $selector: '*';
-
-   @if not $propagate {
-      $selector: selector_nest('>', $selector);
-   }
-
-   #{$selector} {
-      margin-top: 0;
-      margin-bottom: 0;
-   }
+    @include v-spacing(0, $propagate);
 }
 
 @mixin out-of-flow {
-   margin-top: 0;
+    margin-top: 0;
 
-   &:first-child + * {
-      margin-top: 0 !important;
-   }
+    &:first-child + * {
+        margin-top: 0 !important;
+    }
 }
 
 // Somebody is an island.
-@mixin island($leading: 1, $trailing: $leading, $fixed: false) {
+@mixin island($leading: 1, $trailing: $leading) {
 
    @if $leading > 0 {
       margin-top: lines($leading);
@@ -137,42 +134,53 @@ body * + * {
    ========================================================================== */
 
 html {
-   color: color(text);
-   font-family: font(body);
-   font-size: const(BASE) * 1em;
-   line-height: const(LINE_HEIGHT);
-   font-weight: 400;
+    color: color(text);
+    font-family: font(body);
+    font-size: const(BASE) * 1em;
+    line-height: const(LINE_HEIGHT);
+    font-weight: 400;
 
-   @include media('<column') {
-      font-size: const(BASE) * 1em * micro-scale(-1);
-   }
-}
-
-body {
-   @include no-spacing;
-
-   background: color(background);
+    @include media('<column') {
+        font-size: const(BASE) * 1em * micro-scale(-1);
+    }
 }
 
 a {
-   color: shade(color(highlight), .2);
-   text-decoration: underline;
-   transition: color .2s;
+    color: inherit;
+    text-decoration: none;
+}
 
-   &:focus,
-   &:hover {
-      color: color(highlight);
-   }
+a:not([class]) {
+    color: color(highlight);
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 em {
-   color: color(highlight);
+    color: color(highlight);
+}
+
+q {
+    font-style: italic;
+
+    &:before,
+    &:after {
+        display: none;
+    }
 }
 
 strong {
-   font-weight: 600;
+    font-weight: 600;
 }
 
 small {
-   font-size: micro-scale(-2) * 1em;
+    font-size: 875em;
+}
+
+br {
+    margin-top: 0;
 }

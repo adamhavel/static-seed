@@ -1,0 +1,18 @@
+/* ==========================================================================
+   Select
+   ========================================================================== */
+
+.b-select {
+    $button-width: 3em;
+    @include no-spacing;
+
+    background: linear-gradient(to left, color(text), color(text) $button-width, color(background) $button-width);
+    border: 1px solid color(text);
+    cursor: pointer;
+    display: block;
+    line-height: const(LINE_HEIGHT);
+    max-width: 18em;
+    padding-right: $button-width + .5em;
+    padding: lines(.25) .5em;
+    width: 100%;
+}

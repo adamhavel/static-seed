@@ -87,14 +87,14 @@
    ========================================================================== */
 
 $brand: (
-   primary: #30a9d4,
-   secondary: #ff7a04
+    primary: #9c1d19,
+    secondary: #ed9b38
 );
 
 $colors: (
-   background: #fff,
-   text: #393939,
-   light-text: #999,
-   shade: #f0f0f0,
-   highlight: #cdb586
+    background: #fff,
+    text: #363636,
+    shade: #dadada,
+    highlight: brand(primary),
+    contrast: #538daf
 );

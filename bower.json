@@ -2,6 +2,8 @@
   "name": "static-seed",
   "version": "0.1.0",
   "dependencies": {
-    "fastclick": "~1.0.3"
+    "fastclick": "~1.0.3",
+    "pepjs": "~0.4.1",
+    "smoothscroll": "~0.1.0"
   }
 }

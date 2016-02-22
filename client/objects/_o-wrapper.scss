@@ -3,13 +3,17 @@
    ========================================================================== */
 
 .o-wrapper {
-   @include center;
-   @include clearfix;
+    @include center;
+    @include clearfix;
 
-   max-width: const(LAYOUT_WIDTH);
-   padding: 0 const(GUTTER);
+    max-width: const(LAYOUT_WIDTH);
+    padding: 0 2vw;
 
-   @include media('<layout') {
-      padding: 0 const(GUTTER) * 2;
-   }
+    @include media('<layout') {
+        padding: 0 4vw;
+    }
+
+    &--full {
+        padding: 0;
+    }
 }

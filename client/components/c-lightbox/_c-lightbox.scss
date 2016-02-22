@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Lightbox
+   ========================================================================== */
+
+.c-lightbox {
+    @include out-of-flow;
+    @include no-spacing;
+    @include size(100%);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(color(text), .95);
+}
+
+    .c-lightbox__button {
+        position: absolute;
+        z-index: 2;
+        top: lines(1);
+        right: lines(1);
+        background: none;
+        color: color(text);
+
+        &:hover,
+        &:focus {
+            color: color(highlight);
+        }
+    }
+
+    .c-lightbox__content {
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 10vw);
+        height: calc(100% - 10vw);
+        margin: 0 !important;
+    }

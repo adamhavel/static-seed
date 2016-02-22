@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Breadcrumbs
+   ========================================================================== */
+
+.c-breadcrumbs {
+    @extend %o-inline-list;
+    @include h-spacing(.5em);
+}
+
+    .c-breadcrumbs__item {
+        display: inline-block;
+
+        &:before {
+            content: '>';
+            display: inline-block;
+            margin-right: .5em;
+            color: color(highlight);
+        }
+
+        &:first-child:before {
+            display: none;
+        }
+    }
+
+        .c-breadcrumbs__link {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }

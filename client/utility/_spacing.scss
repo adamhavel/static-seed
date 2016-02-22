@@ -2,10 +2,34 @@
    Spacing
    ========================================================================== */
 
-.u-islet {
+.u-island {
     @include island(1);
 }
 
-.u-island {
+.u-island-2 {
     @include island(2);
+}
+
+.u-island-3 {
+    @include island(3);
+}
+
+.u-no-spacing {
+    @include no-spacing;
+}
+
+.u-tight {
+    margin-bottom: 0 !important;
+
+    & + * {
+        margin-top: lines(.5) !important;
+    }
+}
+
+.u-snug {
+    margin-bottom: 0 !important;
+
+    & + * {
+        margin-top: lines(.25) !important;
+    }
 }

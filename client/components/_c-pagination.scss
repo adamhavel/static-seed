@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+.c-pagination {
+    @include island(2);
+    @include no-spacing;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include no-flexbox {
+        @include clearfix;
+    }
+}
+
+    .c-pagination__button {
+        min-width: 12em;
+
+        &[rel="prev"] {
+            float: left;
+            order: 0;
+        }
+
+        &[rel="next"] {
+            order: 2;
+            float: right;
+        }
+    }
+
+    .c-pagination__count {
+        display: block;
+        text-align: center;
+        order: 1;
+    }

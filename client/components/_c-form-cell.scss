@@ -1,16 +1,20 @@
 /* ==========================================================================
-   Block list
+   Form cell
    ========================================================================== */
 
-.o-block-list,
-%o-block-list {
+.c-form-cell {
     @include no-spacing;
+    @include clearfix;
+}
 
-    &--loose {
-        @include v-spacing(.5);
+    .c-form-cell__label {
+        display: block;
+
+        &:after {
+            content: ':';
+        }
     }
 
-    > * {
+    .c-form-cell__input {
         display: block;
     }
-}

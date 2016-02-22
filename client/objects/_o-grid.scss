@@ -11,131 +11,69 @@ $grid-columns: (
    '<column': 1
 );
 $grid-hgap: const(GUTTER);
-$grid-vgap: lines(1);
+$grid-vgap: 1;
 
 
-/* Classes
+/* Mixins
    ========================================================================== */
 
-.o-grid,
-%o-grid {
-   display: flex;
-   flex-wrap: wrap;
-   margin-left: -$grid-hgap;
-   justify-content: center;
-
-   .no-flexbox & {
-      display: block;
-      letter-spacing: -.31em;
-   }
-}
-
-   .o-grid__item,
-   %o-grid__item {
-      margin-left: $grid-hgap;
-      margin-top: $grid-vgap;
-
-      @each $breakpoint, $columns in $grid-columns {
-         $width: (100% / $columns) - $grid-hgap;
-
-         @include media($breakpoint) {
-            &:nth-child(-n + #{$columns}) {
-               margin-top: 0;
-            }
-         }
-
-         @if $breakpoint == $media-static-breakpoint {
-            width: $width;
-         } @else {
-            @include media($breakpoint) {
-               width: $width;
-            }
-         }
-
-      }
-
-      .no-flexbox & {
-         display: inline-block;
-         letter-spacing: normal;
-         vertical-align: top;
-      }
-   }
-
 @mixin grid($items-per-row: $grid-columns, $hgap: $grid-hgap, $vgap: $grid-vgap) {
-   @extend %o-grid;
+    @include island($vgap * 2);
 
-   $items-per-row: map-merge($grid-columns, $items-per-row);
-   $ie8-friendly: true;
+    display: flex !important;
+    flex-wrap: wrap;
 
-   @if ($hgap != 0) and (unit($hgap) != '%') {
-      $ie8-friendly: false;
-   }
+    .no-flexwrap & {
+        display: block;
+        letter-spacing: -.31em;
+    }
 
-   @if $vgap != $grid-vgap {
-      @include island($vgap / lines(1) * 1);
-   }
+    $items-per-row: map-merge($grid-columns, $items-per-row);
 
-   @if $hgap != $grid-hgap {
-      @if $ie8-friendly {
-         margin-left: -$hgap;
+    > * {
+        margin-left: $hgap !important;
+        margin-top: lines($vgap) !important;
+        margin-bottom: 0 !important;
 
-         > * {
-            margin-left: $hgap;
-         }
-      } @else {
-         @include gt-ie8 {
-            margin-left: -$hgap;
+        @each $breakpoint, $columns in $items-per-row {
 
-            > * {
-               margin-left: $hgap;
+            $width: calc(#{(100% / $columns)} - #{$hgap * ($columns - 1) / $columns});
+
+            @if ($hgap == 0) {
+                $width: 100% / $columns;
+            } @elseif (unit($hgap) == '%') {
+                $width: (100% / $columns) - ($hgap * ($columns - 1) / $columns);
             }
-         }
-      }
-   }
-
-   > * {
-      @extend %o-grid__item;
-
-      $is-default: ($grid-columns == $items-per-row) and ($hgap == $grid-hgap);
-
-      @if ($vgap != $grid-vgap) {
-         margin-top: $vgap;
-      }
-
-      @each $breakpoint, $columns in $items-per-row {
-
-         @if not $is-default {
-            $width: if($ie8-friendly, (100% / $columns) - $hgap, calc(#{(100% / $columns)} - #{$hgap}));
-
-            margin-top: $vgap;// !important;
 
             @include media($breakpoint) {
-               &:nth-child(-n + #{$columns}) {
-                  margin-top: 0;// !important;
-               }
-            }
 
-            @if $breakpoint == $media-static-breakpoint {
+                width: $width !important;
 
-               @if $ie8-friendly {
-                  width: $width;
-               } @else {
-                  width: (100% / $columns) - $grid-hgap;
-                  width: $width;
-               }
+                &:nth-child(-n + #{$columns}) {
+                    margin-top: 0 !important;
+                }
 
-            } @else {
-
-               @include media($breakpoint) {
-                  width: $width;
-               }
+                &:nth-child(#{$columns}n + 1) {
+                    margin-left: 0 !important;
+                }
 
             }
 
-         }
+        }
 
-      }
-
-   }
-
+        .no-flexwrap & {
+            display: inline-block !important;
+            letter-spacing: normal;
+            vertical-align: top;
+        }
+    }
 }
+
+
+/* Definitions
+   ========================================================================== */
+
+.o-grid {
+    @include grid;
+}
+

@@ -8,7 +8,7 @@
 $media-breakpoints: (
    char: em-to-px(.5em),
    column: em-to-px(const(LINE_LENGTH)),
-   layout: em-to-px(const(LAYOUT_WIDTH))
+   layout: em-to-px(const(LAYOUT_WIDTH) * .75)
 );
 
 $media-expressions: (

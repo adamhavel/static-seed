@@ -4,21 +4,32 @@
 
 .o-inline-list,
 %o-inline-list {
-   @include no-spacing;
-   @include h-spacing(1em);
+    @include no-spacing;
+    @include h-spacing(1rem);
 
-   letter-spacing: -.31em;
-   margin-bottom: lines(-.25);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: lines(-.25);
 
-   > * {
-      display: inline-block;
-      letter-spacing: normal;
-      margin-bottom: lines(.25);
-      vertical-align: middle;
-   }
+    > * {
+        margin-bottom: lines(.25);
+    }
 
-   &--spread {
-      display: flex;
-      justify-content: space-between;
-   }
+    .no-flexwrap & {
+        display: block;
+
+        > * {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    &--loose {
+        @include h-spacing(2rem);
+    }
+
+    &--spread {
+        justify-content: space-between;
+    }
 }

@@ -3,40 +3,50 @@
    ========================================================================== */
 
 .o-layout {
-   @include clearfix;
-   @include no-spacing;
+    @include no-spacing;
 
-   @include media('<layout') {
-      @include v-spacing(1);
-   }
+    display: flex;
+    justify-content: space-between;
+
+    @include media('<layout') {
+        @include v-spacing(1);
+
+        flex-direction: column;
+    }
+
+    .no-flexbox & {
+        @include clearfix;
+    }
 }
 
-   .o-layout__item {
-      $gutter: const(GUTTER) * 2;
+    .o-layout__item {
+        $gutter: const(GUTTER) * 2;
 
-      float: left;
-      width: scale-to-percentage(0, 0 1, $gutter);
+        float: right;
+        width: scale-to-percentage(0, 0 1, $gutter);
 
-      @include media('<layout') {
-         float: none;
-         margin-right: 0 !important;
-         width: auto !important;
-      }
+        &:first-child {
+            width: scale-to-percentage(1, 0 1, $gutter);
+        }
 
-      &:first-child {
-         margin-right: $gutter;
-         width: scale-to-percentage(1, 0 1, $gutter);
-      }
+        @include media('<layout') {
+            width: auto;
+        }
 
-      .o-layout--rev & {
-         width: scale-to-percentage(1, 0 1, $gutter);
+        .o-layout--equal > & {
+            width: 50% - ($gutter / 2) !important;
+        }
 
-         &:first-child {
-            width: scale-to-percentage(0, 0 1, $gutter);
-         }
-      }
+        .no-flexbox & {
+            float: right;
 
-      .o-layout--equal & {
-         width: 50% - ($gutter / 2) !important;
-      }
-   }
+            &:first-child {
+                float: left;
+            }
+
+            @include media('<layout') {
+                float: none;
+                display: block;
+            }
+        }
+    }

@@ -27,8 +27,8 @@ $constants: () !global;
    ========================================================================== */
 
 @include const('BASE', 1);
-@include const('LINE_HEIGHT', 1.75);
-@include const('LINE_LENGTH', 40rem);
+@include const('LINE_HEIGHT', 1.5);
+@include const('LINE_LENGTH', 50em);
 
 
 /* Layout

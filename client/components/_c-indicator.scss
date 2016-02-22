@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Indicator
+   ========================================================================== */
+
+.c-indicator {
+    @extend %o-inline-list;
+
+    text-align: center;
+}
+
+    .c-indicator__item {
+       @include size(const(LINE_HEIGHT) / 3);
+
+       border-radius: 50%;
+       display: block;
+       background: color(text);
+       font-size: 0;
+       vertical-align: middle;
+       transition: background-color .3s;
+
+       &.is-active {
+          background-color: color(highlight);
+       }
+    }

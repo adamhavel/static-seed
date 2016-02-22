@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Promo carousel
+   ========================================================================== */
+
+.c-promo-carousel {
+    @include no-spacing;
+
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+    .c-promo-carousel__item {
+        min-width: 100%;
+        opacity: 0;
+        flex: 0 1 auto;
+        transition: opacity 0s;
+
+        .no-js &:first-child,
+        .js &.is-active {
+            opacity: 1;
+            order: -1;
+            transition: opacity .5s;
+        }
+
+        @include no-flexbox {
+            display: none;
+        }
+
+        .no-flexbox.no-js &:first-child,
+        .no-flexbox.js &.is-active {
+            display: block;
+        }
+    }

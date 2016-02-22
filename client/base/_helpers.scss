@@ -7,48 +7,56 @@
 }
 
 @mixin size($width, $height: $width) {
-   width: $width;
-   height: $height;
+    width: $width;
+    height: $height;
 }
 
 @mixin center {
-   margin-left: auto;
-   margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @mixin gt-ie8 {
-   @media only screen {
-      @content;
-   }
+    @media only screen {
+        @content;
+    }
 }
 
 @mixin lte-ie8 {
-   @media \0screen\,screen\9 {
-      @content;
-   }
+    @media \0screen\,screen\9 {
+        @content;
+    }
 }
 
 @mixin hide {
-   position: absolute !important;
-   width: 1px !important;
-   height: 1px !important;
-   overflow: hidden !important;
-   clip: rect(0 0 0 0) !important;
-   margin: -1px !important;
+    @include out-of-flow;
+
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    margin: -1px !important;
 }
 
 @mixin clearfix {
-   &:after {
-      clear: both;
-      content: '';
-      display: table;
+    &:after {
+        clear: both;
+        content: '';
+        display: table;
    }
 }
 
+@mixin no-flexbox {
+    .no-flexbox.no-flexboxlegacy.no-flexboxtweener & {
+        @content;
+    }
+}
+
 @function scale-to-percentage($item-interval, $configuration, $gap: const(GUTTER)) {
-   $total: 0;
-   @each $interval in $configuration {
-      $total: $total + macro-scale($interval);
-   }
-   @return (macro-scale($item-interval) / $total) * 100% - ($gap * (length($configuration) - 1) / length($configuration));
+    $total: 0;
+    @each $interval in $configuration {
+        $total: $total + macro-scale($interval);
+    }
+    @return (macro-scale($item-interval) / $total) * 100% - ($gap * (length($configuration) - 1) / length($configuration));
 }

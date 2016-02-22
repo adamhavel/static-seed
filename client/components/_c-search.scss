@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Search
+   ========================================================================== */
+
+.c-search {
+    @include no-spacing;
+
+    border: 1px solid color(highlight);
+    display: flex;
+
+    @include no-flexbox {
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+    .c-search__input {
+        min-width: 10em;
+        flex-grow: 1;
+        padding: lines(.25) .5em;
+
+        @include no-flexbox {
+            margin-right: 2rem;
+        }
+    }
+
+    .c-search__button {
+        background: color(highlight);
+        color: color(background);
+        padding: 0 .75em;
+
+        @include no-flexbox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 2rem;
+        }
+    }
