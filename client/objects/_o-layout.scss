@@ -22,6 +22,8 @@
     .o-layout__item {
         $gutter: const(GUTTER) * 2;
 
+        background: red;
+
         float: right;
         width: scale-to-percentage(0, 0 1, $gutter);
 
@@ -30,7 +32,7 @@
         }
 
         @include media('<layout') {
-            width: auto;
+            width: auto !important;
         }
 
         .o-layout--equal > & {
