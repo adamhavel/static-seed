@@ -2,7 +2,7 @@
    Input
    ========================================================================== */
 
-.b-input {
+.e-input {
     display: block;
     width: 100%;
     padding: lines(.25) .75em;
@@ -42,7 +42,7 @@
             }
         }
 
-        &:checked + .b-input--faux:before {
+        &:checked + .e-input--faux:before {
             display: none;
         }
     }
@@ -50,7 +50,7 @@
     &[type="radio"] {
         @include hide;
 
-        & + .b-input--faux {
+        & + .e-input--faux {
             @include size(lines(.85));
 
             padding: 0;
@@ -58,7 +58,7 @@
             position: relative;
         }
 
-        &:checked + .b-input--faux:before {
+        &:checked + .e-input--faux:before {
             @include size(50%);
 
             content: '';

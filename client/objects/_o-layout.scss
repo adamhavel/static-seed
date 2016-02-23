@@ -14,7 +14,11 @@
         flex-direction: column;
     }
 
-    .no-flexbox & {
+    &--rev {
+        flex-direction: row-reverse;
+    }
+
+    @mixin no-flexbox {
         @include clearfix;
     }
 }
@@ -22,9 +26,6 @@
     .o-layout__item {
         $gutter: const(GUTTER) * 2;
 
-        background: red;
-
-        float: right;
         width: scale-to-percentage(0, 0 1, $gutter);
 
         &:first-child {
@@ -36,10 +37,10 @@
         }
 
         .o-layout--equal > & {
-            width: 50% - ($gutter / 2) !important;
+            width: 50% - ($gutter / 2);
         }
 
-        .no-flexbox & {
+        @mixin no-flexbox {
             float: right;
 
             &:first-child {
@@ -49,6 +50,14 @@
             @include media('<layout') {
                 float: none;
                 display: block;
+            }
+
+            .o-layout--rev > & {
+                float: left;
+
+                &:first-child {
+                    float: right;
+                }
             }
         }
     }

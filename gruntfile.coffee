@@ -68,7 +68,7 @@ module.exports = (grunt) ->
             src: [
                'client/objects/**/*.scss',
                'client/layout/**/*.scss',
-               'client/blocks/**/*.scss',
+               'client/elements/**/*.scss',
                'client/components/**/*.scss',
                'client/utility/**/*.scss'
             ]

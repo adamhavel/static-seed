@@ -2,29 +2,20 @@
    Icons
    ========================================================================== */
 
-/* Variables
-   ========================================================================== */
-
-$icon-gap: .5em;
-$icon-size: 1em;
-
-
-/* Definitions
-   ========================================================================== */
-
-.b-icon {
-    @include size($icon-size);
+.e-icon {
+    $gap: .5em;
+    @include size(1em);
 
     display: inline-block;
     margin-top: 0;
     vertical-align: text-bottom;
 
     &:first-child {
-        margin-right: $icon-gap;
+        margin-right: $gap;
     }
 
     &:last-child {
-        margin-left: $icon-gap;
+        margin-left: $gap;
     }
 
     &:first-child:last-child {
