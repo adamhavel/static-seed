@@ -7,29 +7,15 @@
     @include no-spacing;
     @include h-spacing(1rem);
 
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     margin-bottom: lines(-.25);
 
     > * {
+        display: inline-block;
         margin-bottom: lines(.25);
-    }
-
-    .no-flexwrap & {
-        display: block;
-
-        > * {
-            display: inline-block;
-            vertical-align: middle;
-        }
+        vertical-align: middle;
     }
 
     &--loose {
         @include h-spacing(2rem);
-    }
-
-    &--spread {
-        justify-content: space-between;
     }
 }

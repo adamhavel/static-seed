@@ -34,10 +34,30 @@ var App = (function($) {
     var Component = function(container) {
 
         var self = {
+            // The component's parent DOM node.
             container: container,
+            // Registered component's elements.
             elements: [],
+            // Define an element and register any event handler neccessary.
+            define: function() {
+                [].forEach.call(arguments, function(element) {
+                    self.elements.push(element);
+
+                    if (element.handlers) {
+                        Object.keys(element.handlers).forEach(function(eventType) {
+                            if (self.registeredHandlers.indexOf(eventType) === -1) {
+                                var isCapturing = eventType === 'blur' || eventType === 'focus';
+
+                                self.container.addEventListener(eventType, self.handler, isCapturing);
+                                self.registeredHandlers.push(eventType);
+                            }
+                        });
+                    }
+                });
+            },
+            // Resolves a given element's selector to a single DOM node or an array thereof and returns the result.
             resolveElement: function(element) {
-                if (!element.node) {
+                if (!element.node || element.isTransient) {
                     if (element.isCollection) {
                         element.node = $.queryAll(element.selector, self.container);
                     } else {
@@ -47,12 +67,18 @@ var App = (function($) {
 
                 return element.node;
             },
-            element: function(name) {
-                var element = null;
+            // Returns an element property for a given element name and property type.
+            element: function(name, property) {
+                var property = property || 'node';
+                var result = null;
 
                 self.elements.some(function(el) {
                     if (el.name === name) {
-                        element = self.resolveElement(el);
+                        if (property === 'node') {
+                            result = self.resolveElement(el);
+                        } else {
+                            result = el[property];
+                        }
 
                         return true;
                     }
@@ -60,14 +86,19 @@ var App = (function($) {
                     return false;
                 });
 
-                return element;
+                return result;
             },
-            clickHandler: function(ev) {
+            // String representation of the types of events handled.
+            registeredHandlers: [],
+            // Generic event handler.
+            handler: function(ev) {
                 var target = ev.target;
+                var eventType = ev.type;
                 var element = null;
                 var index;
+
                 var isMatch = function(el) {
-                    if (!el.click) {
+                    if (!el.handlers || !el.handlers[eventType]) {
                         return false;
                     }
 
@@ -98,19 +129,16 @@ var App = (function($) {
 
                 if (element) {
                     if (element.isCollection) {
-                        element.click.call(element.node[index], ev, index);
+                        element.handlers[eventType].call(element.node[index], ev, index);
                     } else {
-                        element.click.call(element.node, ev);
+                        element.handlers[eventType].call(element.node, ev);
                     }
                 }
             }
         };
 
-        container.addEventListener('click', self.clickHandler);
-
         return self;
     };
-
 
     /* Public API
        ========================================================================== */
@@ -164,26 +192,21 @@ var App = (function($) {
     $.loadScript = function(src, callback = null) {
         if (loadedScripts.indexOf(src) === -1) {
             if (loadingScripts.indexOf(src) === -1) {
-                var ref = document.getElementsByTagName('script')[0];
                 var script = document.createElement('script');
 
                 loadingScripts.push(src);
 
-                script.onload = script.onreadystatechange = function() {
-                    var state = script.readyState;
-                    if (!state || state === 'loaded') {
-                        script.onload = script.onreadystatechange = null;
-                        loadedScripts.push(src);
-                        loadingScripts.splice(loadingScripts.indexOf(src), 1);
+                script.addEventListener('load', function(ev) {
+                    loadedScripts.push(src);
+                    loadingScripts.splice(loadingScripts.indexOf(src), 1);
 
-                        if (callback) {
-                            callback.call(window);
-                        }
+                    if (callback) {
+                        callback.call(window);
                     }
-                };
+                });
 
                 script.src = ASSETS_DIR + 'js/' + src;
-                ref.parentNode.insertBefore(script, ref);
+                document.head.appendChild(script);
 
                 return script;
             } else {

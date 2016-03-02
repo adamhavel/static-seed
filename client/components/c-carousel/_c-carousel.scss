@@ -5,93 +5,76 @@
 @keyframes spinner {
     0% {
         transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-   }
+    }
+
     50% {
         transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
     }
+
     100% {
         transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
 }
 
 .c-carousel {
-    @include no-spacing;
+    @include v-spacing(.5);
 
     position: relative;
-
-    &:before {
-        content: '';
-        display: block;
-        padding-top: 50%;
-    }
+    display: flex;
+    flex-direction: column;
 }
 
-    .c-carousel__item {
-        width: 100%;
-        height: 100%;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        left: 0;
-        opacity: 0;
-        padding: 0 5em;
-        position: absolute;
-        top: 0;
-        transition: opacity .5s;
-        z-index: 1;
-        transform: translateZ(0);
+    .c-carousel__list {
+        @include no-spacing;
 
-        &.is-active {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        &.is-loading {
-
-            &:after {
-                @include size(50px);
-
-                content: '';
-                position: absolute;
-                top: calc(50% - 25px);
-                left: calc(50% - 25px);
-                background-color: color(text);
-                animation: spinner 1.2s infinite ease-in-out;
-            }
-        }
-
-        @include media('<column') {
-            padding: 0;
-        }
-
-        @include no-flexbox {
-            text-align: center;
-        }
+        position: relative;
+        flex: 1;
     }
 
-        .c-carousel__label {
-            opacity: 1;
-            transition: opacity .3s .2s;
+        .c-carousel__slide {
+            @include size(100%);
 
-            .is-loading > & {
-                opacity: 0;
-                transition: opacity 0s;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity .5s;
+            z-index: 1;
+            padding: 0 4em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.is-active {
+                opacity: 1;
+                z-index: 2;
             }
 
-            display: none;
-        }
+            &.is-loading {
 
-        .c-carousel__media {
-            max-width: 100%;
-            max-height: 80%;
-            flex: 0 1 auto;
-            object-fit: scale-down;
+                &:after {
+                    @include size(50px);
 
-            @include no-flexbox {
-                @include center;
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: color(text);
+                    animation: spinner 1.2s infinite ease-in-out;
+                }
             }
         }
+
+            .c-carousel__image {
+                height: 100%;
+                object-fit: scale-down;
+                flex: none;
+            }
+
+    .c-carousel__label {
+        text-align: center;
+    }
 
     .c-carousel__controls {
         @include out-of-flow;
@@ -100,46 +83,25 @@
         z-index: 2;
         top: 50%;
         transform: translateY(-50%);
+        transition: color .2s;
 
         &[rel="prev"] {
             left: 0;
+            transform: translateY(-50%) scaleX(-1);
         }
 
         &[rel="next"] {
             right: 0;
-            transform: translateY(-50%) scaleX(-1);
         }
 
         &:hover {
             color: color(highlight);
         }
-
-        @include media('<column') {
-            display: none;
-        }
     }
 
     .c-carousel__indicator {
-        @extend %o-inline-list;
-        @include h-spacing(.65rem, true);
+        @include aloof(1);
 
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        z-index: 1000;
+        display: block;
+        transform: translateZ(0);
     }
-
-        .c-carousel__indicator-item {
-            @include size(10px);
-
-            border-radius: 50%;
-            border: 1px solid color(highlight);
-            font-size: 0;
-            vertical-align: top;
-            transition: background-color .3s;
-
-            &.is-active {
-                background-color: color(highlight);
-            }
-        }

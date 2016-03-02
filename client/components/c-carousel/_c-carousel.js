@@ -2,282 +2,171 @@
    Carousel
    ========================================================================== */
 
-var Carousel = (function($) {
+function Carousel($, self) {
 
-   var self = {
+    var currentIndex;
+    var itemsCount;
 
-      getPrevIndex() {
-         var index;
+    function prev() {
+        moveToIndex(null, currentIndex > 0 ? currentIndex - 1 : itemsCount - 1);
+    }
 
-         if (this.currentItemIndex === 0) {
-            index = this.items.length - 1;
-         } else {
-            index = this.currentItemIndex - 1;
-         }
+    function next() {
+        moveToIndex(null, (currentIndex + 1) % itemsCount);
+    }
 
-         return index;
-      },
+    function moveToIndex(ev, index = 0) {
+        if (currentIndex !== undefined) {
+            self.element('slides')[currentIndex].classList.remove('is-active');
+            self.element('indicator')[currentIndex].classList.remove('is-active');
+        }
 
-      getNextIndex() {
-         var index;
+        currentIndex = index;
 
-         if (this.currentItemIndex === this.items.length - 1) {
-            index = 0;
-         } else {
-            index = this.currentItemIndex + 1;
-         }
+        var currentImage = self.element('images')[currentIndex];
+        var currentSlide = self.element('slides')[currentIndex];
 
-         return index;
-      },
+        currentSlide.classList.add('is-active');
+        self.element('indicator')[currentIndex].classList.add('is-active');
+        self.element('label').textContent = currentImage.getAttribute('alt');
 
-      getCurrentItem() {
-         return this.items[this.currentItemIndex];
-      },
+        if (!currentImage.getAttribute('src')) {
+            currentImage.addEventListener('load', function imageLoaded() {
+                currentSlide.classList.remove('is-loading');
 
-      getPrevItem() {
-         return this.items[this.getPrevIndex()];
-      },
-
-      getNextItem() {
-         return this.items[this.getNextIndex()];
-      },
-
-      prev() {
-         var currentItem = this.getCurrentItem();
-         var prevItem = this.getPrevItem();
-         var currentItemMedia = $.query('.c-carousel__media', currentItem);
-         var prevItemMedia = $.query('.c-carousel__media', prevItem);
-
-         currentItem.classList.remove('is-active');
-         prevItem.classList.add('is-active');
-
-         this.indicator[this.currentItemIndex].classList.remove('is-active');
-         this.indicator[this.getPrevIndex()].classList.add('is-active');
-
-         if ('play' in currentItemMedia) {
-            currentItemMedia.pause();
-         }
-
-         if ('play' in prevItemMedia) {
-            prevItemMedia.play();
-         }
-
-         this.currentItemIndex = this.getPrevIndex();
-
-         this.loadMedia(this.getPrevItem());
-      },
-
-      next() {
-         var currentItem = this.getCurrentItem();
-         var nextItem = this.getNextItem();
-         var currentItemMedia = $.query('.c-carousel__media', currentItem);
-         var nextItemMedia = $.query('.c-carousel__media', nextItem);
-
-         currentItem.classList.remove('is-active');
-         nextItem.classList.add('is-active');
-
-         this.indicator[this.currentItemIndex].classList.remove('is-active');
-         this.indicator[this.getNextIndex()].classList.add('is-active');
-
-         if ('play' in currentItemMedia) {
-            currentItemMedia.pause();
-         }
-
-         if ('play' in nextItemMedia) {
-            nextItemMedia.play();
-         }
-
-         this.currentItemIndex = this.getNextIndex();
-
-         this.loadMedia(this.getNextItem());
-      },
-
-      moveToIndex(index) {
-         this.items[this.currentItemIndex].classList.remove('is-active');
-         this.items[index].classList.add('is-active');
-
-         this.indicator[this.currentItemIndex].classList.remove('is-active');
-         this.indicator[index].classList.add('is-active');
-
-         this.currentItemIndex = index;
-
-         this.loadMedia(this.items[index]);
-      },
-
-      create(items) {
-         var carouselHTML = ['<div class="c-carousel j-carousel" tabindex="0">'];
-         items.forEach(item => {
-            var isVideo = /\.mp4$/.test(item.src);
-            var itemHTML = ['<div class="c-carousel__item">'];
-
-            if (isVideo) {
-               itemHTML.push('<video class="c-carousel__media" data-src="' + item.src + '"></video>');
-            } else {
-               itemHTML.push('<img class="c-carousel__media" data-src="' + item.src + '">');
-            }
-
-            if (item.desc) {
-               itemHTML.push('<span class="c-carousel__label">' + item.desc + '</span>');
-            }
-
-            itemHTML.push('</div>');
-            carouselHTML.push(itemHTML.join(''));
-         });
-         carouselHTML.push('</div>');
-
-         this.element = $.createNode(carouselHTML);
-
-         return this.element;
-      },
-
-      loadMedia(item) {
-         var media = $.query('.c-carousel__media', item);
-         if (!media.src) {
-            if (!('play' in media)) {
-               item.classList.add('is-loading');
-               media.addEventListener('load', function imageLoaded() {
-                  item.classList.remove('is-loading');
-                  media.removeEventListener('load', imageLoaded);
-               });
-            }
-            media.src = media.getAttribute('data-src');
-         }
-      },
-
-      init(index = 0) {
-
-         this.element = this.element || $.query('.j-carousel');
-
-         if (!this.element) {
-            return false;
-         }
-
-         this.items = $.queryAll('.c-carousel__item', this.element);
-
-         this.currentItemIndex = index;
-
-         var currentItem = this.getCurrentItem();
-         var currentItemMedia = $.query('.c-carousel__media', currentItem);
-         var nextItem = this.getNextItem();
-         var prevItem = this.getPrevItem();
-
-         currentItem.classList.add('is-active');
-
-         this.loadMedia(currentItem);
-         if ('play' in currentItemMedia) {
-            currentItemMedia.play();
-         }
-
-         if (nextItem) {
-            this.loadMedia(nextItem);
-         }
-
-         if (prevItem) {
-            this.loadMedia(prevItem);
-         }
-
-         if (this.items.length > 1) {
-
-            var indicatorHTML = ['<ul class="c-carousel__indicator">'];
-            this.items.forEach((item, i) => indicatorHTML.push('<li><button class="c-carousel__indicator-item">' + (++i) + '</button></li>'));
-            indicatorHTML.push('</ul>');
-            this.element.appendChild($.createNode(indicatorHTML));
-            this.indicator = $.queryAll('.c-carousel__indicator-item', this.element);
-            this.indicator[this.currentItemIndex].classList.add('is-active');
-
-            if (this.element.getAttribute('data-controls') !== 'false') {
-
-                var uri = $.query('base');
-
-                uri = uri ? uri.getAttribute('data-uri') : '';
-
-               var controlsHTML = [
-                  '<div>',
-                    `<button class="c-carousel__controls u-alpha" rel="prev" tabindex="-1"><svg class="b-icon" role="image" aria-label="Předchozí"><use xlink:href="${uri}#arrow--simple"></use></svg></button>`,
-                    `<button class="c-carousel__controls u-alpha" rel="next" tabindex="-1"><svg class="b-icon" role="image" aria-label="Další"><use xlink:href="${uri}#arrow--simple"></use></svg></button>`,
-                  '</div>'
-               ];
-
-               this.element.appendChild($.createNode(controlsHTML));
-
-               this.element.addEventListener('click', (e) => {
-                  e.stopPropagation();
-                  var target = e.target;
-
-                  if (target === this.element) {
-                     return false;
-                  }
-
-                  while (!target.matches('.c-carousel__controls') && !target.matches('.c-carousel__indicator-item')) {
-                     target = target.parentNode;
-
-                     if (target === this.element) {
-                        return false;
-                     }
-                  }
-
-                  if (target.matches('.c-carousel__controls')) {
-                    target.getAttribute('rel') === 'next' ? this.next() : this.prev();
-                  } else if (target.matches('.c-carousel__indicator-item')) {
-                    this.moveToIndex(this.indicator.indexOf(target));
-                  }
-
-               });
-
-            }
-
-            this.element.addEventListener('keyup', (e) => {
-               var key = e.which || e.keyCode;
-
-               switch (key) {
-                  case 37:
-                     this.prev();
-                     break;
-                  case 39:
-                     this.next();
-                     break;
-               }
+                currentImage.removeEventListener('load', imageLoaded);
             });
 
-            this.element.addEventListener('touchstart', (e) => {
-               this.touchX = e.touches[0].clientX;
-               this.touchY = e.touches[0].clientY;
-            });
+            currentSlide.classList.add('is-loading');
+            currentImage.src = currentImage.getAttribute('data-src');
+        }
+    }
 
-            this.element.addEventListener('touchmove', (e) => {
-               if (!this.touchX || !this.touchY) {
-                  return;
-               }
+    self.create = function(items, index) {
 
-               var deltaX = this.touchX - e.touches[0].clientX;
-               var deltaY = this.touchY - e.touches[0].clientY;
+        var uri = $.query('base');
 
-               if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                  if (deltaX > 0) {
-                     this.next();
-                  } else {
-                     this.prev();
-                  }
-               }
+        uri = uri ? uri.getAttribute('data-uri') : '';
 
-               this.touchX = this.touchY = null;
-            });
+        var carouselHTML = ['<div class="c-carousel j-carousel__content" tabindex="0">'];
 
-         }
+        carouselHTML.push('<ul class="c-carousel__list">');
 
-         if (this.element.getAttribute('data-auto') === 'true') {
-            var defaultDelay = this.element.getAttribute('data-delay') || 3000;
-            var timer = function() {
-               this.next();
-               setTimeout(timer.bind(this), this.getCurrentItem().getAttribute('data-delay') || defaultDelay);
-            };
-            setTimeout(timer.bind(this), this.getCurrentItem().getAttribute('data-delay') || defaultDelay);
-         }
+        items.forEach(function(item) {
+            carouselHTML.push(`<li class="c-carousel__slide j-carousel__slide"><img class="c-carousel__image j-carousel__image" data-src="${item.media}" alt="${item.label}"></li>`);
+        });
 
-      }
+        carouselHTML.push('</ul>');
 
-   };
+        carouselHTML.push('<p class="c-carousel__label j-carousel__label">Vel sit debitis vero alias.</p>');
 
-   return self;
+        carouselHTML.push('<ol class="c-carousel__indicator c-indicator">');
 
-})(App);
+        items.forEach((item, i) => carouselHTML.push('<li><button class="c-indicator__item j-indicator__item">' + (++i) + '</button></li>'));
+
+        carouselHTML.push('</ol>');
+
+        carouselHTML.push(
+            '<button class="c-carousel__controls j-carousel__controls u-alpha" rel="prev" tabindex="-1">',
+                `<svg class="e-icon" role="image" aria-label="Předchozí"><use xlink:href="${uri}#arrow"></use></svg>`,
+            '</button>'
+        );
+
+        carouselHTML.push(
+            '<button class="c-carousel__controls j-carousel__controls u-alpha" rel="next" tabindex="-1">',
+                `<svg class="e-icon" role="image" aria-label="Další"><use xlink:href="${uri}#arrow"></use></svg>`,
+            '</button>'
+        );
+
+        carouselHTML.push('</div>');
+
+        self.container = $.createNode(carouselHTML);
+
+        self.define(
+            {
+                name: 'self',
+                node: self.container,
+                handlers: {
+                    keyup: function(ev) {
+                        var key = ev.which || ev.keyCode;
+
+                        switch (key) {
+                            case 37:
+                                prev();
+                                break;
+                            case 39:
+                                next();
+                                break;
+                        };
+                    }
+                }
+            },
+            {
+                name: 'slides',
+                selector: '.j-carousel__slide',
+                isCollection: true
+            },
+            {
+                name: 'images',
+                selector: '.j-carousel__image',
+                isCollection: true
+            },
+            {
+                name: 'label',
+                selector: '.j-carousel__label'
+            },
+            {
+                name: 'prevButton',
+                selector: '.j-carousel__controls[rel="prev"]',
+                handlers: {
+                    click: prev,
+                    mouseover: function() {
+                        var prevImage = self.element('images')[currentIndex > 0 ? currentIndex - 1 : itemsCount - 1];
+
+                        if (!prevImage.getAttribute('src')) {
+                            prevImage.src = prevImage.getAttribute('data-src');
+                        }
+                    }
+                }
+            },
+            {
+                name: 'nextButton',
+                selector: '.j-carousel__controls[rel="next"]',
+                handlers: {
+                    click: next,
+                    mouseover: function() {
+                        var nextImage = self.element('images')[(currentIndex + 1) % itemsCount];
+
+                        if (!nextImage.getAttribute('src')) {
+                            nextImage.src = nextImage.getAttribute('data-src');
+                        }
+                    }
+                }
+            },
+            {
+                name: 'indicator',
+                selector: '.j-indicator__item',
+                isCollection: true,
+                handlers: {
+                    click: moveToIndex,
+                    mouseover: function(ev, index) {
+                        var image = self.element('images')[index];
+
+                        if (!image.getAttribute('src')) {
+                            image.src = image.getAttribute('data-src');
+                        }
+                    }
+                }
+            }
+        );
+
+        itemsCount = self.element('slides').length;
+
+        moveToIndex(null, index);
+
+        return self.container;
+    };
+
+    return self;
+
+}

@@ -2,12 +2,17 @@
    Lightbox
    ========================================================================== */
 
-var Lightbox = (function($) {
+function Lightbox($, self) {
 
-    var self = {};
+    var lastActiveElement;
 
-    self.open = function(content) {
-        self.lastActiveElement = document.activeElement;
+    function close() {
+        self.container.parentNode.removeChild(self.container);
+
+        lastActiveElement.focus();
+    }
+
+    self.create = function(content) {
 
         var uri = $.query('base');
 
@@ -15,46 +20,59 @@ var Lightbox = (function($) {
 
         var lightboxHTML = [
             '<div class="c-lightbox j-lightbox" tabindex="0">',
-                `<button class="c-lightbox__button j-lightbox__button u-gamma"><svg class="b-icon"><use xlink:href="${uri}#close"></use></svg></button>`,
+                `<button class="c-lightbox__button j-lightbox__button u-beta"><svg class="e-icon"><use xlink:href="${uri}#close"></use></svg></button>`,
             '</div>'
         ];
 
-        content.classList.add('c-lightbox__content');
+        self.container = $.createNode(lightboxHTML);
 
-        self.element = $.createNode(lightboxHTML);
-        self.element.appendChild(content);
+        content.classList.add('c-lightbox__content', 'j-carousel__content');
+        self.container.appendChild(content);
 
-        document.body.appendChild(self.element);
+        self.define(
+            {
+                name: 'self',
+                node: self.container,
+                handlers: {
+                    keyup: function(ev) {
+                        var key = ev.which || ev.keyCode;
 
-        self.element.addEventListener('keyup', (e) => {
-            var key = e.which || e.keyCode;
-
-            switch (key) {
-                case 27:
-                    e.preventDefault();
-                    self.close();
-                    break;
+                        switch (key) {
+                            case 27:
+                                close();
+                                break;
+                        }
+                    }
+                }
+            },
+            {
+                name: 'closeButton',
+                selector: '.j-lightbox__button',
+                handlers: {
+                    click: close
+                }
+            },
+            {
+                name: 'content',
+                selector: '.j-carousel__content',
+                handlers: {
+                    click: function(ev) {
+                        ev.stopPropagation();
+                    }
+                }
             }
-        });
+        );
 
-        content.addEventListener('click', function(ev) {
-            ev.stopPropagation();
-        });
-
-        self.element.addEventListener('click', (e) => {
-            e.preventDefault();
-            self.close();
-        });
-
-        self.element.focus();
+        return self.container;
     };
 
-    self.close = function() {
-        document.body.removeChild(self.element);
-        self.element = null;
-        self.lastActiveElement.focus();
-    };
+    (function init() {
+
+        lastActiveElement = document.activeElement;
+
+    })();
 
     return self;
 
-})(App);
+}
+

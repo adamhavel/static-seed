@@ -15,6 +15,7 @@
    margin: 0;
    outline: 0;
    padding: 0;
+   background-repeat: none;
 }
 
 *:after,
@@ -405,13 +406,6 @@ table {
 img {
     display: block;
     max-width: 100%;
-
-    p & {
-        margin: 0 .125em;
-        margin-bottom: -.1rem;
-        display: inline-block;
-        width: auto !important;
-    }
 }
 
 [src$=".svg"] {
