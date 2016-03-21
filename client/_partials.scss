@@ -5,6 +5,7 @@
 @import "objects/o-inline-list";
 @import "objects/o-layout";
 @import "objects/o-wrapper";
+@import "layout/l-body";
 @import "layout/l-footer";
 @import "layout/l-header";
 @import "layout/l-main-content";
@@ -27,6 +28,7 @@
 @import "components/c-site-nav";
 @import "components/c-spot";
 @import "components/c-carousel/c-carousel";
+@import "components/c-gallery/c-gallery";
 @import "components/c-lightbox/c-lightbox";
 @import "components/c-promo-carousel/c-promo-carousel";
 @import "utility/alignment";

@@ -3,15 +3,18 @@
    ========================================================================== */
 
 .c-site-nav {
-
+    @include display-type;
 }
 
     .c-site-nav__list {
-        @extend %o-inline-list;
+        @include h-spacing(1.5em);
     }
 
         .c-site-nav__item {
 
+            &:hover {
+                color: color(highlight);
+            }
         }
 
             .c-site-nav__link {

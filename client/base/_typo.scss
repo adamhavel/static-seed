@@ -125,8 +125,8 @@ body * + * {
    }
 }
 
-@mixin aloof($distance, $fixed: false) {
-   @include island($distance, 0, $fixed);
+@mixin aloof($distance) {
+   @include island($distance, 0);
 }
 
 

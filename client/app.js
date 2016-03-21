@@ -2,6 +2,15 @@
 
 var App = (function($) {
 
+    if (
+        !document.querySelector
+        || !window.addEventListener
+        || !window.localStorage
+        || !('classList' in document.createElement('_'))
+    ) {
+        return false;
+    }
+
     const ASSETS_DIR = 'assets/site/';
     const COMPONENTS_DIR = 'components/';
 
@@ -139,6 +148,28 @@ var App = (function($) {
 
         return self;
     };
+
+
+    /* Libraries
+       ========================================================================== */
+
+    var libraries = [
+        {
+            src: 'fastclick.min.js',
+            callback: function() {
+                FastClick.attach(document.body);
+            }
+        },
+        {
+            src: 'pep.min.js',
+            test: !Modernizr.pointerevents
+        },
+        {
+            src: 'smoothscroll.min.js',
+            test: !('scrollBehavior' in document.documentElement.style)
+        }
+    ];
+
 
     /* Public API
        ========================================================================== */
@@ -281,23 +312,13 @@ var App = (function($) {
             }
         });
 
-        if (!Modernizr.svg) {
-            $.queryAll('img[src$=".svg"]').forEach(function(img) {
-                img.src = img.src.replace(/\.svg$/, '.png');
-            });
-        }
-
-        $.loadScript('fastclick.min.js', function() {
-            FastClick.attach(document.body);
+        libraries.forEach(function(library) {
+            if (library.test || typeof library.test === 'undefined') {
+                $.loadScript(library.src, function() {
+                    library.callback && library.callback();
+                });
+            }
         });
-
-        if (!Modernizr.pointerevents) {
-            $.loadScript('pep.min.js');
-        }
-
-        if (!('scrollBehavior' in document.documentElement.style)) {
-            $.loadScript('smoothscroll.min.js');
-        }
 
         window.addEventListener('resize', $.debounce(function() {
             media = false;

@@ -5,42 +5,89 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1.0">
     <link rel="dns-prefetch" href="//cdn.polyfill.io">
     <link href="assets/site/css/default.css" rel="stylesheet">
-    <script>(function(){function t(e){return e.split(".").pop()}function n(e,t){var n=document.getElementsByTagName("head")[0];if(t==="css"){var r=document.createElement("style");n.appendChild(r);if(r.styleSheet){r.styleSheet.cssText=e}else{r.innerHTML=e}}else if(t==="svg"){n.insertAdjacentHTML("beforeend",e)}}function r(e){var r=localStorage[e];if(r){n(r,t(e))}else{var i=new XMLHttpRequest;i.open("GET",e,true);i.onreadystatechange=function(){if(i.readyState===4){n(i.responseText,t(e));localStorage[e]=i.responseText}};i.send()}}var e=["assets/site/css/non-critical.css","assets/site/img/icons.svg"];if(window.localStorage){for(var i=e.length;i--;){if(!(t(e[i])==="svg"&&!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"))){r(e[i])}}}})()</script>
+    <script>
+        (function() {
+            'use strict';
+
+            function getType(src) {
+                return src.match(/\.([^\.\?]+)(?:\?.*)?$/)[1];
+            }
+
+            function injectContent(content, type) {
+                if (type === 'css') {
+                    var style = document.createElement('style');
+
+                    document.head.appendChild(style);
+                    style.textContent = content;
+                } else {
+                    document.head.insertAdjacentHTML('beforeend', content);
+                }
+            }
+
+            window.loadFile = function(src) {
+                if (!window.localStorage || !window.addEventListener) {
+                    return false;
+                }
+
+                var content = localStorage[src];
+
+                if (content) {
+                    injectContent(content, getType(src));
+                } else {
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.addEventListener('load', function() {
+                        localStorage[src] = xhr.responseText;
+                        injectContent(xhr.responseText, getType(src));
+                    });
+
+                    xhr.open('GET', src);
+                    xhr.send();
+                }
+            };
+
+        })();
+    </script>
+    <script>
+        loadFile('assets/site/css/non-critical.css');
+        loadFile('assets/site/img/icons.svg');
+    </script>
     <script src="assets/site/js/modernizr.min.js"></script>
-    <!--[if lt IE 9]><script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script><![endif]-->
     <title></title>
     <meta name="description" content="">
     <noscript>
         <link href="assets/site/css/non-critical.css" rel="stylesheet">
     </noscript>
 </head>
-<body>
+<body class="l-body">
 
     <header class="l-header" role="banner">
+        <div class="o-wrapper">
 
-        <h1 class="" class="l-header__logo c-site-logo">
-            <a href=""><img class="c-site-logo__image" src="" alt=""></a>
-        </h1>
+            <!-- <h1 class="" class="l-header__logo c-site-logo">
+                <a href=""><img class="c-site-logo__image" src="" alt=""></a>
+            </h1> -->
 
-        <nav class="l-header__nav c-site-nav j-site-nav" role="navigation">
-            <div class="o-wrapper">
-                <ul class="c-site-nav__list">
-                    <li class="c-site-nav__item"><a class="c-site-nav__link" href=""><svg class="e-icon" aria-hidden="true"><use xlink:href="#close"></use></svg><span>Item 1</span></a></li>
-                    <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 2</a></li>
+            <nav class="l-header__nav c-site-nav j-site-nav u-delta" role="navigation">
+                <ul class="c-site-nav__list o-inline-list">
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href=""><svg class="e-icon" aria-hidden="true"><use xlink:href="#close"></use></svg> Item 1</a></li>
+                    <li class="c-site-nav__item"><a class="c-site-nav__link" href=""><svg class="e-icon" aria-hidden="true"><use xlink:href="#menu"></use></svg> Item 2</a></li>
                     <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 3</a></li>
                     <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 4</a></li>
                     <li class="c-site-nav__item"><a class="c-site-nav__link" href="">Item 5</a></li>
                 </ul>
-            </div>
-        </nav>
+            </nav>
 
+        </div>
     </header>
 
     <div class="o-wrapper">
 
         <main class="l-main-content" role="main">
 
+            <header>Accusantium quae consequatur vero vitae enim, ipsum sequi amet sunt voluptatum dolore recusandae possimus adipisci ab, consectetur quos error assumenda quidem officia. Quod, praesentium consequuntur corrupti nisi maiores eius inventore.</header>
 
+            <footer>Autem dolorum odio amet eum tempore excepturi cupiditate consequatur neque similique libero facilis vel eaque, doloremque, quidem ducimus, id nesciunt iusto voluptate veritatis praesentium perferendis repudiandae! Dolor quam aliquid, officia.</footer>
 
         </main>
 
@@ -52,7 +99,6 @@
 
     </footer>
 
-<script src="https://cdn.polyfill.io/v1/polyfill.min.js" defer></script>
-<script src="assets/site/js/app.js" defer></script>
+<script src="assets/site/js/app.js" async></script>
 </body>
 </html>

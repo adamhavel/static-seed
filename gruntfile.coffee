@@ -199,12 +199,7 @@ module.exports = (grunt) ->
 
       svgstore:
          options:
-            cleanup: ['fill', 'class']
             cleanupdefs: true
-            externalDefs: 'public/assets/site/img/icons-style.svg'
-            symbol: {
-              class: 'icon'
-            }
          icons:
             src: ['public/assets/site/img/icon/*.svg']
             dest: 'public/assets/site/img/icons.svg'
