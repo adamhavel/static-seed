@@ -40,7 +40,7 @@ var App = (function($) {
         }
     ];
 
-    var Component = function(container) {
+    var Component = function (container) {
 
         var self = {
             // The component's parent DOM node.
@@ -49,7 +49,7 @@ var App = (function($) {
             elements: [],
             // Define an element and register any event handler neccessary.
             define: function() {
-                [].forEach.call(arguments, function(element) {
+                [].forEach.call(arguments, function (element) {
                     self.elements.push(element);
 
                     if (element.handlers) {
@@ -78,7 +78,7 @@ var App = (function($) {
             },
             // Returns an element property for a given element name and property type.
             element: function(name, property) {
-                var property = property || 'node';
+                property = property || 'node';
                 var result = null;
 
                 self.elements.some(function(el) {
@@ -227,7 +227,7 @@ var App = (function($) {
 
                 loadingScripts.push(src);
 
-                script.addEventListener('load', function(ev) {
+                script.addEventListener('load', function() {
                     loadedScripts.push(src);
                     loadingScripts.splice(loadingScripts.indexOf(src), 1);
 
@@ -259,7 +259,7 @@ var App = (function($) {
         var style = document.createElement('link');
 
         style.rel = 'stylesheet';
-        style.href = assetsDir + 'css/' + src;
+        style.href = ASSETS_DIR + 'css/' + src;
         style.media = 'only x';
         ref.parentNode.insertBefore(style, ref);
 
