@@ -24,19 +24,9 @@ var App = (function($) {
 
     var components = [
         {
-            name: 'GalleryCarousel',
-            selector:  '.j-gallery-carousel',
-            src: '_c-gallery-carousel.js'
-        },
-        {
             name: 'PromoCarousel',
             selector:  '.j-promo-carousel',
             src: '_c-promo-carousel.js'
-        },
-        {
-            name: 'Datepicker',
-            selector:  '.j-datepicker',
-            src: '_c-datepicker.js'
         }
     ];
 
