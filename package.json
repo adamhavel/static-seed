@@ -17,6 +17,9 @@
     "express": "~4.13.3"
   },
   "devDependencies": {
+    "pepjs": "~0.4.1",
+    "fastclick": "~1.0.6",
+    "smoothscroll-polyfill": "~0.2.1",
     "babel-preset-es2015": "~6.1.18",
     "eslint": "~2.7.0",
     "grunt": "~1.0.1",

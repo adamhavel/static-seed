@@ -22,8 +22,7 @@ module.exports = (grunt) ->
 
       modernizr:
          default:
-            dest: 'public/assets/site/lib/modernizr/modernizr.custom.js'
-            uglify: false
+            dest: 'public/assets/site/js/modernizr.min.js'
             options: ['prefixed', 'setClasses']
             files:
                src: ['client/**/*.js',' public/assets/site/css/default.css']
@@ -43,17 +42,14 @@ module.exports = (grunt) ->
                src: ['*.js']
                dest: 'build/public/assets/site/js/components'
             }]
-         modernizr:
-            src: 'public/assets/site/lib/modernizr/modernizr.custom.js'
-            dest: 'public/assets/site/js/modernizr.min.js'
          fastclick:
-            src: 'public/assets/site/lib/fastclick/lib/fastclick.js'
+            src: 'node_modules/fastclick/lib/fastclick.js'
             dest: 'public/assets/site/js/fastclick.min.js'
          pep:
-            src: 'public/assets/site/lib/pepjs/dist/pep.js'
+            src: 'node_modules/pepjs/dist/pep.js'
             dest: 'public/assets/site/js/pep.min.js'
          smoothscroll:
-            src: 'public/assets/site/lib/smoothscroll/dist/smoothscroll.js'
+            src: 'node_modules/smoothscroll-polyfill/smoothscroll.js'
             dest: 'public/assets/site/js/smoothscroll.min.js'
 
       # CSS
@@ -118,7 +114,6 @@ module.exports = (grunt) ->
                src: [
                   '**',
                   '!**/*.map',
-                  '!assets/site/lib/**',
                   '!assets/site/img/icon/**',
                   '!assets/site/font/**',
                   '!assets/site/img/icons-style.svg'
@@ -278,7 +273,7 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'init',
       'Builds the non-critical stylesheet.',
-      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:modernizr', 'uglify:fastclick', 'uglify:pep', 'uglify:smoothscroll', 'make_js', 'svgstore']
+      ['make_css', 'make_non_critical_css', 'modernizr', 'uglify:fastclick', 'uglify:pep', 'uglify:smoothscroll', 'make_js', 'svgstore']
 
    grunt.registerTask 'develop',
       'Watches the project for changes and automatically builds them.',
