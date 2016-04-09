@@ -260,7 +260,7 @@ module.exports = (grunt) ->
 
    grunt.registerTask 'make_css',
       'Builds the critical stylesheet.',
-      ['sass_globbing', 'exec:sass', 'autoprefixer:default']
+      ['sass_globbing', 'sass', 'autoprefixer:default']
 
    grunt.registerTask 'make_js',
       'Bundles and transpiles scripts.',

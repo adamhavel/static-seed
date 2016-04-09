@@ -6,7 +6,7 @@
 %u-alpha {
     font-size: 3rem !important;
 
-    @include media('<column') {
+    @include media('<line') {
         font-size: 2rem !important;
     }
 }
@@ -15,7 +15,7 @@
 %u-beta {
     font-size: 2rem !important;
 
-    @include media('<column') {
+    @include media('<line') {
         font-size: 1.5rem !important;
     }
 }
@@ -24,7 +24,7 @@
 %u-gamma {
     font-size: 1.5rem !important;
 
-    @include media('<column') {
+    @include media('<line') {
         font-size: 1.25rem !important;
     }
 }
@@ -33,7 +33,7 @@
 %u-delta {
     font-size: 1.25rem !important;
 
-    @include media('<column') {
+    @include media('<line') {
         font-size: 1.125rem !important;
     }
 }
@@ -42,7 +42,7 @@
 %u-epsilon {
     font-size: 1.125rem !important;
 
-    @include media('<column') {
+    @include media('<line') {
         font-size: 1rem !important;
     }
 }

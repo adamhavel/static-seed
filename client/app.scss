@@ -1,11 +1,9 @@
 @charset "UTF-8";
 
 @import "base/normalize";
-@import "base/math";
-@import "base/scale";
+@import "base/functions";
 @import "base/config";
 @import "base/helpers";
-@import "base/colors";
 @import "base/media-queries";
 @import "base/typo";
 @import "partials";

@@ -53,6 +53,14 @@
     }
 }
 
+@mixin flexbox {
+    .flexbox &,
+    .flexboxlegacy &,
+    .flexboxtweener & {
+        @content;
+    }
+}
+
 @function scale-to-percentage($item-interval, $configuration, $gap: const(GUTTER)) {
     $total: 0;
     @each $interval in $configuration {

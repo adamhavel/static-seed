@@ -9,9 +9,7 @@
     display: inline-block;
     margin-top: 0;
     fill: currentcolor;
-    vertical-align: baseline;
-    position: relative;
-    top: .15em;
+    vertical-align: -.15em;
 
     &:first-child {
         margin-right: $gap;

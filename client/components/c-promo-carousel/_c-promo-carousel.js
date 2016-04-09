@@ -4,7 +4,7 @@
 
 function PromoCarousel($, self) {
 
-    self.elements.push(
+    self.define(
         {
             name: 'items',
             selector: '.j-promo-carousel__item',

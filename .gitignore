@@ -3,4 +3,5 @@ public/assets/site/lib
 public/assets/site/js/**/*.js
 public/assets/site/css/*.css
 public/assets/site/css/*.map
+client/_partials.scss
 build

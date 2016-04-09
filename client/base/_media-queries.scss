@@ -6,36 +6,32 @@
    ========================================================================== */
 
 $media-breakpoints: (
-   char: em-to-px(.5em),
-   column: em-to-px(const(LINE_LENGTH)),
-   layout: em-to-px(const(LAYOUT_WIDTH) * .75)
+    line: const(LINE_LENGTH),
+    layout: const(LAYOUT_WIDTH)
 );
 
 $media-expressions: (
-   screen: 'screen',
-   print: 'print',
-   inbetween: '(max-width: #{map-get($media-breakpoints, layout) - 1px}) and (min-width: #{map-get($media-breakpoints, column)})',
-   landscape: '(orientation: landscape)',
-   portrait: '(orientation: portrait)',
-   condensed: ('(max-width: #{map-get($media-breakpoints, column) - 1px})', '(max-height: #{em-to-px(const(LINE_HEIGHT) * 20em)})'),
-   retina2x: ('(-webkit-min-device-pixel-ratio: 2)', '(min-resolution: 192dpi)'),
-   retina3x: ('(-webkit-min-device-pixel-ratio: 3)', '(min-resolution: 350dpi)')
+    screen: 'screen',
+    print: 'print',
+    inbetween: '(max-width: #{map-get($media-breakpoints, layout) - .01em}) and (min-width: #{map-get($media-breakpoints, line)})',
+    landscape: '(orientation: landscape)',
+    portrait: '(orientation: portrait)',
+    retina2x: ('(-webkit-min-device-pixel-ratio: 2)', '(min-resolution: 192dpi)'),
+    retina3x: ('(-webkit-min-device-pixel-ratio: 3)', '(min-resolution: 350dpi)')
 );
 
 $media-unit-intervals: (
-   'px': 1,
-   'em': .01,
-   'rem': .1
+    'px': 1,
+    'em': .01,
+    'rem': .1
 );
-
-$media-static-breakpoint: '>=layout';
 
 /* Functions
    ========================================================================== */
 
 @mixin media($conditions...) {
-   @for $i from 1 through length($conditions) {
-      $conditions: set-nth($conditions, $i, parse-expression(nth($conditions, $i)));
+    @for $i from 1 through length($conditions) {
+        $conditions: set-nth($conditions, $i, parse-expression(nth($conditions, $i)));
    }
 
    $branches: get-query-branches($conditions);
@@ -237,15 +233,15 @@ $media-static-breakpoint: '>=layout';
  * Use: window.getComputedStyle(document.body, ':after').getPropertyValue('content');
  */
 body {
-   &:after {
-      display: none;
-   }
+    &:after {
+        display: none;
+    }
 
-   @each $type in map-keys($media-breakpoints) {
-      @include media('>=' + $type) {
-         &:after {
-            content: quote($type);
-         }
-      }
-   }
+    @each $type in map-keys($media-breakpoints) {
+        @include media('>=' + $type) {
+            &:after {
+                content: quote($type);
+            }
+        }
+    }
 }

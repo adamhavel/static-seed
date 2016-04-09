@@ -5,11 +5,10 @@
 /* Imports
    ========================================================================== */
 
-@import "base/math";
-@import "base/scale";
+@import "base/normalize";
+@import "base/functions";
 @import "base/config";
 @import "base/helpers";
-@import "base/colors";
 @import "base/media-queries";
 
 
@@ -17,26 +16,22 @@
    Fonts
    ========================================================================== */
 
-/* Settings
-   ========================================================================== */
-
-$FONTS_PATH: 'assets/site/font/';
-
-
 /* Methods
    ========================================================================== */
 
 @mixin define-font($name, $file, $weight: null) {
-    $path: $FONTS_PATH + $file;
-
     @font-face {
         font-family: $name;
-        src: base64('../public/' + $path + '.woff') format('woff');
+        src: base64('../public/assets/site/font/' + $file + '.woff') format('woff');
         @if $weight not null {
             font-weight: $weight;
         }
     }
 }
+
+
+/* Definitions
+   ========================================================================== */
 
 
 /* ==========================================================================
@@ -49,3 +44,7 @@ $FONTS_PATH: 'assets/site/font/';
 @function asset($file) {
     @return url(#{'assets/site/img/' + $file});
 }
+
+
+/* Definitions
+   ========================================================================== */

@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Functions
+   ========================================================================== */
+
+/* Math
+   ========================================================================== */
+
+@function gcd($a, $b) {
+    @if ($b != 0) {
+        @return gcd($b, $a % $b);
+    } @else {
+        @return abs($a);
+    }
+}
+
+@function pow($base, $exponent, $prec: 5) {
+
+    @if (floor($exponent) != $exponent) {
+        $prec2 : pow(10, $prec);
+        $exponent: round($exponent * $prec2);
+        $denominator: gcd($exponent, $prec2);
+        @return nth-root(pow($base, $exponent / $denominator), $prec2 / $denominator, $prec);
+    }
+
+    $value: $base;
+    @if $exponent > 1 {
+        @for $i from 2 through $exponent {
+            $value: $value * $base;
+        }
+    } @else if $exponent < 1 {
+        @for $i from 0 through -$exponent {
+            $value: $value / $base;
+        }
+    }
+
+    @return $value;
+}
+
+@function nth-root($num, $n: 2, $prec: 12) {
+    $x: 1;
+
+    @for $i from 0 through $prec {
+        $x: 1 / $n * (($n - 1) * $x + ($num / pow($x, $n - 1)));
+    }
+
+    @return $x;
+}
+
+
+/* Scale
+   ========================================================================== */
+
+@function scale-by($ratio, $interval, $unit: null) {
+    $unitless-value: pow($ratio, $interval);
+
+    @if (not $unit) {
+        @return $unitless-value;
+    } @else {
+        @return unquote("#{$unitless-value * 1}#{$unit}");
+    }
+}
+
+// Typographic level scale based on equal temperament.
+@function micro-scale($interval, $unit: null) {
+    @return scale-by(1.05946309436, $interval, $unit);
+}
+
+// Layout scale based on golden ratio.
+@function macro-scale($interval, $unit: null) {
+    @return scale-by(1.61803398875, $interval, $unit);
+}
+
+
+/* Colors
+   ========================================================================== */
+
+@function color-luminance($color) {
+    $rgba: red($color), green($color), blue($color);
+    $rgba2: ();
+
+    @for $i from 1 through 3 {
+        $rgb: nth($rgba, $i);
+        $rgb: $rgb / 255;
+        $rgb: if($rgb < .03928, $rgb / 12.92, pow(($rgb + .055) / 1.055, 2.4));
+        $rgba2: append($rgba2, $rgb);
+    }
+
+    @return .2126 * nth($rgba2, 1) + .7152 * nth($rgba2, 2) + .0722 * nth($rgba2, 3);
+}
+
+@function color-contrast($color1, $color2) {
+    $luminance1: color-luminance($color1) + .05;
+    $luminance2: color-luminance($color2) + .05;
+    $ratio: $luminance1 / $luminance2;
+
+    @if $luminance2 > $luminance1 {
+        $ratio: 1 / $ratio;
+    }
+
+    $ratio: round($ratio * 10) / 10;
+
+    @return $ratio;
+}
+
+@function faux-rgba($color, $background, $opacity) {
+    @return mix($color, $background, $opacity * 100%);
+}
+
+@function shade($color, $amount) {
+    @return mix(#000, $color, $amount * 100%);
+}
+
+@function tint($color, $amount) {
+    @return mix(#fff, $color, $amount * 100%);
+}
+
+@function contrasting-color($base, $opacity: 1, $colors...) {
+    @if length($colors) == 0 {
+        $colors: (color(background), color(text));
+    }
+
+    $contrast: 0;
+    $best-color: null;
+
+    @each $color in $colors {
+
+        @if length($opacity < 1) {
+            $color: faux-rgba($color, $base, $opacity);
+        }
+
+        $current-contrast: color-contrast($base, $color);
+
+        @if ($current-contrast >= $contrast) {
+            $contrast: $current-contrast;
+            $best-color: $color;
+        }
+    }
+
+    @if ($contrast < 4.5) {
+        @warn "Contrast ratio of #{$contrast} for #{$best-color} on #{$base} does not meet WCAG AA.";
+    }
+
+    @return $best-color;
+}

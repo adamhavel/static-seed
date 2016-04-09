@@ -6,11 +6,11 @@
    ========================================================================== */
 
 $grid-columns: (
-   '>=layout': 3,
-   'inbetween': 2,
-   '<column': 1
+    '>=layout': 3,
+    'inbetween': 2,
+    '<line': 1
 );
-$grid-hgap: const(GUTTER);
+$grid-hgap: const(GUTTER) * 2;
 $grid-vgap: 1;
 
 
@@ -18,8 +18,6 @@ $grid-vgap: 1;
    ========================================================================== */
 
 @mixin grid($items-per-row: $grid-columns, $hgap: $grid-hgap, $vgap: $grid-vgap) {
-    @include island($vgap * 2);
-
     display: flex !important;
     flex-wrap: wrap;
 
@@ -47,7 +45,7 @@ $grid-vgap: 1;
 
             @include media($breakpoint) {
 
-                width: $width !important;
+                width: $width;
 
                 &:nth-child(-n + #{$columns}) {
                     margin-top: 0 !important;

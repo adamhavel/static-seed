@@ -18,4 +18,30 @@
     &--loose {
         @include h-spacing(2rem);
     }
+
+    &--tight {
+        @include h-spacing(0);
+    }
+
+    &--spread,
+    &--fill {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+
+        > * {
+            margin-bottom: 0;
+        }
+    }
+
+    &--spread {
+        justify-content: space-between;
+    }
+
+    &--fill {
+
+        > * {
+            flex: 1;
+        }
+    }
 }

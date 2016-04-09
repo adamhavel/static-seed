@@ -2,26 +2,27 @@
    Configuration
    ========================================================================== */
 
-$constants: () !global;
-
 /* Functions
    ========================================================================== */
 
-@mixin const($name, $value) {
-   @if map-has-key($constants, $name) {
-      @error 'Constant `#{$name}` already defined.';
-   }
+$constants: () !global;
 
-   $constants: map-merge($constants, ($name: $value)) !global;
+@mixin const($name, $value) {
+    @if map-has-key($constants, $name) {
+        @error 'Constant `#{$name}` already defined.';
+    }
+
+    $constants: map-merge($constants, ($name: $value)) !global;
 }
 
 @function const($name) {
-   @if not map-has-key($constants, $name) {
-      @error 'Unknown constant `#{$name}`.';
-   }
+    @if not map-has-key($constants, $name) {
+        @error 'Unknown constant `#{$name}`.';
+    }
 
-   @return map-get($constants, $name);
+    @return map-get($constants, $name);
 }
+
 
 /* Typography
    ========================================================================== */
@@ -36,3 +37,31 @@ $constants: () !global;
 
 @include const('GUTTER', 2%);
 @include const('LAYOUT_WIDTH', const(LINE_LENGTH) + const(LINE_LENGTH) * macro-scale(-1));
+
+
+/* Colors
+   ========================================================================== */
+
+@include const('COLORS', (
+    background: #fff,
+    text: #363636,
+    shade: #dadada,
+    highlight: #9c1d19
+));
+
+@function color($name) {
+    @return map-get(const('COLORS'), $name);
+}
+
+
+/* Fonts
+   ========================================================================== */
+
+@include const('FONTS', (
+    body: ('Helvetica Neue', Helvetica, 'Segoe UI', Roboto, Arial, sans-serif),
+    display: ('Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif)
+));
+
+@function font($name) {
+    @return map-get(const('FONTS'), $name);
+}

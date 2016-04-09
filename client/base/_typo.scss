@@ -2,21 +2,8 @@
    Typography
    ========================================================================== */
 
-/* Variables
-   ========================================================================== */
-
-$fonts: (
-   body: ('Helvetica Neue', Helvetica, 'Segoe UI', Roboto, Arial, sans-serif),
-   display: ('Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif)
-);
-
 /* Helpers
    ========================================================================== */
-
-// Retrieve a font stack, either of the body or display variety.
-@function font($name) {
-    @return map-get($fonts, $name);
-}
 
 // Returns a multiple of the leading. Used to create any sort of vertical spacing.
 @function lines($count: 1, $correction: null) {
@@ -31,20 +18,20 @@ $fonts: (
 
 // Create a pretty underline.
 @mixin underline($weight: 1px, $background: color(background), $color: currentColor, $hover: color(text), $position: 90%) {
-   display: inline-block;
-   text-decoration: none;
-   background: linear-gradient($color, $color) no-repeat;
-   background-size: 100% $weight;
-   background-position: 0 $position;
-   text-shadow: $weight 0 $background,
-                -$weight 0 $background,
-                ($weight / 2) 0 $background,
-                -($weight / 2) 0 $background;
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient($color, $color) no-repeat;
+    background-size: 100% $weight;
+    background-position: 0 $position;
+    text-shadow: $weight 0 $background,
+                 -$weight 0 $background,
+                 ($weight / 2) 0 $background,
+                 -($weight / 2) 0 $background;
 
-   &:focus,
-   &:hover {
-      background-image: linear-gradient($hover, $hover);
-   }
+    &:focus,
+    &:hover {
+        background-image: linear-gradient($hover, $hover);
+    }
 }
 
 @mixin display-type {
@@ -57,13 +44,8 @@ $fonts: (
 /* Flow control
    ========================================================================== */
 
-// Default content vertical spacing.
-body * + * {
-    margin-top: lines(1);
-}
-
 // Alter the default vertical spacing.
-@mixin v-spacing($lines, $propagate: false, $fixed: false) {
+@mixin v-spacing($lines, $propagate: false) {
     $selector: '* + *';
 
     @if not $propagate {
@@ -76,17 +58,14 @@ body * + * {
 }
 
 // Spread items horizontally.
-@mixin h-spacing($distance, $adjust: false) {
+@mixin h-spacing($distance) {
+
     > * {
         margin-right: $distance;
 
-        &:last-child {
-            margin-right: 0;
-        }
-
-        @if $adjust {
-            @include media('<column') {
-                margin-right: $distance / 2;
+        @if $distance > 0 {
+            &:last-child {
+                margin-right: 0;
             }
         }
     }
@@ -108,41 +87,41 @@ body * + * {
 // Somebody is an island.
 @mixin island($leading: 1, $trailing: $leading) {
 
-   @if $leading > 0 {
-      margin-top: lines($leading);
+    @if $leading > 0 {
+        margin-top: lines($leading);
 
-      &:first-child {
-         margin-top: 0;
-      }
-   }
+        &:first-child {
+            margin-top: 0;
+        }
+    }
 
-   @if $trailing > 0 {
-      margin-bottom: lines($trailing);
+    @if $trailing > 0 {
+        margin-bottom: lines($trailing);
 
-      &:last-child {
-         margin-bottom: 0;
-      }
-   }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
 
 @mixin aloof($distance) {
-   @include island($distance, 0);
+    @include island($distance, 0);
 }
 
 
-/* Base
+/* Definitions
    ========================================================================== */
 
 html {
     color: color(text);
     font-family: font(body);
     font-size: const(BASE) * 1em;
+    font-size: calc(#{const(BASE) * 75%} + .3vw);
     line-height: const(LINE_HEIGHT);
-    font-weight: 400;
+}
 
-    @include media('<column') {
-        font-size: const(BASE) * 1em * micro-scale(-1);
-    }
+body * + * {
+    margin-top: lines(1);
 }
 
 a {
@@ -162,6 +141,10 @@ a:not([class]) {
 
 em {
     color: color(highlight);
+}
+
+strong {
+    font-weight: 700;
 }
 
 q {

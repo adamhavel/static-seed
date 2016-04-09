@@ -30,7 +30,7 @@ var App = (function($) {
         }
     ];
 
-    var Component = function (container) {
+    $.Component = function (container) {
 
         var self = {
             // The component's parent DOM node.
@@ -240,7 +240,7 @@ var App = (function($) {
         }
     };
 
-    $.loadComponent = function(src, callback) {
+    $.requireComponent = function(src, callback) {
         return $.loadScript(COMPONENTS_DIR + src, callback);
     };
 
@@ -274,16 +274,18 @@ var App = (function($) {
         }
     };
 
-    $.scrollTo = function(element, nudge) {
-        nudge = nudge || 0;
-
-        var marginTop = parseInt(window.getComputedStyle(element).marginTop) || 24;
-        var distance = element.getBoundingClientRect().top - marginTop + nudge;
+    $.scrollTo = function(element, nudge = 0) {
+        var distance = element.getBoundingClientRect().top + nudge;
+        var id = element.getAttribute('id');
 
         window.scrollBy({
             top: distance,
             behavior: 'smooth'
         });
+
+        if (window.history && id) {
+            window.history.pushState(null, null, '#' + id);
+        }
     };
 
     (function init() {
@@ -292,11 +294,11 @@ var App = (function($) {
             var elements = $.queryAll(component.selector);
 
             if (elements.length) {
-                $.loadComponent(component.src, function() {
+                $.requireComponent(component.src, function() {
                     elements.forEach(function(container) {
                         var setup = window[component.name];
 
-                        setup($, Component(container), component.selector);
+                        setup($, $.Component(container), component.selector);
                     });
                 });
             }
