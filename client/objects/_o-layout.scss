@@ -14,10 +14,6 @@
         flex-direction: column;
     }
 
-    &--rev {
-        flex-direction: row-reverse;
-    }
-
     @mixin no-flexbox {
         @include clearfix;
     }
@@ -50,14 +46,6 @@
             @include media('<layout') {
                 float: none;
                 display: block;
-            }
-
-            .o-layout--rev > & {
-                float: left;
-
-                &:first-child {
-                    float: right;
-                }
             }
         }
     }

@@ -116,7 +116,6 @@ html {
     color: color(text);
     font-family: font(body);
     font-size: const(BASE) * 1em;
-    font-size: calc(#{const(BASE) * 75%} + .3vw);
     line-height: const(LINE_HEIGHT);
 }
 

@@ -7,10 +7,10 @@
     @include clearfix;
 
     max-width: const(LAYOUT_WIDTH);
-    padding: 0 const(GUTTER);
+    padding: 0 2vw;
 
     @include media('<layout') {
-        padding: 0 const(GUTTER) * 2;
+        padding: 0 4vw;
     }
 
     &--full {
