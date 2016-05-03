@@ -232,7 +232,6 @@ module.exports = (grunt) ->
             files: ['public/assets/site/assets/site/font/*.woff']
             tasks: ['exec:sass_non_critical']
 
-   grunt.loadNpmTasks 'grunt-autoprefixer'
    grunt.loadNpmTasks 'grunt-babel'
    grunt.loadNpmTasks 'grunt-concurrent'
    grunt.loadNpmTasks 'grunt-contrib-clean'

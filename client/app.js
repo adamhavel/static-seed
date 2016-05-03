@@ -2,12 +2,17 @@
 
 var App = (function($) {
 
+    // Cutting the mustard.
     if (
         !document.querySelector
         || !window.addEventListener
         || !window.localStorage
         || !('classList' in document.createElement('_'))
     ) {
+        var rootEl = document.documentElement;
+
+        rootEl.className = rootEl.className.replace(/\bjs\b/gi, 'no-js');
+
         return false;
     }
 
@@ -26,7 +31,7 @@ var App = (function($) {
         {
             name: 'PromoCarousel',
             selector:  '.j-promo-carousel',
-            src: '_c-promo-carousel.js'
+            src: '_c-promo-carousel.min.js'
         }
     ];
 
@@ -149,10 +154,6 @@ var App = (function($) {
             callback: function() {
                 FastClick.attach(document.body);
             }
-        },
-        {
-            src: 'pep.min.js',
-            test: !Modernizr.pointerevents
         },
         {
             src: 'smoothscroll.min.js',
@@ -306,7 +307,7 @@ var App = (function($) {
 
         libraries.forEach(function(library) {
             if (library.test || typeof library.test === 'undefined') {
-                $.loadScript(library.src, function() {
+                $.loadScript('lib/' + library.src, function() {
                     library.callback && library.callback();
                 });
             }

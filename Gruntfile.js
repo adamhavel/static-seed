@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             },
             app: {
                 src: 'client/app.js',
-                dest: 'public/assets/site/js/Heureka.js'
+                dest: 'public/assets/site/js/app.js'
             },
             components: {
                 files: [{
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
                 files: [{
                     cwd: 'public/assets/site/js',
                     expand: true,
-                    src: ['**/*.js', '!lib/*'],
+                    src: ['**/*.js', '!**/*.min.js', '!lib/*'],
                     dest: 'public/assets/site/js',
                     ext: '.min.js'
                 }]
@@ -52,6 +52,26 @@ module.exports = function(grunt) {
             smoothscroll: {
                 src: 'node_modules/smoothscroll-polyfill/smoothscroll.js',
                 dest: 'public/assets/site/js/lib/smoothscroll.min.js'
+            }
+        },
+
+        sass: {
+            default: {
+                src: 'client/app.scss',
+                dest: 'public/assets/site/css/default.css'
+            }
+        },
+
+        sass_globbing: {
+            default: {
+                src: [
+                    'client/objects/**/*.scss',
+                    'client/layout/**/*.scss',
+                    'client/elements/**/*.scss',
+                    'client/components/**/*.scss',
+                    'client/utility/**/*.scss'
+                ],
+                dest: 'client/_partials.scss'
             }
         },
 
@@ -72,32 +92,6 @@ module.exports = function(grunt) {
             }
         },
 
-        hashres: {
-            options: {
-                fileNameFormat: '${name}.${hash}.${ext}',
-                hashSize: 10
-            },
-            components: {
-                src: ['public/assets/site/js/component/*.min.js'],
-                dest: [
-                    'public/assets/site/js/app.min.js',
-                    'public/assets/site/js/component/*.min.js'
-                ]
-            },
-            app: {
-                src: 'public/assets/site/js/Heureka.min.js'
-            },
-            css: {
-                src: 'public/assets/site/css/default.min.css'
-            },
-            noncriticalcss: {
-                src: 'public/assets/site/css/non-critical.min.css'
-            },
-            icons: {
-                src: 'public/assets/site/img/icons.min.svg'
-            }
-        },
-
         svgstore: {
             options: {
                 cleanupdefs: true,
@@ -108,18 +102,85 @@ module.exports = function(grunt) {
                 }
             },
             default: {
-                src: ['assets/img/icon/*.svg'],
+                src: ['public/assets/site/img/icon/*.svg'],
                 dest: 'public/assets/site/img/icons.svg'
+            }
+        },
+
+        clean: {
+            build: {
+                src: ['build']
+            }
+        },
+
+        copy: {
+            build: {
+                files: [{
+                    cwd: 'public',
+                    expand: true,
+                    src: [
+                        '**',
+                        '!**/*.map',
+                        '!assets/site/img/icon/**',
+                        '!assets/site/font/**'
+                    ],
+                    dest: 'build/public'
+                }]
+            }
+        },
+
+        hashres: {
+            options: {
+                fileNameFormat: '${name}.${hash}.${ext}'
+            },
+            components: {
+                src: ['build/public/assets/site/js/component/*.min.js'],
+                dest: [
+                    'build/public/assets/site/js/app.min.js',
+                    'build/public/assets/site/js/component/*.min.js'
+                ]
+            },
+            default: {
+                src: [
+                    'build/public/assets/site/js/app.min.js',
+                    'build/public/assets/site/css/default.min.css',
+                    'build/public/assets/site/css/non-critical.min.css',
+                    'build/public/assets/site/img/icons.min.svg'
+                ],
+                dest: 'build/public/*.html'
+            }
+        },
+
+        inliner: {
+            default: {
+                files: [{
+                    expand: true,
+                    cwd: 'build/public',
+                    src: '*.html',
+                    dest: 'build/public'
+                }]
+            },
+            modernizr: {
+                options: {
+                    js: true,
+                    css: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'build/public',
+                    src: '*.html',
+                    dest: 'build/public'
+                }]
             }
         },
 
         imagemin: {
             default: {
                 files: [{
-                    cwd: 'assets/img',
+                    cwd: 'build/public/assets/site/img',
                     expand: true,
-                    src: '**/*.*',
-                    dest: 'public/assets/site/img'
+                    src: ['**/*.*', '!icons.min.svg'],
+                    dest: 'build/public/assets/site/img'
                 }]
             },
             icons: {
@@ -133,24 +194,24 @@ module.exports = function(grunt) {
             }
         },
 
-        clean: {
-            css: {
-                src: 'public/assets/site/css/**/*'
+        exec: {
+            sass: {
+                cmd: 'sass app.scss:../public/assets/site/css/default.css --style expanded -E UTF-8',
+                cwd: 'client'
             },
-            js: {
-                src: [
-                    'public/assets/site/js/*.js',
-                    'public/assets/site/js/component/*.js'
-                ]
+            sassnoncritical: {
+                cmd: 'sass -r ../data-uri.rb non-critical.scss:../public/assets/site/css/non-critical.css --style expanded -E UTF-8',
+                cwd: 'client'
             },
-            images: {
-                src: ['public/assets/site/img/*', '!public/assets/site/img/icons.*']
-            },
-            icons: {
-                src: ['public/assets/site/img/icons.*']
-            },
-            cache: {
-                src: 'temp/**/*'
+            server: {
+                cmd: 'node server.js'
+            }
+        },
+
+        concurrent: {
+            target: ['exec:server', 'watch'],
+            options: {
+                logConcurrentOutput: true
             }
         },
 
@@ -160,49 +221,49 @@ module.exports = function(grunt) {
                 spawn: false
             },
             css: {
-                files: ['client/**/*.less'],
-                tasks: ['clean:cache', 'build-css']
+                files: ['client/**/*.scss'],
+                tasks: ['build-css', 'build-non-critical-css']
             },
             js: {
                 files: ['client/**/*.js'],
-                tasks: ['clean:cache', 'build-js']
+                tasks: ['build-js']
             },
             images: {
-                files: ['assets/img/**/*'],
-                tasks: ['clean:cache', 'build-images']
+                files: ['public/assets/site/img/*']
             },
             icons: {
-                files: ['assets/img/icons/*'],
-                tasks: ['clean:cache', 'build-icons']
+                files: ['public/assets/site/img/icons/*'],
+                tasks: ['build-icons']
             },
-            templates: {
-                files: ['app/**/*.latte']
-            },
-            nette: {
-                files: ['app/**/*.php']
+            html: {
+                files: ['public/**/*.html']
             }
         }
 
     });
 
     grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concurrent');
-    grunt.loadNpmTasks('grunt-hashres2');
+    grunt.loadNpmTasks('grunt-hashres');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-inliner');
     grunt.loadNpmTasks('grunt-modernizr');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-sass-globbing');
     grunt.loadNpmTasks('grunt-svgstore');
-    grunt.loadNpmTasks('grunt-inliner');
 
-    grunt.registerTask('build-js', ['clean:js', 'babel', 'uglify:default', 'hashres:components', 'hashres:app']);
-    grunt.registerTask('build-css', ['clean:css', 'less:default', 'postcss:default', 'hashres:css', 'less:noncritical', 'postcss:noncritical', 'hashres:noncriticalcss']);
-    grunt.registerTask('build-icons', ['clean:icons', 'svgstore', 'imagemin:icons', 'hashres:icons']);
-    grunt.registerTask('build-images', ['clean:images', 'imagemin:default']);
-    grunt.registerTask('build', ['clean:cache', 'build-js', 'build-css', 'build-icons', 'build-images', 'modernizr', 'uglify:smoothscroll', 'uglify:fastclick', 'uglify:nette', 'uglify:injector']);
-    grunt.registerTask('develop', ['build', 'watch']);
+    grunt.registerTask('build-js', ['babel', 'uglify:default']);
+    grunt.registerTask('build-css', ['sass_globbing', 'sass:default', 'postcss:default']);
+    grunt.registerTask('build-non-critical-css', ['sass:default', 'exec:sassnoncritical', 'postcss:noncritical']);
+    grunt.registerTask('build-icons', ['svgstore', 'imagemin:icons']);
+    grunt.registerTask('init', ['build-css', 'build-non-critical-css', 'modernizr', 'uglify:fastclick', 'uglify:smoothscroll', 'build-js', 'build-icons']);
+    grunt.registerTask('build', ['init', 'clean:build', 'copy:build', 'imagemin:default', 'inliner', 'hashres']);
+    grunt.registerTask('develop', ['init', 'concurrent']);
 
 };

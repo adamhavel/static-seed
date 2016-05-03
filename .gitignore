@@ -1,7 +1,8 @@
 node_modules
 public/assets/site/lib
-public/assets/site/js/**/*.js
-public/assets/site/css/*.css
-public/assets/site/css/*.map
+public/assets/site/js
+public/assets/site/css
+public/assets/site/img/icons.svg
+public/assets/site/img/icons.min.svg
 client/_partials.scss
 build

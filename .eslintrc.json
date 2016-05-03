@@ -1,0 +1,18 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "FastClick": false,
+        "NetteAjax": false
+    },
+    "rules": {
+        "brace-style": 2,
+        "indent": 2,
+        "eqeqeq": [2, "smart"]
+    }
+}
