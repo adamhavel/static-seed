@@ -29,7 +29,12 @@
         loadScript('lib/system.js', function() {
 
             System.config({
-                baseURL: 'assets/site/js/modules'
+                baseURL: 'assets/site/js/modules',
+                meta: {
+                    '*.js': {
+                        format: 'register'
+                    }
+                }
             });
 
             System.import('main.js');

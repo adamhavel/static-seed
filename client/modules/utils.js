@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Utilities
-   ========================================================================== */
-
 var utils = {};
 
 const loadedScripts = [];
@@ -88,7 +84,7 @@ utils.loadStyle = function(src) {
     var style = document.createElement('link');
 
     style.rel = 'stylesheet';
-    style.href = ASSETS_DIR + 'css/' + src;
+    style.href = 'assets/site/css/' + src;
     style.media = 'only x';
     ref.parentNode.insertBefore(style, ref);
 

@@ -1,11 +1,6 @@
-/* ==========================================================================
-   Promo carousel
-   ========================================================================== */
-
 import component from 'component.js';
 
-
-export default function PromoCarousel(node, selector) {
+export default function(node, selector) {
 
     const self = component(node, selector);
     var currentIndex;
@@ -56,7 +51,7 @@ export default function PromoCarousel(node, selector) {
 
     (function init() {
 
-        interval = self.container.getAttribute('data-interval') || 5000;
+        interval = self.container.getAttribute('data-interval') || 1000;
         currentIndex = 0;
 
         self.container.appendChild(self.element('indicator').render());

@@ -12,7 +12,9 @@ module.exports = function(grunt) {
             },
             modules: {
                 options: {
-                    plugins: ['transform-es2015-modules-systemjs']
+                    plugins: [
+                        'transform-es2015-modules-systemjs'
+                    ]
                 },
                 files: [{
                     cwd: 'client',
@@ -266,7 +268,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-globbing');
     grunt.loadNpmTasks('grunt-svgstore');
 
-    grunt.registerTask('build-js', ['babel', 'uglify:default']);
+    grunt.registerTask('build-js', ['babel']);
     grunt.registerTask('build-css', ['sass_globbing', 'sass:default', 'postcss:default']);
     grunt.registerTask('build-non-critical-css', ['exec:sassnoncritical', 'postcss:noncritical']);
     grunt.registerTask('build-icons', ['svgstore', 'imagemin:icons']);

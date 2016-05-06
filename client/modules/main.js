@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Main
-   ========================================================================== */
-
 import utils from 'utils.js';
-
 
 // Load components.
 System.import('components.js').then(function(components) {
@@ -12,11 +7,9 @@ System.import('components.js').then(function(components) {
         let nodes = utils.queryAll(componentSpec.selector);
 
         if (nodes.length) {
-            System.import(componentSpec.src).then(function(component) {
-                let constructor = component.default;
-
+            System.import(componentSpec.src).then(function(constructor) {
                 nodes.forEach(function(node) {
-                    constructor(node, componentSpec.selector);
+                    constructor.default(node, componentSpec.selector);
                 });
             });
         }
