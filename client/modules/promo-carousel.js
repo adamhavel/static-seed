@@ -4,6 +4,7 @@
 
 import component from 'component.js';
 
+
 export default function PromoCarousel(node, selector) {
 
     const self = component(node, selector);

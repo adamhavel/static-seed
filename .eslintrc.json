@@ -11,7 +11,8 @@
     "globals": {
         "FastClick": false,
         "NetteAjax": false,
-        "System": false
+        "System": false,
+        "Modernizr": false
     },
     "rules": {
         "brace-style": 2,

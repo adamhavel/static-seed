@@ -4,6 +4,9 @@
 
 var utils = {};
 
+const loadedScripts = [];
+const loadingScripts = [];
+
 utils.query = function(selector, parent = document) {
     return parent.querySelector(selector);
 };
@@ -66,7 +69,7 @@ utils.loadScript = function(src, callback = null) {
                 }
             });
 
-            script.src = ASSETS_DIR + 'js/' + src;
+            script.src = 'assets/site/js/' + src;
             document.head.appendChild(script);
 
             return script;
@@ -78,10 +81,6 @@ utils.loadScript = function(src, callback = null) {
     } else if (callback) {
         callback.call(window);
     }
-};
-
-utils.requireComponent = function(src, callback) {
-    return utils.loadScript(COMPONENTS_DIR + src, callback);
 };
 
 utils.loadStyle = function(src) {

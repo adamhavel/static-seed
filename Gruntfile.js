@@ -7,8 +7,8 @@ module.exports = function(grunt) {
                 presets: ['es2015']
             },
             app: {
-                src: 'client/app.js',
-                dest: 'public/assets/site/js/app.js'
+                src: 'client/scout.js',
+                dest: 'public/assets/site/js/scout.js'
             },
             modules: {
                 options: {
@@ -17,20 +17,10 @@ module.exports = function(grunt) {
                 files: [{
                     cwd: 'client',
                     expand: true,
-                    src: ['**/*.js', '!app.js'],
+                    src: ['modules/**/*.js'],
                     dest: 'public/assets/site/js/modules',
                     flatten: true
                 }]
-            }
-        },
-
-        concat: {
-            default: {
-                src: [
-                    'public/assets/site/js/lib/system.js',
-                    'public/assets/site/js/app.js'
-                ],
-                dest: 'public/assets/site/js/app.js'
             }
         },
 
@@ -68,6 +58,10 @@ module.exports = function(grunt) {
             systemjs: {
                 src: 'node_modules/systemjs/dist/system-csp-production.src.js',
                 dest: 'public/assets/site/js/lib/system.js'
+            },
+            bluebird: {
+                src: 'node_modules/bluebird/js/browser/bluebird.js',
+                dest: 'public/assets/site/js/lib/bluebird.js'
             }
         },
 
@@ -150,13 +144,13 @@ module.exports = function(grunt) {
             modules: {
                 src: ['build/public/assets/site/js/modules/*.js'],
                 dest: [
-                    'build/public/assets/site/js/app.js',
+                    'build/public/assets/site/js/scout.js',
                     'build/public/assets/site/js/modules/*.js'
                 ]
             },
             default: {
                 src: [
-                    'build/public/assets/site/js/app.js',
+                    'build/public/assets/site/js/scout.js',
                     'build/public/assets/site/css/default.css',
                     'build/public/assets/site/css/non-critical.css',
                     'build/public/assets/site/img/icons.svg'
@@ -260,7 +254,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -273,11 +266,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-globbing');
     grunt.loadNpmTasks('grunt-svgstore');
 
-    grunt.registerTask('build-js', ['babel', 'uglify:default', 'concat:default']);
+    grunt.registerTask('build-js', ['babel', 'uglify:default']);
     grunt.registerTask('build-css', ['sass_globbing', 'sass:default', 'postcss:default']);
     grunt.registerTask('build-non-critical-css', ['exec:sassnoncritical', 'postcss:noncritical']);
     grunt.registerTask('build-icons', ['svgstore', 'imagemin:icons']);
-    grunt.registerTask('init', ['build-css', 'build-non-critical-css', 'modernizr', 'uglify:fastclick', 'uglify:smoothscroll', 'uglify:systemjs', 'build-js', 'build-icons']);
+    grunt.registerTask('init', ['build-css', 'build-non-critical-css', 'modernizr', 'uglify:fastclick', 'uglify:smoothscroll', 'uglify:systemjs', 'uglify:bluebird', 'build-js', 'build-icons']);
     grunt.registerTask('build', ['init', 'clean:build', 'copy:build', 'imagemin:default', 'inliner', 'hashres']);
     grunt.registerTask('develop', ['init', 'concurrent']);
 

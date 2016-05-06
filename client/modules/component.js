@@ -4,6 +4,7 @@
 
 import utils from 'utils.js';
 
+
 export default function(node, selector) {
 
     var self = {
@@ -37,8 +38,10 @@ export default function(node, selector) {
                 };
 
                 if (!element.selector) {
+                    // Create a default selector by using the element's name and container selector.
                     let defaultSelector = self.selector + '__' + element.name;
 
+                    // Strip the last 's' when generating a selector for collections ('items' becomes 'container__item').
                     element.selector = element.isCollection ? defaultSelector.slice(0, -1) : defaultSelector;
                 }
 
@@ -66,17 +69,17 @@ export default function(node, selector) {
         resolveElement: function(element) {
             if (!element.node || element.isTransient) {
                 if (element.isCollection) {
-                    element.node = utils.queryAll(element.selector || defaultSelector, self.container);
+                    element.node = utils.queryAll(element.selector, self.container);
                 } else {
-                    element.node = utils.query(element.selector || defaultSelector, self.container);
+                    element.node = utils.query(element.selector, self.container);
                 }
             }
 
             return element.node;
         },
         // Returns an element property for a given element name and property type.
-        element: function(name, property = 'node') {
-            var result = null;
+        element: function(name) {
+            let result = null;
 
             self.elements.some(function(el) {
                 if (el.name === name) {
