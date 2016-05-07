@@ -3,6 +3,5 @@ public/assets/site/lib
 public/assets/site/js
 public/assets/site/css
 public/assets/site/img/icons.svg
-public/assets/site/img/icons.min.svg
 client/_partials.scss
 build

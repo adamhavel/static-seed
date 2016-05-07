@@ -22,7 +22,6 @@
     "bluebird": "3.3.5",
     "cssnano": "3.5.2",
     "eslint": "2.9.0",
-    "fastclick": "1.0.6",
     "grunt": "1.0.1",
     "grunt-babel": "6.0.0",
     "grunt-concurrent": "2.3.0",

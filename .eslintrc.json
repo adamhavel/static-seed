@@ -9,8 +9,6 @@
         "node": true
     },
     "globals": {
-        "FastClick": false,
-        "NetteAjax": false,
         "System": false,
         "Modernizr": false
     },
