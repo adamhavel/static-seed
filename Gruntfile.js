@@ -4,18 +4,17 @@ module.exports = function(grunt) {
 
         babel: {
             options: {
-                presets: ['es2015']
+                presets: ['es2015'],
+                plugins: ['transform-es2015-modules-systemjs']
             },
-            app: {
+            scout: {
                 src: 'client/scout.js',
-                dest: 'public/assets/site/js/scout.js'
+                dest: 'public/assets/site/js/scout.js',
+                options: {
+                    plugins: []
+                }
             },
             modules: {
-                options: {
-                    plugins: [
-                        'transform-es2015-modules-systemjs'
-                    ]
-                },
                 files: [{
                     cwd: 'client',
                     expand: true,
@@ -49,21 +48,12 @@ module.exports = function(grunt) {
                     dest: 'public/assets/site/js'
                 }]
             },
-            fastclick: {
-                src: 'node_modules/fastclick/lib/fastclick.js',
-                dest: 'public/assets/site/js/lib/fastclick.js'
-            },
-            smoothscroll: {
-                src: 'node_modules/smoothscroll-polyfill/smoothscroll.js',
-                dest: 'public/assets/site/js/lib/smoothscroll.js'
-            },
-            systemjs: {
-                src: 'node_modules/systemjs/dist/system-csp-production.src.js',
-                dest: 'public/assets/site/js/lib/system.js'
-            },
-            bluebird: {
-                src: 'node_modules/bluebird/js/browser/bluebird.js',
-                dest: 'public/assets/site/js/lib/bluebird.js'
+            libraries: {
+                files: [
+                    { 'public/assets/site/js/lib/smoothscroll.js': 'node_modules/smoothscroll-polyfill/dist/smoothscroll.js' },
+                    { 'public/assets/site/js/lib/system.js': 'node_modules/systemjs/dist/system-csp-production.src.js' },
+                    { 'public/assets/site/js/lib/shim.js': 'node_modules/core-js/client/shim.js' }
+                ]
             }
         },
 
@@ -228,7 +218,7 @@ module.exports = function(grunt) {
         watch: {
             options: {
                 livereload: true,
-                spawn: false
+                spawn: true
             },
             css: {
                 files: ['client/**/*.scss'],
@@ -242,7 +232,7 @@ module.exports = function(grunt) {
                 files: ['public/assets/site/img/*']
             },
             icons: {
-                files: ['public/assets/site/img/icons/*'],
+                files: ['public/assets/site/img/icon/*'],
                 tasks: ['build-icons']
             },
             html: {
@@ -268,11 +258,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-globbing');
     grunt.loadNpmTasks('grunt-svgstore');
 
-    grunt.registerTask('build-js', ['babel']);
+    grunt.registerTask('build-js', ['babel', 'uglify:default']);
     grunt.registerTask('build-css', ['sass_globbing', 'sass:default', 'postcss:default']);
     grunt.registerTask('build-non-critical-css', ['exec:sassnoncritical', 'postcss:noncritical']);
     grunt.registerTask('build-icons', ['svgstore', 'imagemin:icons']);
-    grunt.registerTask('init', ['build-css', 'build-non-critical-css', 'modernizr', 'uglify:fastclick', 'uglify:smoothscroll', 'uglify:systemjs', 'uglify:bluebird', 'build-js', 'build-icons']);
+    grunt.registerTask('init', ['build-css', 'build-non-critical-css', 'modernizr', 'uglify:libraries', 'build-js', 'build-icons']);
     grunt.registerTask('build', ['init', 'clean:build', 'copy:build', 'imagemin:default', 'inliner', 'hashres']);
     grunt.registerTask('develop', ['init', 'concurrent']);
 

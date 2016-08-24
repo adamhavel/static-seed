@@ -110,6 +110,10 @@ svg:not(:root) {
     overflow: hidden;
 }
 
+use {
+    pointer-events: none;
+}
+
 /* Links
    ========================================================================== */
 
@@ -134,7 +138,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-size: 1rem;
+    font-size: inherit;
     font-weight: 400;
 }
 
@@ -429,10 +433,6 @@ table {
 img {
     display: block;
     max-width: 100%;
-}
-
-[src$=".svg"] {
-    width: 100%;
 }
 
 /* Flexbox

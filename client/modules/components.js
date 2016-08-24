@@ -1,6 +1,6 @@
 export default [
-    {
-        selector: '.j-promo-carousel',
-        src: 'promo-carousel.js'
-    }
+    // {
+    //     selector: '.j-promo-carousel',
+    //     src: 'promo-carousel.js'
+    // }
 ];

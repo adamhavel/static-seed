@@ -1,6 +1,6 @@
 (function() {
 
-    // Cutting the mustard.
+    // Don't load the application for legacy browsers.
     if (
         !document.querySelector
         || !window.addEventListener
@@ -14,8 +14,13 @@
         return false;
     }
 
-    var loadScript = function(src, callback) {
-        var script = document.createElement('script');
+    /**
+     * Asynchronously load a script;
+     * @param {string}   src
+     * @param {Function} callback
+     */
+    let loadScript = function(src, callback) {
+        let script = document.createElement('script');
 
         script.addEventListener('load', function() {
             callback.call(window);
@@ -25,27 +30,38 @@
         document.head.appendChild(script);
     };
 
-    var bootstrap = function() {
-        loadScript('lib/system.js', function() {
+    /**
+     * Load the main module.
+     */
+    let bootstrap = function() {
+        if (!('System' in window)) {
 
-            System.config({
-                baseURL: 'assets/site/js/modules',
-                meta: {
-                    '*.js': {
-                        format: 'register'
-                    }
-                }
+            loadScript('lib/system.js', function() {
+
+                System.config({
+                    baseURL: 'assets/site/js/modules'
+                });
+
+                System.import('app.js');
+
             });
 
-            System.import('main.js');
-
-        });
+        } else {
+            System.import('app.js');
+        }
     };
 
-    if (!Modernizr.promises) {
-        loadScript('lib/bluebird.js', bootstrap);
-    } else {
+    let tests = [
+        'Promise' in window,
+        'Symbol' in window,
+        'Map' in window
+    ];
+
+    // Check feature support and load shims if needed.
+    if (tests.every(test => test)) {
         bootstrap();
+    } else {
+        loadScript('lib/shim.js', bootstrap);
     }
 
 })();
