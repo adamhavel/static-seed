@@ -221,8 +221,12 @@ module.exports = function(grunt) {
                 spawn: true
             },
             css: {
-                files: ['client/**/*.scss'],
+                files: ['client/**/*.scss', '!client/non-critical.scss'],
                 tasks: ['build-css']
+            },
+            noncriticalcss: {
+                files: ['client/non-critical.scss'],
+                tasks: ['build-non-critical-css']
             },
             js: {
                 files: ['client/**/*.js'],
