@@ -97,8 +97,8 @@ module.exports = function(grunt) {
                 cleanupdefs: true,
                 includeTitleElement: false,
                 svg: {
-                    'xmlns': 'http://public/assets/site.w3.org/2000/svg',
-                    'xmlns:xlink': 'http://public/assets/site.w3.org/1999/xlink'
+                    'xmlns': 'http://www.w3.org/2000/svg',
+                    'xmlns:xlink': 'http://www.w3.org/1999/xlink'
                 }
             },
             default: {
