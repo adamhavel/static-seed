@@ -48,6 +48,7 @@ const Element = {
         // Set the component actions to the special 'self' element actions.
         if (this.name === 'self') {
             component.actions = this.actions;
+            component.startup = this.startup;
         }
 
         this.resolveNodes();
@@ -97,6 +98,9 @@ const Element = {
     filter(selector) {
         return this.nodes.filter(node => utils.matches(node, selector));
     },
+    indexOf(node) {
+        return this.nodes.indexOf(node);
+    },
     /**
      * Remove a node at a given index from the DOM.
      * @param {number} index
@@ -105,7 +109,7 @@ const Element = {
         let node = this.get(index);
 
         node.parentNode.removeChild(node);
-        this.resolveNodes();
+        this.component.resolveElements();
     },
     /**
      * Remove all element nodes from the DOM.
@@ -113,6 +117,7 @@ const Element = {
     removeAll() {
         this.nodes.forEach(node => node.parentNode.removeChild(node));
         this.nodes = [];
+        this.component.resolveElements();
     },
     /**
      * Create a node if a template function is available.
@@ -140,9 +145,7 @@ const Element = {
         if (target && renderedEl) {
             target.appendChild(renderedEl);
 
-            for (let element of this.component.elements.values()) {
-                if (!element.nodes.length || element.template) element.resolveNodes();
-            }
+            this.component.resolveElements();
         }
     }
 };
@@ -194,9 +197,10 @@ const Component = {
 
             }
 
-            for (let element of this.elements.values()) {
-                if (element.nodes.length && element.startup) element.startup();
-            }
+        }
+
+        for (let element of this.elements.values()) {
+            if (element.nodes.length && element.startup) element.startup();
         }
     },
     /**
@@ -239,6 +243,13 @@ const Component = {
         });
 
         return result;
+    },
+    resolveElements() {
+        let elements = this.elements.values();
+
+        [...elements].forEach(element => {
+            element.resolveNodes();
+        });
     },
     /**
      * Generic event handler.
@@ -303,9 +314,13 @@ const Component = {
      * Emit an event and optional payload data.
      * @param {string} event
      * @param {Object} payload
+     *
+     * @return {Component}
      */
     emit(event, payload) {
         Hub.broadcast(this, event, payload);
+
+        return this;
     }
 };
 

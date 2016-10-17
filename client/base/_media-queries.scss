@@ -6,8 +6,8 @@
    ========================================================================== */
 
 $media-breakpoints: (
-    line: const(LINE_LENGTH),
-    layout: const(LAYOUT_WIDTH)
+    line: const(LINE_LENGTH) * const('BASE'),
+    layout: const(LAYOUT_WIDTH) * const('BASE')
 );
 
 $media-expressions: (
