@@ -23,7 +23,7 @@ System.import('libraries.js').then(function(libraries) {
     libraries.default.forEach(function(library) {
 
         if (library.test || typeof library.test === 'undefined') {
-            utils.loadScript('lib/' + library.src, function() {
+            utils.fetch('/assets/site/js/lib/' + library.src).then(() => {
                 library.callback && library.callback();
             });
         }

@@ -2,68 +2,25 @@
    Grid
    ========================================================================== */
 
-/* Settings
-   ========================================================================== */
-
-$grid-columns: (
-    '>=layout': 3,
-    'inbetween': 2,
-    '<line': 1
-);
-$grid-hgap: const(GUTTER) * 2;
-$grid-vgap: 1;
-
-
 /* Mixins
    ========================================================================== */
 
-@mixin grid($items-per-row: $grid-columns, $hgap: $grid-hgap, $vgap: $grid-vgap) {
-    display: flex !important;
+@mixin grid($basis: 30em, $hgap: 2em, $vgap: lines(2)) {
+    @include no-spacing;
+
+    display: flex;
     flex-wrap: wrap;
+    margin-left: -$hgap;
+    justify-content: flex-start;
+
+    > * {
+        flex: 1 0 $basis;
+        margin-left: $hgap;
+        margin-bottom: $vgap;
+    }
 
     .no-flexwrap & {
         display: block;
-        letter-spacing: -.31em;
-    }
-
-    $items-per-row: map-merge($grid-columns, $items-per-row);
-
-    > * {
-        margin-left: $hgap !important;
-        margin-top: lines($vgap) !important;
-        margin-bottom: 0 !important;
-
-        @each $breakpoint, $columns in $items-per-row {
-
-            $width: calc(#{(100% / $columns)} - #{$hgap * ($columns - 1) / $columns});
-
-            @if ($hgap == 0) {
-                $width: 100% / $columns;
-            } @elseif (unit($hgap) == '%') {
-                $width: (100% / $columns) - ($hgap * ($columns - 1) / $columns);
-            }
-
-            @include media($breakpoint) {
-
-                width: $width;
-
-                &:nth-child(-n + #{$columns}) {
-                    margin-top: 0 !important;
-                }
-
-                &:nth-child(#{$columns}n + 1) {
-                    margin-left: 0 !important;
-                }
-
-            }
-
-        }
-
-        .no-flexwrap & {
-            display: inline-block !important;
-            letter-spacing: normal;
-            vertical-align: top;
-        }
     }
 }
 
@@ -74,4 +31,3 @@ $grid-vgap: 1;
 .o-grid {
     @include grid;
 }
-
